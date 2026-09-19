@@ -1,0 +1,16 @@
+# Prepared only — NOT deployed. See README.md for manual deploy steps.
+name = "ate-gateway-path"
+main = "cloudflare-worker.js"
+compatibility_date = "2026-09-01"
+
+# Intercepts ONLY /gateway*; every other path keeps serving GitHub Pages.
+# zone_name resolves without needing a numeric zone ID.
+routes = [
+  { pattern = "akmaltaufikenterprise.my/gateway*", zone_name = "akmaltaufikenterprise.my" }
+]
+
+[vars]
+# Dashboard origin on Railway (hostname is operational config, not a secret;
+# never referenced from frontend JavaScript). Override in the Cloudflare
+# dashboard instead of editing this file if the origin ever moves.
+GATEWAY_ORIGIN = "https://ate-gateway-production.up.railway.app"
