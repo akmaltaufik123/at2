@@ -1,6 +1,10 @@
 User-agent: *
 Allow: /
 
+# ATEGateway admin/application interface (served at /gateway by the
+# dashboard origin through Cloudflare). Not for search indexing.
+Disallow: /gateway/
+
 User-agent: GPTBot
 Disallow: /
 
