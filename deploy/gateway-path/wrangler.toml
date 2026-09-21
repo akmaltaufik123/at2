@@ -10,7 +10,8 @@ routes = [
 ]
 
 [vars]
-# Dashboard origin on Railway (hostname is operational config, not a secret;
-# never referenced from frontend JavaScript). Override in the Cloudflare
-# dashboard instead of editing this file if the origin ever moves.
-GATEWAY_ORIGIN = "https://ate-gateway-production.up.railway.app"
+# Set at deploy time and never committed with a real value:
+#   wrangler deploy --var GATEWAY_ORIGIN=https://ate-gateway-production.up.railway.app
+# An empty value fails closed (generic 502). The Worker also accepts an
+# override from the Cloudflare dashboard instead of this file.
+GATEWAY_ORIGIN = ""

@@ -1,0 +1,5 @@
+{
+  "name": "ate-gateway-path-worker",
+  "private": true,
+  "type": "module"
+}
