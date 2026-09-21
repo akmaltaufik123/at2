@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <title>ATEGateway API | Akmal Taufik Enterprise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://plain-apac-prod-public.komododecks.com/202608/12/3HS3RGiBnGa12S29398i/image.png">
+  <link rel="stylesheet" href="css/styles.css?v=20260814">
+  <style>
+    .api-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+    .api-meta .card { flex: 1 1 220px; }
+    .api-meta .card h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted, #a1a1aa); }
+    .api-meta code { font-size: 0.85rem; overflow-wrap: anywhere; }
+    pre.code { background: #0b0f1a; color: #e2e8f0; border: 1px solid #1e293b; border-radius: 0.75rem; padding: 1rem; overflow-x: auto; font-size: 0.82rem; line-height: 1.55; margin: 0.75rem 0 0; }
+    pre.code code { font-family: ui-monospace, Consolas, monospace; }
+    .code-head { display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; }
+    .code-head h3 { margin: 0; }
+    .copy-btn { cursor: pointer; }
+    .endpoint-table { width: 100%; border-collapse: collapse; margin-top: 0.75rem; font-size: 0.9rem; }
+    .endpoint-table th, .endpoint-table td { text-align: left; padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--border-dark, #2a2a30); vertical-align: top; }
+    .endpoint-table th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted, #a1a1aa); }
+    .method { display: inline-block; font-weight: 700; font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 0.4rem; background: #0ea5e9; color: #fff; margin-right: 0.4rem; }
+    .method.post { background: #16a34a; }
+    .quickstart ol { margin: 0.75rem 0 0; padding-left: 1.25rem; }
+    .quickstart li { margin-bottom: 0.5rem; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand"><img src="https://plain-apac-prod-public.komododecks.com/202608/12/3HS3RGiBnGa12S29398i/image.png" alt="Logo" class="logo-img"></a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="nav-links">
+        <a href="index.html#services" data-i18n="nav-services">Perkhidmatan</a>
+        <a href="index.html#coverage" data-i18n="nav-coverage">Kawasan Liputan</a>
+        <a href="index.html#contact" data-i18n="nav-contact">Hubungi Kami</a>
+        <a href="login.html" data-i18n="nav-portal">Log Masuk</a>
+        <a href="/api.html" data-i18n="nav-gateway">ATEGateway</a>
+        <a href="index.html#contact" class="btn btn-primary" data-i18n="nav-quote">Minta Sebut Harga</a>
+        <div class="lang-switch">
+          <button class="lang-btn" data-lang="my">MY</button>
+          <button class="lang-btn" data-lang="en">ENG</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <h1 class="glitch" data-i18n="api-title" data-text="Dokumentasi API ATEGateway">Dokumentasi API ATEGateway</h1>
+      <p class="lead" data-i18n="api-lead">Gerbang API AI khusus oleh Akmal Taufik Enterprise.</p>
+
+      <div class="api-meta">
+        <div class="card">
+          <h3 data-i18n="api-base-title">Base URL Production</h3>
+          <code>https://akmaltaufikenterprise.my/gateway/v1</code>
+        </div>
+        <div class="card">
+          <h3 data-i18n="api-model-title">Model Semasa</h3>
+          <code>gpt-6-astra</code>
+        </div>
+        <div class="card">
+          <h3 data-i18n="api-auth-title">Pengesahan</h3>
+          <code>Authorization: Bearer ate_&lt;YOUR_API_KEY&gt;</code>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 data-i18n="api-auth-h">Cara Pengesahan Berfungsi</h2>
+      <p data-i18n="api-auth-desc">Setiap permintaan mesti menyertakan kunci API anda dalam header Authorization. Dapatkan kunci anda melalui proses akaun pelanggan ATE.</p>
+
+      <h2 data-i18n="api-endpoints-title" style="margin-top:2rem">Endpoint</h2>
+      <table class="endpoint-table">
+        <thead>
+          <tr><th>Method</th><th>Path</th><th data-i18n="api-col-desc">Keterangan</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="method">GET</span></td>
+            <td><code>/models</code></td>
+            <td data-i18n="api-models-desc">Senaraikan model yang tersedia untuk kunci anda.</td>
+          </tr>
+          <tr>
+            <td><span class="method post">POST</span></td>
+            <td><code>/chat/completions</code></td>
+            <td data-i18n="api-chat-desc">Hantar perbualan dan terima pelengkapan model.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-head">
+        <h3 data-i18n="api-example-title">Contoh Permintaan</h3>
+        <button class="btn btn-secondary btn-sm copy-btn" data-copy="ex1">Copy</button>
+      </div>
+      <pre class="code"><code id="ex1">{
+  "model": "gpt-6-astra",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hello from ATEGateway"
+    }
+  ],
+  "stream": false
+}</code></pre>
+
+      <div class="code-head">
+        <h3 data-i18n="api-curl-title">Contoh curl</h3>
+        <button class="btn btn-secondary btn-sm copy-btn" data-copy="ex2">Copy</button>
+      </div>
+      <pre class="code"><code id="ex2">curl https://akmaltaufikenterprise.my/gateway/v1/chat/completions \
+  -H "Authorization: Bearer ate_&lt;YOUR_API_KEY&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-6-astra",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Hello from ATEGateway"
+      }
+    ],
+    "stream": false
+  }'</code></pre>
+      <p data-i18n="api-stream-note">Penstriman disokong dengan menetapkan stream kepada true.</p>
+    </section>
+
+    <section class="section quickstart">
+      <h2 data-i18n="api-quick-title">Mula Pantas</h2>
+      <ol>
+        <li data-i18n="api-q1">Dapatkan kunci API ATEGateway anda.</li>
+        <li data-i18n="api-q2">Set header Authorization.</li>
+        <li data-i18n="api-q3">Gunakan Base URL production.</li>
+        <li data-i18n="api-q4">Hantar permintaan ke /chat/completions.</li>
+        <li data-i18n="api-q5">Pantau penggunaan melalui portal pelanggan.</li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <div class="card">
+        <h3 data-i18n="api-needkey-title">Perlukan Kunci API?</h3>
+        <p data-i18n="api-needkey-desc">Hubungi kami untuk mendapatkan kunci API ATEGateway anda.</p>
+        <div class="cta-row">
+          <a href="index.html#contact" class="btn btn-primary" data-i18n="api-needkey-btn">Hubungi Kami</a>
+          <a href="index.html" class="btn btn-secondary" data-i18n="api-back">← Kembali ke laman utama</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p data-i18n="footer-line">Server &amp; rack server | WiFi &amp; CCTV | Kabel rangkaian | Komputer &amp; laptop | Kelas komputer &amp; AI</p>
+      <p class="slogan-mini" data-i18n="hero-slogan">PANTAS - PROFESSIONAL - DIPERCAYAI</p>
+      <p class="muted" data-i18n="footer-copy">© 2026 Hak cipta terpelihara.</p>
+    </div>
+  </footer>
+
+  <script src="js/lang.js?v=20260814"></script>
+  <script src="js/main.js?v=20260814"></script>
+  <script>
+    (function () {
+      function copyById(id, btn) {
+        var text = document.getElementById(id).textContent;
+        function done() { if (btn) { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1200); } }
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(done, function () { done(); });
+        } else {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); } catch (e) {}
+          ta.remove();
+          done();
+        }
+      }
+      document.querySelectorAll(".copy-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () { copyById(btn.getAttribute("data-copy"), btn); });
+      });
+    })();
+  </script>
+</body>
+</html>
