@@ -270,3 +270,36 @@ test('13. exact /gateway redirects to /gateway/', async () => {
     await stopOrigin(o);
   }
 });
+
+test('A. /gateway/ preserves prefix to origin /gateway/ (no redirect loop)', async () => {
+  const o = await startOrigin((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('<html>site</html>');
+  });
+  try {
+    const r = await worker.fetch(new Request(`${ZONE}/gateway/?x=1&y=2`), envFor(o));
+    assert.equal(r.status, 200);
+    assert.equal(await r.text(), '<html>site</html>');
+    assert.equal(o.seen.length, 1);
+    assert.equal(o.seen[0].url, '/gateway/?x=1&y=2');
+  } finally {
+    await stopOrigin(o);
+  }
+});
+
+test('C. /gateway/app strips to origin /app (portal path contract)', async () => {
+  const o = await startOrigin((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('portal');
+  });
+  try {
+    const r = await worker.fetch(new Request(`${ZONE}/gateway/app`), envFor(o));
+    assert.equal(r.status, 200);
+    assert.equal(o.seen[0].url, '/app');
+    const r2 = await worker.fetch(new Request(`${ZONE}/gateway/app/login?next=%2F`), envFor(o));
+    assert.equal(r2.status, 200);
+    assert.equal(o.seen[1].url, '/app/login?next=%2F');
+  } finally {
+    await stopOrigin(o);
+  }
+});

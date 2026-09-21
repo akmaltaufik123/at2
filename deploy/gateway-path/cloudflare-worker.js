@@ -65,9 +65,14 @@ export default {
       return errorJson();
     }
 
-    // Strip the public prefix; the API paths below it map 1:1 onto Railway.
+    // Customer-site root: preserve the prefix so the origin mount serves
+    // the site. Stripping here would hit origin / (API 404), which redirects
+    // back to /gateway/ — an infinite loop. All deeper paths strip below.
+    const siteRoot = url.pathname === '/gateway/';
+    // Strip the public prefix; the paths below it map 1:1 onto Railway
+    // (/gateway/v1/* -> /v1/*, /gateway/app -> /app, ...).
     const upstream = new URL(origin);
-    upstream.pathname = url.pathname.slice('/gateway'.length) || '/';
+    upstream.pathname = siteRoot ? '/gateway/' : (url.pathname.slice('/gateway'.length) || '/');
     upstream.search = url.search;
 
     const headers = new Headers(req.headers);

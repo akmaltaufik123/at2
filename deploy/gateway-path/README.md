@@ -49,8 +49,10 @@ no code change needed.
 ## 6. How /gateway is handled
 
 - `GET /gateway` → `301` to `/gateway/`.
-- `/gateway/` → origin `/`. The public base is API-only: use
-  `/gateway/v1/*` or `/gateway/healthz` below.
+- `/gateway/` → origin `/gateway/` (prefix preserved so the origin mount
+  serves the customer site; stripping here would hit origin `/`, which
+  redirects back — an infinite loop).
+- `/gateway/app…` → origin `/app…` (prefix stripped, query preserved).
 - `/gateway/v1/models` → origin `/v1/models`, etc. (prefix stripped,
   query string preserved, all HTTP methods and bodies preserved).
 - `/gateway/v1/chat/completions` → origin `/v1/chat/completions`
