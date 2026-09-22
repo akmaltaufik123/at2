@@ -52,7 +52,8 @@ no code change needed.
 - `/gateway/` → origin `/gateway/` (prefix preserved so the origin mount
   serves the customer site; stripping here would hit origin `/`, which
   redirects back — an infinite loop).
-- `/gateway/app…` → origin `/app…` (prefix stripped, query preserved).
+- `/gateway/app`, `/gateway/app/`, `/gateway/app/…` → origin identical
+  path (prefix preserved for the portal mount; query strings preserved).
 - `/gateway/v1/models` → origin `/v1/models`, etc. (prefix stripped,
   query string preserved, all HTTP methods and bodies preserved).
 - `/gateway/v1/chat/completions` → origin `/v1/chat/completions`

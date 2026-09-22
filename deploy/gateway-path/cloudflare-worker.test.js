@@ -287,7 +287,7 @@ test('A. /gateway/ preserves prefix to origin /gateway/ (no redirect loop)', asy
   }
 });
 
-test('C. /gateway/app strips to origin /app (portal path contract)', async () => {
+test('C. /gateway/app preserves prefix to origin /gateway/app (portal contract)', async () => {
   const o = await startOrigin((req, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end('portal');
@@ -295,10 +295,65 @@ test('C. /gateway/app strips to origin /app (portal path contract)', async () =>
   try {
     const r = await worker.fetch(new Request(`${ZONE}/gateway/app`), envFor(o));
     assert.equal(r.status, 200);
-    assert.equal(o.seen[0].url, '/app');
-    const r2 = await worker.fetch(new Request(`${ZONE}/gateway/app/login?next=%2F`), envFor(o));
-    assert.equal(r2.status, 200);
-    assert.equal(o.seen[1].url, '/app/login?next=%2F');
+    assert.equal(await r.text(), 'portal');
+    assert.equal(o.seen[0].url, '/gateway/app');
+  } finally {
+    await stopOrigin(o);
+  }
+});
+
+test('D. /gateway/app/ preserves prefix (portal trailing slash)', async () => {
+  const o = await startOrigin((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('portal');
+  });
+  try {
+    const r = await worker.fetch(new Request(`${ZONE}/gateway/app/`), envFor(o));
+    assert.equal(r.status, 200);
+    assert.equal(o.seen[0].url, '/gateway/app/');
+  } finally {
+    await stopOrigin(o);
+  }
+});
+
+test('E. /gateway/app/assets/main.js preserves prefix (portal nested path)', async () => {
+  const o = await startOrigin((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'application/javascript' });
+    res.end('console.log(1)');
+  });
+  try {
+    const r = await worker.fetch(new Request(`${ZONE}/gateway/app/assets/main.js`), envFor(o));
+    assert.equal(r.status, 200);
+    assert.equal(await r.text(), 'console.log(1)');
+    assert.equal(o.seen[0].url, '/gateway/app/assets/main.js');
+  } finally {
+    await stopOrigin(o);
+  }
+});
+
+test('F. /gateway/app?foo=bar preserves prefix and query', async () => {
+  const o = await startOrigin((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('portal');
+  });
+  try {
+    const r = await worker.fetch(new Request(`${ZONE}/gateway/app?foo=bar`), envFor(o));
+    assert.equal(r.status, 200);
+    assert.equal(o.seen[0].url, '/gateway/app?foo=bar');
+  } finally {
+    await stopOrigin(o);
+  }
+});
+
+test('G. /gateway/app/assets/main.js?v=123 preserves prefix and query', async () => {
+  const o = await startOrigin((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'application/javascript' });
+    res.end('console.log(1)');
+  });
+  try {
+    const r = await worker.fetch(new Request(`${ZONE}/gateway/app/assets/main.js?v=123`), envFor(o));
+    assert.equal(r.status, 200);
+    assert.equal(o.seen[0].url, '/gateway/app/assets/main.js?v=123');
   } finally {
     await stopOrigin(o);
   }
