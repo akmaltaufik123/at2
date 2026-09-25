@@ -52,13 +52,34 @@
         slotsBox.querySelectorAll(".time-slot").forEach(function (b) { b.classList.remove("taken"); });
         return;
       }
+      // Hardened availability: prefer least-privilege RPC (002_booking_availability_storage.sql)
+      // which returns only booking_time/status for one in-range date, no PII.
+      // Fallback preserves current behaviour when RPC is not yet deployed.
+      function applyTaken(rows) {
+        taken = new Set((rows || []).map(function (b) { return b.booking_time; }));
+        renderSlots();
+      }
+      if (sb.rpc) {
+        sb.rpc("booking_times_for_date", { p_date: d }).then(function (res) {
+          if (!res.error) { applyTaken(res.data); return; }
+          return sb.from("bookings")
+            .select("booking_time, status")
+            .eq("booking_date", d)
+            .not("status", "eq", "cancelled")
+            .then(function (r2) { applyTaken(r2.data); });
+        }, function () {
+          sb.from("bookings").select("booking_time, status").eq("booking_date", d)
+            .not("status", "eq", "cancelled")
+            .then(function (r2) { applyTaken(r2.data); });
+        });
+        return;
+      }
       sb.from("bookings")
         .select("booking_time, status")
         .eq("booking_date", d)
         .not("status", "eq", "cancelled")
         .then(function (res) {
-          taken = new Set((res.data || []).map(function (b) { return b.booking_time; }));
-          renderSlots();
+          applyTaken(res.data);
         });
     }
 

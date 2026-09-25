@@ -79,12 +79,15 @@
           cs.textContent = page.custom_css;
           document.head.appendChild(cs);
         }
+        // SECURITY: stored custom_js execution removed (2026-09 hardening).
+        // Previously used dynamic code construction from DB content, which ran
+        // arbitrary JS in every visitor browser. Writer set is now admin-only
+        // in RLS (002/001), but defense-in-depth removes the sink entirely.
+        // Custom JS is ignored. See docs/security/CUSTOM_JS_RISK.md.
+        // Residual: custom_css/layout_json still render stored content
+        // (textContent/JSON only, no eval).
         if (page.custom_js) {
-          try {
-            new Function(page.custom_js)();
-          } catch (e) {
-            if (window.console) console.error("Custom JS error:", e);
-          }
+          if (window.console) console.warn("custom_js ignored (disabled for security).");
         }
       }
     }).catch(function () {});
