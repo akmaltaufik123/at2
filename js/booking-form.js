@@ -171,6 +171,14 @@
     dateInput.addEventListener("change", loadTaken);
 
     async function uploadFile(file, kind) {
+      var MAX_IMG = 10 * 1024 * 1024;
+      var MAX_VID = 50 * 1024 * 1024;
+      var maxSize = kind === "image" ? MAX_IMG : MAX_VID;
+      if (file.size > maxSize) {
+        showError(t("Fail terlalu besar. Maksimum " + (kind === "image" ? "10MB (gambar)" : "50MB (video)") + ".",
+                    "File too large. Maximum " + (kind === "image" ? "10MB (image)" : "50MB (video)") + "."));
+        return null;
+      }
       var type = (file.type || "").toLowerCase();
       var ext = (file.name.split(".").pop() || "").toLowerCase();
       var allowImg = ["image/gif", "image/png", "image/jpeg", "image/webp"];
@@ -183,7 +191,7 @@
         return null;
       }
       var safeExt = extMap[kind].indexOf(ext) > -1 ? ext : (kind === "image" ? "png" : "mp4");
-      var path = "booking-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + "." + safeExt;
+      var path = "public/booking-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + "." + safeExt;
       var { error } = await sb.storage.from("booking-files").upload(path, file, { upsert: false });
       if (error) {
         showError(t("Gagal muat naik " + (kind === "image" ? "gambar" : "video") + ": ", "Failed to upload " + (kind === "image" ? "image" : "video") + ": ") + error.message);
@@ -219,6 +227,13 @@
 
       if (!service || !date) {
         showError(t("Sila pilih perkhidmatan dan tarikh.", "Please pick a service and a date."));
+        return;
+      }
+      // Enforce booking window today..+90 days (matches booking_times_for_date RPC).
+      var todayStr = new Date().toISOString().slice(0, 10);
+      var maxD = new Date(Date.now() + 90 * 86400000).toISOString().slice(0, 10);
+      if (date < todayStr || date > maxD) {
+        showError(t("Tarikh mesti hari ini hingga 90 hari ke depan.", "Date must be today through 90 days ahead."));
         return;
       }
       if (!name || !phone || !email) {

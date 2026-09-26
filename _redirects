@@ -1,0 +1,6 @@
+# Block sensitive paths with real 404s (prevents soft-404 homepage fallback leaking scan signals).
+/.git/* /404.html 404
+/.env /404.html 404
+/.env.* /404.html 404
+/*.env /404.html 404
+# NOTE: if this site uses a SPA fallback (/* /index.html 200), keep these rules ABOVE it.

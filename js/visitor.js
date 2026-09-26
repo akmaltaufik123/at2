@@ -41,30 +41,11 @@
   function apply() {
     var el = document.getElementById("visitor-info");
     if (!el) return;
+    // Privacy fix: device/browser/OS only. No third-party geo lookup
+    // (previously sent visitor IP to ipwho.is without consent).
     var dev = detectDevice();
     var info = { device: dev.type, os: dev.os, browser: dev.browser };
     render(el, info);
-    var done = false;
-    var timeout = setTimeout(function () { if (!done) { done = true; } }, 8000);
-    function finish(data) {
-      if (done) return;
-      done = true;
-      clearTimeout(timeout);
-      if (data) {
-        info.flag = data.flag;
-        info.country = data.country;
-        info.city = data.city;
-        render(el, info);
-      }
-    }
-    try {
-      fetch("https://ipwho.is/?fields=country,country_flag,city", { mode: "cors" })
-        .then(function (r) { return r.json(); })
-        .then(function (d) { finish(d && d.success ? { flag: d.country_flag, country: d.country, city: d.city } : null); })
-        .catch(function () { finish(null); });
-    } catch (e) {
-      finish(null);
-    }
   }
 
   if (document.readyState === "loading") {
