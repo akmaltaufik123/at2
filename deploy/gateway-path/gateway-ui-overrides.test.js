@@ -49,6 +49,7 @@ const ROOT_SAMPLE = `<html><head><style>.ate-theme{color:red}</style></head><bod
 const APP_SAMPLE = `<html><head></head><body>` +
   `<link rel="icon" href="https://apikey.fun/logo.png">` +
   `<div class="sidebar-header"><div class="sidebar-logo">A</div><div>ATEGateway</div></div>` +
+  `<label>Display Name</label><input id="reg-name" class="input" type="text" placeholder="work.akmaltaufik">` +
   `</body></html>`;
 
 test("root markers trigger injection, stub HTML does not", () => {
@@ -85,6 +86,9 @@ test("app override: raining binaries bg, enterprise logo, transitions", () => {
   assert.ok(out.includes(ATE_ENTERPRISE_LOGO), "enterprise logo missing");
   assert.ok(!out.includes('<div class="sidebar-logo">A</div>'), "A logo must be replaced");
   assert.ok(!out.includes("https://apikey.fun/logo.png"), "old favicon must be replaced");
+  assert.ok(out.includes('placeholder="Your Display Name"'), "Display Name placeholder must be generic");
+  assert.ok(!out.includes('placeholder="work.akmaltaufik">'), "personal email prefix must not appear as a placeholder attribute");
+  assert.ok(ATE_APP_INLINE.includes("fixPlaceholders"), "client fallback must repair re-rendered placeholders");
   assert.ok(!out.includes("code.jquery.com"), "must not depend on jQuery CDN");
   assert.ok(out.includes('id="ate-app-transitions"'), "transition script missing");
   assert.ok(out.includes("ate-binary-rain"), "binary rain JS missing");

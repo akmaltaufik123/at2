@@ -195,11 +195,15 @@ const ATE_APP_INLINE = [
   "requestAnimationFrame(frame);",
   "}catch(e){}}",
   "function markReady(){try{if(document.body)document.body.classList.add('ate-app-ready');}catch(e){}}",
-  "swapAppLogo();initBinaryRain();markReady();",
-  "if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){swapAppLogo();initBinaryRain();markReady();});}",
-  "try{if('MutationObserver' in window){new MutationObserver(function(){swapAppLogo();}).observe(document.documentElement,{childList:true,subtree:true});}}catch(e){}",
-  "setTimeout(function(){swapAppLogo();initBinaryRain();},800);",
-  "setTimeout(swapAppLogo,2000);",
+  "function fixPlaceholders(){try{",
+  "document.querySelectorAll('input[placeholder=\"work.akmaltaufik\"]').forEach(function(el){",
+  "el.setAttribute('placeholder','Your Display Name');});",
+  "}catch(e){}}",
+  "swapAppLogo();initBinaryRain();markReady();fixPlaceholders();",
+  "if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){swapAppLogo();initBinaryRain();markReady();fixPlaceholders();});}",
+  "try{if('MutationObserver' in window){new MutationObserver(function(){swapAppLogo();fixPlaceholders();}).observe(document.documentElement,{childList:true,subtree:true});}}catch(e){}",
+  "setTimeout(function(){swapAppLogo();initBinaryRain();fixPlaceholders();},800);",
+  "setTimeout(function(){swapAppLogo();fixPlaceholders();},2000);",
   "})();",
 ].join("\n");
 
@@ -280,6 +284,10 @@ function injectAppOverride(html) {
       '" alt="Akmal Taufik Enterprise" class="ate-app-logo"></div>',
   );
   out = out.split("https://apikey.fun/logo.png").join(ATE_ENTERPRISE_LOGO);
+  // Register-form Display Name placeholder used a personal email prefix;
+  // use a generic prompt instead. Server-side replace covers the exact
+  // markup; the client fallback below covers re-rendered variants.
+  out = out.split('placeholder="work.akmaltaufik"').join('placeholder="Your Display Name"');
   out = injectBeforeTag(out, "</head>", ATE_APP_CSS);
   out = injectAfterBodyOpen(out, ATE_APP_BODY_PREFIX);
   out = injectBeforeTag(out, "</body>", ATE_APP_JS);
