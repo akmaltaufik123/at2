@@ -4,6 +4,8 @@ import http from "http";
 import worker from "./cloudflare-worker.js";
 import {
   ATE_ENTERPRISE_LOGO,
+  ATE_ROOT_INLINE,
+  ATE_APP_INLINE,
   injectRootOverride,
   injectAppOverride,
   maybeInjectUi,
@@ -57,17 +59,17 @@ test("root markers trigger injection, stub HTML does not", () => {
   assert.equal(shouldInjectApp(APP_SAMPLE), true);
 });
 
-test("root override: white bg, black instead of red, enterprise logo, jQuery transitions", () => {
+test("root override: white bg, black instead of red, enterprise logo, vanilla transitions", () => {
   const out = injectRootOverride(ROOT_SAMPLE);
   assert.ok(out.includes('id="ate-root-override"'), "missing root style");
   assert.ok(out.includes("background:#ffffff"), "background must be white");
   assert.ok(out.includes("#111827"), "red must become black");
   assert.ok(out.includes(ATE_ENTERPRISE_LOGO), "enterprise logo missing");
   assert.ok(!out.includes(">ATE</div>"), "ATE box logo must be replaced");
-  assert.ok(out.includes("code.jquery.com/jquery-3.7.1.min.js"), "jQuery missing");
+  assert.ok(!out.includes("code.jquery.com"), "must not depend on jQuery CDN");
   assert.ok(out.includes('id="ate-root-transitions"'), "transition script missing");
   assert.ok(out.includes("switchView"), "view transition wrapper missing");
-  assert.ok(out.includes("fadeTo") || out.includes("fadeIn"), "fade transition missing");
+  assert.ok(out.includes("ate-view-flash"), "flash transition missing");
   assert.ok(
     out.includes("prefers-reduced-motion"),
     "must respect reduced motion",
@@ -83,10 +85,59 @@ test("app override: raining binaries bg, enterprise logo, transitions", () => {
   assert.ok(out.includes(ATE_ENTERPRISE_LOGO), "enterprise logo missing");
   assert.ok(!out.includes('<div class="sidebar-logo">A</div>'), "A logo must be replaced");
   assert.ok(!out.includes("https://apikey.fun/logo.png"), "old favicon must be replaced");
-  assert.ok(out.includes("code.jquery.com/jquery-3.7.1.min.js"), "jQuery missing");
+  assert.ok(!out.includes("code.jquery.com"), "must not depend on jQuery CDN");
   assert.ok(out.includes('id="ate-app-transitions"'), "transition script missing");
   assert.ok(out.includes("ate-binary-rain"), "binary rain JS missing");
   assert.ok(out.includes("sidebar-link"), "sidebar transition missing");
+});
+
+test("root transition layer is non-destructive: orig called exactly once, no opacity traps", () => {
+  const forwards = (ATE_ROOT_INLINE.match(/orig\.apply\(/g) || []).length;
+  assert.equal(forwards, 1, "switchView wrapper must forward to orig exactly once");
+  assert.ok(!ATE_ROOT_INLINE.includes("fadeTo"), "must not use per-element fadeTo");
+  assert.ok(!ATE_ROOT_INLINE.includes(".hide()"), "must never hide body/content");
+  assert.ok(!ATE_ROOT_INLINE.includes("animate({opacity"), "must not set inline opacity");
+  assert.ok(ATE_ROOT_INLINE.includes("orig.apply(this,a)"), "must forward all args + return value");
+});
+
+test("app transition layer sets no opacity traps", () => {
+  assert.ok(!ATE_APP_INLINE.includes(".hide()"), "must never hide content");
+  assert.ok(!ATE_APP_INLINE.includes("fadeTo"), "must not use fadeTo");
+  assert.ok(!ATE_APP_INLINE.includes("animate({opacity"), "must not set inline opacity");
+  assert.ok(ATE_APP_INLINE.includes("__ateRainStarted"), "rain must be start-once guarded");
+});
+
+test("root wrapper forwards login/register clicks to orig exactly once (fake DOM)", () => {
+  const calls = [];
+  const flashAdded = [];
+  const fakeEl = {
+    classList: {
+      add: (c) => flashAdded.push(c),
+      remove: () => {},
+    },
+  };
+  const fakeDocument = {
+    readyState: "complete",
+    documentElement: { classList: { add: () => {} } },
+    querySelectorAll: () => [],
+    getElementById: (id) => (id === "view-login" ? fakeEl : null),
+    addEventListener: () => {},
+  };
+  const fakeWindow = {
+    switchView(v) {
+      calls.push(v);
+      return "ok:" + v;
+    },
+  };
+  const run = new Function("window", "document", "setTimeout", ATE_ROOT_INLINE);
+  run(fakeWindow, fakeDocument, () => 0);
+  assert.equal(typeof fakeWindow.switchView, "function");
+  const ret = fakeWindow.switchView("login");
+  assert.equal(ret, "ok:login", "wrapper must preserve orig return value");
+  assert.deepEqual(calls, ["login"], "orig must be called exactly once per click");
+  assert.ok(flashAdded.includes("ate-view-flash"), "target view must get flash class");
+  fakeWindow.switchView("register");
+  assert.deepEqual(calls, ["login", "register"], "second click must also forward once");
 });
 
 test("worker: GET /gateway/ with real markers gets transformed, prefix preserved", async () => {
@@ -101,7 +152,7 @@ test("worker: GET /gateway/ with real markers gets transformed, prefix preserved
     const body = await r.text();
     assert.ok(body.includes('id="ate-root-override"'));
     assert.ok(body.includes(ATE_ENTERPRISE_LOGO));
-    assert.ok(body.includes("jquery-3.7.1.min.js"));
+    assert.ok(body.includes('id="ate-root-transitions"'));
   } finally {
     await stopOrigin(o);
   }

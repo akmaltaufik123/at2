@@ -36,7 +36,9 @@ through untouched (`return fetch(req)`).
 - UI HTML (`GET /gateway/` and `/gateway/app*` with `text/html`) is
   transformed in-flight by `gateway-ui-overrides.js` (markup preserved):
   `/gateway/` forces white background, black instead of red, enterprise
-  logo, jQuery fade/slide transitions; `/gateway/app*` adds the main-site
+  logo, vanilla-JS/CSS view transitions (no jQuery dependency — the layer
+  forwards `switchView` calls synchronously so login/register views keep
+  working); `/gateway/app*` adds the main-site
   raining-binaries background (`/assets/rain.mp4` + binary canvas),
   enterprise logo, and transitions. API/JSON/SSE/JS/CSS pass through
   byte-for-byte. Stub HTML without gateway markers passes through

@@ -62,15 +62,19 @@ const ATE_ROOT_CSS = [
   ".ate-logo-img-lg{width:48px;height:48px;border-radius:14px}",
   ".view-section{transition:opacity .45s cubic-bezier(.16,1,.3,1),transform .45s cubic-bezier(.16,1,.3,1)!important}",
   ".ate-fade-enter{opacity:0;transform:translateY(14px)}",
+  ".ate-view-flash{animation:ateFlash .45s cubic-bezier(.22,1,.36,1)}",
+  "@keyframes ateFlash{from{opacity:.25;transform:translateY(10px)}to{opacity:1;transform:none}}",
   ".glass-card table tbody tr{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,background-color .35s!important}",
   ".glass-card table tbody tr:hover{transform:scale(1.02)!important;box-shadow:0 8px 25px rgba(0,0,0,.1)!important;background-color:#f9fafb!important}",
-  "@media (prefers-reduced-motion:reduce){.ate-theme .glass-card:hover,.ate-theme button.bg-gray-900:hover,.ate-theme button.bg-white:hover,.ate-logo-img:hover{transform:none!important}.view-section{transition:none!important}.ate-theme .rgb-sym{animation:none!important}}",
+  "@media (prefers-reduced-motion:reduce){.ate-theme .glass-card:hover,.ate-theme button.bg-gray-900:hover,.ate-theme button.bg-white:hover,.ate-logo-img:hover{transform:none!important}.view-section{transition:none!important}.ate-theme .rgb-sym{animation:none!important}.ate-view-flash{animation:none!important}}",
   "</style>",
 ].join("\n");
 
-const ATE_ROOT_JS = [
-  '<script src="' + ATE_JQUERY_CDN + '"></script>',
-  '<script id="ate-root-transitions">',
+// Vanilla transition layer (no jQuery): wraps window.switchView exactly once
+// and forwards every call synchronously, so the origin view state machine
+// keeps its exact timing. The only addition is a non-destructive CSS flash
+// on the target section. Never hides <body>, never sets inline opacity.
+const ATE_ROOT_INLINE = [
   "(function(){",
   "var LOGO='" + ATE_ENTERPRISE_LOGO + "';",
   "function swapLogos(){try{",
@@ -83,22 +87,26 @@ const ATE_ROOT_JS = [
   "if(big){img.style.width='48px';img.style.height='48px';}",
   "el.replaceWith(img);}});",
   "}catch(e){}}",
-  "function initTransitions($){try{",
+  "function flashView(v){try{",
+  "var el=document.getElementById('view-'+v);if(!el||!el.classList)return;",
+  "el.classList.add('ate-view-flash');",
+  "setTimeout(function(){try{el.classList.remove('ate-view-flash');}catch(e){}},500);",
+  "}catch(e){}}",
+  "function initTransitions(){try{",
   "if(typeof window.switchView==='function'&&!window.__ateSwitchWrapped){window.__ateSwitchWrapped=true;var orig=window.switchView;",
-  "window.switchView=function(v){var secs=document.querySelectorAll('.view-section');",
-  "if($&&$.fn){$(secs).stop(true).fadeTo(150,0.2,function(){try{orig(v);}catch(e){}$(secs).fadeTo(260,1);setTimeout(swapLogos,60);});}else{try{orig(v);}catch(e){}setTimeout(swapLogos,60);}};}",
-  "}catch(e){}",
-  "try{if($&&$.fn){",
-  "$('body').hide().fadeIn(320);",
-  "$('.glass-card').each(function(i,el){var $el=$(el);$el.css({opacity:0});$el.delay(Math.min(i*70,560)).animate({opacity:1},300);});",
-  "$(document).on('mouseenter','.glass-card,.price-table tbody tr.price-row',function(){$(this).css('transition','transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s');});",
-  "}}catch(e){}}",
-  "swapLogos();",
-  "if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){swapLogos();try{initTransitions(window.jQuery);}catch(e){}});}",
-  "else{try{initTransitions(window.jQuery);}catch(e){}}",
+  "window.switchView=function(){var a=arguments;var v=a.length?a[0]:undefined;var r=orig.apply(this,a);setTimeout(swapLogos,60);flashView(v);return r;};}",
+  "}catch(e){}}",
+  "swapLogos();initTransitions();",
+  "if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){swapLogos();initTransitions();});}",
   "try{if('MutationObserver' in window){new MutationObserver(swapLogos).observe(document.documentElement,{childList:true,subtree:true});}}catch(e){}",
-  "setTimeout(swapLogos,800);setTimeout(swapLogos,2000);",
+  "setTimeout(function(){swapLogos();initTransitions();},800);",
+  "setTimeout(swapLogos,2000);",
   "})();",
+].join("\n");
+
+const ATE_ROOT_JS = [
+  '<script id="ate-root-transitions">',
+  ATE_ROOT_INLINE,
   "</script>",
 ].join("\n");
 
@@ -138,9 +146,9 @@ const ATE_APP_BODY_PREFIX = [
   "</div>",
 ].join("\n");
 
-const ATE_APP_JS = [
-  '<script src="' + ATE_JQUERY_CDN + '"></script>',
-  '<script id="ate-app-transitions">',
+// Vanilla app layer (no jQuery): logo swap + binary rain + a ready marker.
+// Never hides content or sets inline opacity, so upstream views keep working.
+const ATE_APP_INLINE = [
   "(function(){",
   "var LOGO='" + ATE_ENTERPRISE_LOGO + "';",
   "function swapAppLogo(){try{",
@@ -154,6 +162,7 @@ const ATE_APP_JS = [
   "var fav=document.querySelector('link[rel=\"icon\"]');if(fav&&fav.href.indexOf('apikey.fun')!==-1){fav.href=LOGO;}",
   "}catch(e){}}",
   "function initBinaryRain(){try{",
+  "if(window.__ateRainStarted)return;window.__ateRainStarted=true;",
   "if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;",
   "var c=document.getElementById('ate-binary-rain');if(!c)return;",
   "var ctx=c.getContext('2d');if(!ctx)return;",
@@ -173,21 +182,18 @@ const ATE_APP_JS = [
   "requestAnimationFrame(frame);}",
   "requestAnimationFrame(frame);",
   "}catch(e){}}",
-  "function initTransitions($){try{if($&&$.fn){",
-  "$('.sidebar,.card,#page-gateway').hide().fadeIn(380);",
-  "$('.card').each(function(i,el){$(el).delay(Math.min(i*60,480)).animate({opacity:1},260);});",
-  "$(document).on('click','.sidebar-link,.gw-tab,.tab',function(){var $t=$(this);$t.stop(true).fadeTo(90,.55).fadeTo(180,1);});",
-  "}}catch(e){}",
-  "try{",
-  "document.querySelectorAll('.sidebar-link,.gw-tab,.tab,.btn,.card').forEach(function(el){",
-  "el.style.transition='transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s,opacity .3s';});",
-  "}catch(e){}}",
-  "swapAppLogo();initBinaryRain();",
-  "if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){swapAppLogo();initBinaryRain();try{initTransitions(window.jQuery);}catch(e){}});}",
-  "else{try{initTransitions(window.jQuery);}catch(e){}}",
+  "function markReady(){try{if(document.body)document.body.classList.add('ate-app-ready');}catch(e){}}",
+  "swapAppLogo();initBinaryRain();markReady();",
+  "if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){swapAppLogo();initBinaryRain();markReady();});}",
   "try{if('MutationObserver' in window){new MutationObserver(function(){swapAppLogo();}).observe(document.documentElement,{childList:true,subtree:true});}}catch(e){}",
-  "setTimeout(swapAppLogo,800);setTimeout(swapAppLogo,2000);",
+  "setTimeout(function(){swapAppLogo();initBinaryRain();},800);",
+  "setTimeout(swapAppLogo,2000);",
   "})();",
+].join("\n");
+
+const ATE_APP_JS = [
+  '<script id="ate-app-transitions">',
+  ATE_APP_INLINE,
   "</script>",
 ].join("\n");
 
@@ -285,9 +291,11 @@ export {
   ATE_JQUERY_CDN,
   ATE_RAIN_VIDEO,
   ATE_ROOT_CSS,
+  ATE_ROOT_INLINE,
   ATE_ROOT_JS,
   ATE_APP_CSS,
   ATE_APP_BODY_PREFIX,
+  ATE_APP_INLINE,
   ATE_APP_JS,
   isUiHtmlPath,
   isRootPath,
