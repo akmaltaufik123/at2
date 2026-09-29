@@ -32,8 +32,15 @@ through untouched (`return fetch(req)`).
   Production must use `https:`.
 - The ATEGateway app already supports the `/gateway` mount via
   `X-Forwarded-Prefix: /gateway`, so no application change is needed for
-  the API paths below. Dashboard UI (`/gateway/app`) and legacy
-  `/gateway/api/*` are intentionally NOT served through this Worker.
+  the API paths below.
+- UI HTML (`GET /gateway/` and `/gateway/app*` with `text/html`) is
+  transformed in-flight by `gateway-ui-overrides.js` (markup preserved):
+  `/gateway/` forces white background, black instead of red, enterprise
+  logo, jQuery fade/slide transitions; `/gateway/app*` adds the main-site
+  raining-binaries background (`/assets/rain.mp4` + binary canvas),
+  enterprise logo, and transitions. API/JSON/SSE/JS/CSS pass through
+  byte-for-byte. Stub HTML without gateway markers passes through
+  untouched (keeps existing proxy tests green).
 
 ## 4. Required Cloudflare route
 

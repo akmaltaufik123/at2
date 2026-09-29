@@ -5,14 +5,21 @@
 //   -> Cloudflare Worker (this file, route: akmaltaufikenterprise.my/gateway*)
 //   -> ATEGateway API origin on Railway (server-side fetch only)
 //
-// API-only: /gateway/v1/* and /gateway/healthz strip to /v1/* and /healthz.
-// Dashboard UI (/gateway/app) and legacy /gateway/api/* are intentionally
-// NOT served here.
+// UI paths (/gateway/ and /gateway/app*) are HTML-transformed in-flight:
+// white/black theme + enterprise logo + jQuery transitions for /gateway/,
+// raining-binaries background + enterprise logo + transitions for /gateway/app.
+// API/JSON/SSE/JS/CSS pass through byte-for-byte.
 //
 // This Worker is a CLOSED proxy: the ONLY upstream it can ever contact is
 // GATEWAY_ORIGIN (Worker variable, set at deploy time). There is no
 // user-controlled target (?url=..., path-based host switching, etc.).
 // A missing or non-http(s) origin fails closed with a generic 502.
+
+import {
+  isUiHtmlPath,
+  isRootPath,
+  maybeInjectUi,
+} from "./gateway-ui-overrides.js";
 
 const FETCH_TIMEOUT_MS = 25000;
 
@@ -104,8 +111,39 @@ export default {
 
     const out = new Headers(res.headers);
     for (const h of DROP_RESPONSE_HEADERS) out.delete(h);
-    // Preserve everything else byte-for-byte: content-type, x-robots-tag,
+    // UI HTML (GET /gateway/ and /gateway/app*) gets white/black + logo +
+    // transition overrides. Everything else (API JSON, SSE, JS, CSS)
+    // preserves byte-for-byte: content-type, x-robots-tag,
     // cache headers, request-id headers, and upstream error statuses/bodies.
+    try {
+      const ct = res.headers.get("content-type") || "";
+      if (
+        req.method === "GET" &&
+        res.status >= 200 &&
+        res.status < 300 &&
+        ct.toLowerCase().includes("text/html") &&
+        isUiHtmlPath(url.pathname)
+      ) {
+        const html = await res.text();
+        const injected = maybeInjectUi(url.pathname, html);
+        out.delete("content-length");
+        // Injected HTML when markers match; otherwise return the same HTML
+        // text (res.body is already consumed by res.text() above).
+        return new Response(injected !== null ? injected : html, {
+          status: res.status,
+          headers: out,
+        });
+      }
+    } catch {
+      // If HTML parsing/injection fails, fall through to passthrough below.
+      // Note: res.body may already be disturbed here; callers only hit this
+      // for UI HTML paths, and upstream errors still fail closed via catch.
+      try {
+        return new Response(await res.text(), { status: res.status, headers: out });
+      } catch {
+        // last resort passthrough
+      }
+    }
     return new Response(res.body, { status: res.status, headers: out });
   },
 };
