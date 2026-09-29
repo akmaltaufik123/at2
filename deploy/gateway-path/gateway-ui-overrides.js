@@ -74,6 +74,8 @@ const ATE_ROOT_CSS = [
 // and forwards every call synchronously, so the origin view state machine
 // keeps its exact timing. The only addition is a non-destructive CSS flash
 // on the target section. Never hides <body>, never sets inline opacity.
+// Also guards ateNotify so object-shaped API errors render as readable text
+// instead of "[object Object]".
 const ATE_ROOT_INLINE = [
   "(function(){",
   "var LOGO='" + ATE_ENTERPRISE_LOGO + "';",
@@ -92,9 +94,19 @@ const ATE_ROOT_INLINE = [
   "el.classList.add('ate-view-flash');",
   "setTimeout(function(){try{el.classList.remove('ate-view-flash');}catch(e){}},500);",
   "}catch(e){}}",
+  "function errText(e){try{",
+  "if(e==null)return '';",
+  "if(typeof e==='string')return e;",
+  "if(typeof e.message==='string'&&e.message)return e.message;",
+  "if(typeof e.error!=='undefined')return errText(e.error);",
+  "if(Object.prototype.toString.call(e)==='[object Array]')return e.map(errText).filter(Boolean).join('; ');",
+  "return JSON.stringify(e);",
+  "}catch(err){return '';}}",
   "function initTransitions(){try{",
   "if(typeof window.switchView==='function'&&!window.__ateSwitchWrapped){window.__ateSwitchWrapped=true;var orig=window.switchView;",
   "window.switchView=function(){var a=arguments;var v=a.length?a[0]:undefined;var r=orig.apply(this,a);setTimeout(swapLogos,60);flashView(v);return r;};}",
+  "if(typeof window.ateNotify==='function'&&!window.__ateNotifyWrapped){window.__ateNotifyWrapped=true;var origN=window.ateNotify;",
+  "window.ateNotify=function(t,ti,m,o){if(typeof m==='object'&&m!==null){m=errText(m)||'Request failed. Please try again.';}return origN.call(this,t,ti,m,o);};}",
   "}catch(e){}}",
   "swapLogos();initTransitions();",
   "if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){swapLogos();initTransitions();});}",

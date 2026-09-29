@@ -72,13 +72,17 @@ export default {
       return errorJson();
     }
 
-    // Customer-site root and portal keep the prefix so the origin mount
-    // serves them: stripping /gateway/ would hit origin / (API 404, which
-    // redirects back — an infinite loop), and the portal lives under the
-    // origin /gateway mount, not unprefixed. All other paths strip below.
+    // Customer-site root, portal, and backend API keep the prefix: the
+    // origin serves them mounted under /gateway (stripping here would hit
+    // origin /api/* which does not exist -> not_found, which the frontend
+    // then rendered as "[object Object]"). Stripping /gateway/ would hit
+    // origin / (API 404, which redirects back — an infinite loop), and the
+    // portal lives under the origin /gateway mount, not unprefixed.
+    // All other paths strip below.
     const preservePrefix = url.pathname === '/gateway/'
       || url.pathname === '/gateway/app'
-      || url.pathname.startsWith('/gateway/app/');
+      || url.pathname.startsWith('/gateway/app/')
+      || url.pathname.startsWith('/gateway/api/');
     // Strip the public prefix; the remaining paths map 1:1 onto Railway
     // (/gateway/v1/* -> /v1/*, /gateway/healthz -> /healthz, ...).
     const upstream = new URL(origin);

@@ -358,3 +358,44 @@ test('G. /gateway/app/assets/main.js?v=123 preserves prefix and query', async ()
     await stopOrigin(o);
   }
 });
+
+test('H. /gateway/api/auth/login preserves prefix (backend mount, not stripped)', async () => {
+  const payload = JSON.stringify({ email: 'a@b.c', password: 'x' });
+  const o = await startOrigin((req, res) => {
+    res.writeHead(401, { 'Content-Type': 'application/json' });
+    res.end('{"error":{"message":"Invalid credentials."}}');
+  });
+  try {
+    const r = await worker.fetch(
+      new Request(`${ZONE}/gateway/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+      }),
+      envFor(o),
+    );
+    assert.equal(r.status, 401);
+    assert.equal(await r.text(), '{"error":{"message":"Invalid credentials."}}');
+    assert.equal(o.seen.length, 1);
+    assert.equal(o.seen[0].method, 'POST');
+    assert.equal(o.seen[0].url, '/gateway/api/auth/login');
+    assert.equal(o.seen[0].body.toString('utf8'), payload);
+  } finally {
+    await stopOrigin(o);
+  }
+});
+
+test('I. /gateway/api/pricing preserves prefix with query', async () => {
+  const o = await startOrigin((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end('[]');
+  });
+  try {
+    const r = await worker.fetch(new Request(`${ZONE}/gateway/api/pricing?x=1`), envFor(o));
+    assert.equal(r.status, 200);
+    assert.equal(await r.text(), '[]');
+    assert.equal(o.seen[0].url, '/gateway/api/pricing?x=1');
+  } finally {
+    await stopOrigin(o);
+  }
+});

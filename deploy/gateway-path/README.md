@@ -63,6 +63,10 @@ no code change needed.
   redirects back — an infinite loop).
 - `/gateway/app`, `/gateway/app/`, `/gateway/app/…` → origin identical
   path (prefix preserved for the portal mount; query strings preserved).
+- `/gateway/api/…` → origin identical path (prefix preserved: the backend
+  mounts its API under `/gateway/api/` — stripping would hit origin
+  `/api/…`, which does not exist and returns `not_found`; this broke
+  login/register, whose errors then rendered as "[object Object]").
 - `/gateway/v1/models` → origin `/v1/models`, etc. (prefix stripped,
   query string preserved, all HTTP methods and bodies preserved).
 - `/gateway/v1/chat/completions` → origin `/v1/chat/completions`

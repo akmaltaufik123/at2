@@ -198,3 +198,53 @@ test("worker: API JSON and JS assets pass through untouched (no injection)", asy
     await stopOrigin(o);
   }
 });
+
+test("root layer guards ateNotify so object errors never render as [object Object]", () => {
+  assert.ok(ATE_ROOT_INLINE.includes("__ateNotifyWrapped"), "must wrap ateNotify once");
+  assert.ok(ATE_ROOT_INLINE.includes("origN.call"), "must forward to original ateNotify");
+
+  const seen = [];
+  const msgEl = { textContent: "" };
+  const stubEl = () => ({ classList: { add: () => {}, remove: () => {} }, textContent: "" });
+  const byId = {
+    ateNotifyModal: stubEl(),
+    ateNotifyBox: stubEl(),
+    ateNotifyIcon: stubEl(),
+    ateNotifyTitle: stubEl(),
+    ateNotifyMsg: msgEl,
+  };
+  const fakeDocument = {
+    readyState: "complete",
+    documentElement: { classList: { add: () => {} } },
+    querySelectorAll: () => [],
+    getElementById: (id) => byId[id] || null,
+    addEventListener: () => {},
+  };
+  const fakeWindow = {
+    ateNotify(type, title, msg) {
+      seen.push([type, title, msg]);
+      msgEl.textContent = msg || "";
+    },
+  };
+  const run = new Function(
+    "window",
+    "document",
+    "setTimeout",
+    "requestAnimationFrame",
+    ATE_ROOT_INLINE,
+  );
+  run(fakeWindow, fakeDocument, () => 0, () => 0);
+
+  fakeWindow.ateNotify("error", "T", { message: "Not found." });
+  assert.equal(seen[0][2], "Not found.");
+  assert.equal(msgEl.textContent, "Not found.");
+
+  fakeWindow.ateNotify("error", "T", { error: { message: "Invalid credentials." } });
+  assert.equal(seen[1][2], "Invalid credentials.");
+
+  fakeWindow.ateNotify("error", "T", "plain string");
+  assert.equal(seen[2][2], "plain string");
+
+  fakeWindow.ateNotify("error", "T", { error: { message: "Not found.", type: "not_found" } });
+  assert.ok(!String(seen[3][2]).includes("[object Object]"), "must never render [object Object]");
+});
