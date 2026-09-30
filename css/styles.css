@@ -137,20 +137,6 @@ h1, h2, h3, .slogan, .slogan-mini, .brand, .step-num, .nav-links a, .btn, .lang-
   pointer-events: none;
 }
 
-#hero-3d {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.9;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #hero-3d { opacity: 0.5; }
-}
-
 .container {
   max-width: 1100px;
   margin: 0 auto;
