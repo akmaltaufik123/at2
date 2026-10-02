@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="https://plain-apac-prod-public.komododecks.com/202608/12/3HS3RGiBnGa12S29398i/image.png">
   <link rel="stylesheet" href="css/styles.css?v=20260814">
 </head>
@@ -25,47 +26,117 @@
     </div>
   </div>
 
-  <video class="bg-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-    <source src="assets/rain.mp4" type="video/mp4">
-  </video>
+  <div class="vland">
+    <video class="hero-photo" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="hero-bg.mp4" type="video/mp4">
+    </video>
+    <div class="vshade-left" aria-hidden="true"></div>
+    <div class="vshade-bottom" aria-hidden="true"></div>
+    <div class="menu-backdrop" aria-hidden="true"></div>
 
-  <header class="nav">
-    <div class="container nav-inner">
-      <a href="index.html" class="brand"><img src="https://plain-apac-prod-public.komododecks.com/202608/12/3HS3RGiBnGa12S29398i/image.png" alt="Logo" class="logo-img"></a>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <nav class="nav-links">
+    <header class="header">
+      <a class="logo appear appear--scale" style="--d:0.08s" href="#top" aria-label="Akmal Taufik Enterprise">
+        <span class="logo-mark" aria-hidden="true">ATE</span>
+        <span>Akmal Taufik <span class="logo-suffix">Enterprise</span></span>
+      </a>
+      <nav id="site-nav" aria-label="Primary">
+        <a class="appear appear--scale" style="--d:0.16s" href="#services" data-i18n="nav-services">Perkhidmatan</a>
+        <a class="appear appear--soft" style="--d:0.28s" href="#coverage" data-i18n="nav-coverage-short">Liputan</a>
+        <a class="appear appear--scale" style="--d:0.40s" href="#contact" data-i18n="nav-contact">Hubungi Kami</a>
+        <a class="appear appear--soft" style="--d:0.52s" href="login.html" data-i18n="nav-portal">Log Masuk</a>
+      </nav>
+      <div class="header-right">
+        <a class="btn btn-solid header-cta appear appear--scale" style="--d:0.34s" href="#contact" data-i18n="nav-quote">Minta Sebut Harga</a>
+        <div class="lang-switch header-lang">
+          <button class="lang-btn" data-lang="my">MY</button>
+          <button class="lang-btn" data-lang="en">ENG</button>
+        </div>
+        <button id="burger" class="appear appear--scale" style="--d:0.34s" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu">
+      <nav aria-label="Mobile">
         <a href="#services" data-i18n="nav-services">Perkhidmatan</a>
         <a href="#coverage" data-i18n="nav-coverage">Kawasan Liputan</a>
         <a href="#contact" data-i18n="nav-contact">Hubungi Kami</a>
         <a href="login.html" data-i18n="nav-portal">Log Masuk</a>
         <a href="/gateway/" data-i18n="nav-gateway">ATEGateway</a>
-        <a href="#contact" class="btn btn-primary" data-i18n="nav-quote">Minta Sebut Harga</a>
-        <div class="lang-switch">
-          <button class="lang-btn" data-lang="my">MY</button>
-          <button class="lang-btn" data-lang="en">ENG</button>
-        </div>
+        <a href="#contact" class="btn btn-solid" data-i18n="nav-quote">Minta Sebut Harga</a>
       </nav>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="container">
-      <img src="https://plain-apac-prod-public.komododecks.com/202608/12/3HS3RGiBnGa12S29398i/image.png" alt="Logo" class="hero-logo">
-      <div class="slogan glitch" data-i18n="hero-slogan" data-text="PANTAS - PROFESSIONAL - DIPERCAYAI">PANTAS - PROFESSIONAL - DIPERCAYAI</div>
-      <h1 class="glitch" data-i18n="hero-title" data-text="Rakan perkhidmatan IT anda di Pulau Pinang">Rakan perkhidmatan IT anda di Pulau Pinang</h1>
-      <p class="lead" data-i18n="hero-lead">Pemasangan server, rack server, WiFi dan CCTV, kabel rangkaian, komputer dan laptop, serta kelas komputer dan AI — dikendalikan secara profesional, di rumah atau di pejabat.</p>
-      <div class="hero-actions">
-        <a href="#services" class="btn btn-primary btn-lg" data-i18n="hero-btn-services">Lihat Perkhidmatan</a>
-        <a href="#booking" class="btn btn-primary btn-lg btn-pulse" data-i18n="booking-slot-btn">Tempah Slot</a>
-        <a href="#contact" class="btn btn-primary btn-lg" data-i18n="hero-btn-contact">Hubungi Kami</a>
+      <div class="lang-switch">
+        <button class="lang-btn" data-lang="my">MY</button>
+        <button class="lang-btn" data-lang="en">ENG</button>
       </div>
-      <p class="hero-note" data-i18n="hero-note">Tindak balas pantas | Harga telus | Perkhidmatan di Pulau Pinang</p>
     </div>
-  </section>
+
+    <main class="hero" id="top">
+      <div class="hero-copy">
+        <span class="badge appear appear--pop" style="--d:0.22s">
+          <svg class="badge-star" width="18" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12 2.6C12.55 2.6 12.88 3.15 13.08 4.7c.62 4.7 1.52 5.6 6.22 6.22 1.55.2 2.1.53 2.1 1.08s-.55.88-2.1 1.08c-4.7.62-5.6 1.52-6.22 6.22-.2 1.55-.53 2.1-1.08 2.1s-.88-.55-1.08-2.1c-.62-4.7-1.52-5.6-6.22-6.22C3.15 12.88 2.6 12.55 2.6 12s.55-.88 2.1-1.08c4.7-.62 5.6-1.52 6.22-6.22C11.12 3.15 11.45 2.6 12 2.6Z"/></svg>
+          <span data-i18n="hero-badge">Perkhidmatan IT Pulau Pinang</span>
+        </span>
+        <h1>
+          <span class="headline-line appear appear--mask" style="--d:0.42s"><span data-i18n="hero-l1a">Sedia</span> <em data-i18n="hero-l1b">khidmat IT</em> <span data-i18n="hero-l1c">untuk</span></span>
+          <span class="headline-line appear appear--mask" style="--d:0.62s"><span data-i18n="hero-l2">rumah &amp; pejabat anda.</span></span>
+        </h1>
+        <p class="lede appear appear--soft" style="--d:0.82s;animation-duration:1.25s" data-i18n="hero-lede">Pemasangan server, WiFi, CCTV, kabel rangkaian dan komputer — dikendalikan secara profesional, di rumah atau di pejabat.</p>
+        <div class="hero-actions">
+          <a class="btn btn-solid appear appear--btn" style="--d:0.96s" href="#contact" data-i18n="nav-quote">Minta Sebut Harga</a>
+          <a class="btn btn-ghost appear appear--side" style="--d:1.10s" href="#services" data-i18n="hero-btn-services">Lihat Perkhidmatan</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="stats">
+      <span class="stat appear appear--stat" style="--d:1.12s">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+          <defs>
+            <linearGradient id="pillL" x1="3" y1="2" x2="14" y2="22" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#ffffff" stop-opacity="0.38"/>
+              <stop offset="1" stop-color="#3a3a3a" stop-opacity="0.62"/>
+            </linearGradient>
+            <linearGradient id="pillR" x1="3" y1="2" x2="14" y2="22" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#3a3a3a" stop-opacity="0.38"/>
+              <stop offset="1" stop-color="#ffffff" stop-opacity="0.62"/>
+            </linearGradient>
+          </defs>
+          <rect x="3.4" y="2.6" width="7.2" height="18.8" rx="3.6" fill="url(#pillL)"/>
+          <rect x="13.4" y="2.6" width="7.2" height="18.8" rx="3.6" fill="url(#pillR)"/>
+          <rect x="9.2" y="10.9" width="5.6" height="2.2" rx="1.1" fill="#4a4a4a"/>
+        </svg>
+        <span data-i18n="stat-1">500+ pemasangan disiapkan</span>
+      </span>
+      <span class="stat appear appear--stat" style="--d:1.28s">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2.4" y="2.4" width="19.2" height="19.2" rx="6.2" fill="#ffffff"/>
+          <path d="M12 7.1v7.4" stroke="#111111" stroke-width="1.85" stroke-linecap="round"/>
+          <path d="M8.15 12.35L12 16.2l3.85-3.85" stroke="#111111" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span data-i18n="stat-2">92% pelanggan berpuas hati</span>
+      </span>
+      <span class="stat appear appear--stat" style="--d:1.44s">
+        <svg class="stat-icon-wide" width="38" height="21" viewBox="0 0 40 22" aria-hidden="true">
+          <circle cx="10.2" cy="11" r="9.2" fill="#2b2b2b"/>
+          <polygon points="4.5,6.5 6.8,2.8 8.2,6.2" fill="#2b2b2b"/>
+          <polygon points="15.9,6.5 13.6,2.8 12.2,6.2" fill="#2b2b2b"/>
+          <ellipse cx="10.2" cy="12.1" rx="4.15" ry="3.7" fill="#f4f4f4"/>
+          <circle cx="8.6" cy="11.4" r="0.7" fill="#1a1a1a"/>
+          <circle cx="11.8" cy="11.4" r="0.7" fill="#1a1a1a"/>
+          <circle cx="20.2" cy="11" r="9.2" fill="#ffffff"/>
+          <circle cx="17.4" cy="9.6" r="1.7" fill="#111111"/>
+          <circle cx="23" cy="9.6" r="1.7" fill="#111111"/>
+          <ellipse cx="20.2" cy="12.6" rx="1.4" ry="1" fill="#111111"/>
+          <path d="M17.2 15.2 Q20.2 17.4 23.2 15.2" stroke="#111111" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <circle cx="30.2" cy="11" r="9.2" fill="#f26b1d"/>
+          <text x="30.2" y="15.1" font-size="12.5" font-weight="700" text-anchor="middle" fill="#ffffff" font-family="Inter, sans-serif">e</text>
+        </svg>
+        <span data-i18n="stat-3">1000+ pelanggan dibantu</span>
+      </span>
+    </footer>
+  </div>
 
 <section id="services" class="section">
     <div class="container">
@@ -275,6 +346,66 @@
   <script src="js/main.js?v=20260814"></script>
   <script src="js/visitor.js?v=20260814"></script>
   <script src="js/booking-form.js?v=20260814"></script>
+  <script>
+    (function () {
+      var noted = document.querySelectorAll(".vland .appear");
+      for (var i = 0; i < noted.length; i++) {
+        (function (el) {
+          el.addEventListener("animationend", function () { el.classList.add("is-in"); }, { once: true });
+        })(noted[i]);
+      }
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          var els = document.querySelectorAll(".vland .appear");
+          var anyLive = false;
+          for (var i = 0; i < els.length && !anyLive; i++) {
+            try {
+              var anims = els[i].getAnimations();
+              for (var j = 0; j < anims.length; j++) {
+                if (anims[j].playState === "running" || anims[j].playState === "finished") { anyLive = true; break; }
+              }
+            } catch (e) {}
+          }
+          if (!anyLive) {
+            for (var k = 0; k < els.length; k++) { els[k].classList.add("is-in"); }
+          }
+        });
+      });
+      var burger = document.getElementById("burger");
+      var menu = document.getElementById("mobile-menu");
+      function closeMenu() {
+        document.body.classList.remove("menu-open");
+        if (menu) menu.classList.remove("open");
+        if (burger) {
+          burger.setAttribute("aria-expanded", "false");
+          burger.setAttribute("aria-label", "Open menu");
+        }
+      }
+      if (burger && menu) {
+        burger.addEventListener("click", function () {
+          var open = document.body.classList.toggle("menu-open");
+          menu.classList.toggle("open", open);
+          burger.setAttribute("aria-expanded", open ? "true" : "false");
+          burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        });
+        menu.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", closeMenu); });
+      }
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeMenu(); });
+      window.addEventListener("resize", function () {
+        if (window.matchMedia("(min-width: 901px)").matches) closeMenu();
+      });
+      document.querySelectorAll(".vland .btn, .vland #site-nav a, .vland #burger").forEach(function (b) {
+        b.addEventListener("click", function () {
+          b.classList.remove("btn-fading");
+          void b.offsetWidth;
+          b.classList.add("btn-fading");
+        });
+        b.addEventListener("animationend", function (e) {
+          if (e.animationName === "btnFade") b.classList.remove("btn-fading");
+        });
+      });
+    })();
+  </script>
   <script>
     (function () {
       var form = document.getElementById("booking-form");
