@@ -1,0 +1,45 @@
+/* Hallmark · macrostructure: product-workflow · theme: ate-charcoal · genre: modern-minimal
+ * pre-emit critique: P4 H4 E4 S5 R5 V4 · slop test: pass (EVIDEX addition)
+ */
+:root {
+  --font-evidex-body: "Chakra Petch", system-ui, sans-serif;
+  --font-evidex-display: "Orbitron", system-ui, sans-serif;
+}
+html, body { overflow-x: clip; }
+#evidex { scroll-margin-top: 100px; background: var(--bg); }
+#evidex h2, #evidex h3 { min-width: 0; overflow-wrap: anywhere; }
+#evidex h2 { text-align: left; font-family: var(--font-evidex-display); margin: 0 0 16px; }
+#evidex h3 { font-family: var(--font-evidex-body); font-size: 1.15rem; margin-bottom: 8px; }
+.evidex-intro { max-width: 76ch; margin-bottom: 32px; }
+.evidex-intro p { color: var(--muted); }
+.evidex-intro .evidex-lead { font-size: clamp(1.3rem, 2.5vw, 1.8rem); line-height: 1.4; color: var(--text); margin-bottom: 12px; }
+.evidex-workflow { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 36px; align-items: start; }
+.evidex-steps, .evidex-download { min-width: 0; }
+.evidex-steps ol { padding-left: 24px; }
+.evidex-steps li { padding: 0 0 22px 8px; }
+.evidex-steps li::marker { color: var(--accent); font-weight: 700; }
+.evidex-steps p, .evidex-download p, .evidex-outputs dd, .evidex-review { color: var(--muted); }
+.evidex-download { padding: 24px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.evidex-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-block: 22px; }
+.evidex-actions a { white-space: nowrap; color: var(--text); }
+.evidex-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 14px; border: 1px solid var(--primary); border-radius: var(--radius); background: var(--primary); text-decoration: none; font-family: var(--font-evidex-body); font-weight: 600; }
+.evidex-button:hover { background: var(--primary-hover); }
+.evidex-button-secondary { background: var(--bg); border-color: var(--border); }
+.evidex-status { border-top: 1px solid var(--border); padding-top: 16px; font-size: .9rem; }
+.evidex-outputs { margin-top: 28px; border-block: 1px solid var(--border); }
+.evidex-outputs > div { display: grid; grid-template-columns: minmax(0, .6fr) minmax(0, 2fr); gap: 20px; padding-block: 16px; }
+.evidex-outputs > div + div { border-top: 1px solid var(--border); }
+.evidex-outputs dt { font-weight: 600; }
+.evidex-review { margin-top: 20px; max-width: 90ch; font-size: .95rem; }
+#evidex a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.nav-links a[href="#evidex"] { white-space: nowrap; }
+@media(max-width: 768px) {
+  .evidex-workflow, .evidex-outputs > div { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .evidex-download { padding: 20px; }
+}
+@media(prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* Keep the added navigation item from wrapping existing labels. */
+@media(min-width: 901px) {
+  .nav-links { gap: 8px; }
+  .nav-links a { padding-inline: 10px; font-size: 14px; white-space: nowrap; }
+}
