@@ -1,0 +1,6 @@
+# Keep source, tests and operational documentation in GitHub, outside Pages.
+exclude:
+  - deploy
+  - docs
+  - supabase
+  - tests
