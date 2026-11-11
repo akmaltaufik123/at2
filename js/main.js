@@ -1,19 +1,4 @@
 (function () {
-  var ham = document.getElementById("hamburger");
-  var links = document.querySelector(".nav-links");
-  if (ham && links) {
-    ham.addEventListener("click", function () {
-      links.classList.toggle("open");
-      ham.classList.toggle("open");
-    });
-    links.addEventListener("click", function (e) {
-      if (e.target.tagName === "A") {
-        links.classList.remove("open");
-        ham.classList.remove("open");
-      }
-    });
-  }
-
   var revealEls = document.querySelectorAll(".reveal");
   if (revealEls.length && "IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (entries) {

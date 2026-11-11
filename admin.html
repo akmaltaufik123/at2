@@ -14,9 +14,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=20261112">
 </head>
-<body class="radial-bg">
+<body class="ate-black">
   <div id="loader" class="loader-overlay">
     <div class="loader-inner">
       <div class="loader-ring"><div class="loader-spin"></div></div>
@@ -27,9 +27,12 @@
 
 
   <header class="nav">
-    <div class="container nav-inner">
+    <div class="container nav-inner" data-responsive-nav>
       <a href="index.html" class="brand"><img src="https://plain-apac-prod-public.komododecks.com/202608/12/3HS3RGiBnGa12S29398i/image.png" alt="Logo" class="logo-img"></a>
-      <nav class="portal-nav">
+      <button class="nav-toggle" type="button" aria-controls="admin-menu" aria-expanded="false">
+        <span aria-hidden="true">☰</span> Menu
+      </button>
+      <nav class="portal-nav" id="admin-menu" aria-label="Navigasi pentadbir">
         <a href="dashboard.html" data-i18n="nav-dashboard">Dashboard</a>
         <a href="request.html" data-i18n="nav-request">Permohonan Baru</a>
         <a href="my-requests.html" data-i18n="nav-my">Permohonan Saya</a>
@@ -78,7 +81,6 @@
         <div class="tab-bar">
           <button class="tab-btn active" data-tab="dashboard" data-i18n="tab-dashboard">Dashboard</button>
           <button class="tab-btn" data-tab="requests" data-i18n="tab-requests">Permohonan</button>
-          <button class="tab-btn" data-tab="bookings" data-i18n="tab-bookings">Tempahan</button>
           <button class="tab-btn" data-tab="classes" data-i18n="tab-classes">Kelas</button>
           <button class="tab-btn" data-tab="customers" data-i18n="tab-customers">Pelanggan</button>
           <button class="tab-btn" data-tab="report" data-i18n="tab-report">Laporan</button>
@@ -189,7 +191,6 @@
         <select id="gr-scope">
           <option value="semua" data-i18n="scope-semua">Laporan Lengkap (Semua)</option>
           <option value="requests" data-i18n="scope-requests">Permohonan Perkhidmatan</option>
-          <option value="bookings" data-i18n="scope-bookings">Tempahan</option>
           <option value="enrollments" data-i18n="scope-enrollments">Pendaftaran Kelas</option>
           <option value="customers" data-i18n="scope-customers">Pelanggan</option>
           <option value="transactions" data-i18n="scope-transactions">Transaksi</option>
@@ -218,12 +219,6 @@
         <div id="tab-requests" class="tab-panel" hidden>
           <div class="card">
             <div id="requests-list"><p class="muted" data-i18n="loading">Memuatkan...</p></div>
-          </div>
-        </div>
-
-        <div id="tab-bookings" class="tab-panel" hidden>
-          <div class="card">
-            <div id="bookings-list"><p class="muted" data-i18n="loading">Memuatkan...</p></div>
           </div>
         </div>
 
@@ -263,7 +258,6 @@
               <select id="report-scope">
                 <option value="semua" data-i18n="scope-semua">Laporan Lengkap (Semua)</option>
                 <option value="requests" data-i18n="scope-requests">Permohonan Perkhidmatan</option>
-                <option value="bookings" data-i18n="scope-bookings">Tempahan</option>
                 <option value="enrollments" data-i18n="scope-enrollments">Pendaftaran Kelas</option>
                 <option value="customers" data-i18n="scope-customers">Pelanggan</option>
                 <option value="transactions" data-i18n="scope-transactions">Transaksi</option>
@@ -352,7 +346,7 @@
           btn.addEventListener("click", function () {
             document.querySelectorAll(".tab-btn").forEach(function (b) { b.classList.remove("active"); });
             btn.classList.add("active");
-            ["dashboard", "requests", "bookings", "classes", "customers", "report"].forEach(function (t) {
+            ["dashboard", "requests", "classes", "customers", "report"].forEach(function (t) {
               document.getElementById("tab-" + t).hidden = btn.getAttribute("data-tab") !== t;
             });
           });
@@ -1190,109 +1184,6 @@ async function loadEnrollments() {
           });
         }
 
-        async function loadBookings() {
-          var { data, error } = await sb.from("bookings")
-            .select("id, user_id, service, booking_date, booking_time, location, notes, status, created_at, customer_name, phone, email, image_url, video_url")
-            .order("created_at", { ascending: false });
-          var box = document.getElementById("bookings-list");
-          if (error) {
-            box.innerHTML = '<p class="muted">Ralat: ' + esc(error.message) + '</p>';
-            return;
-          }
-          if (!data || data.length === 0) {
-            box.innerHTML = '<p class="muted">' + adminI18n.t("e-bookings") + '</p>';
-            return;
-          }
-          function toPath(urlOrPath) {
-            if (!urlOrPath) return "";
-            if (urlOrPath.indexOf("http") === 0) {
-              var i = urlOrPath.indexOf("/booking-files/");
-              if (i > -1) return urlOrPath.slice(i + "/booking-files/".length);
-            }
-            return urlOrPath;
-          }
-          async function fileLink(urlOrPath, kind) {
-            var path = toPath(urlOrPath);
-            if (!path) return "";
-            try {
-              var { data, error } = await sb.storage.from("booking-files").createSignedUrl(path, 3600);
-              if (error || !data || !data.signedUrl) return "";
-              var href = data.signedUrl;
-              return kind === "img"
-                ? '<a href="' + esc(href) + '" target="_blank" rel="noopener"><img src="' + esc(href) + '" class="booking-thumb" alt="Gambar"></a>'
-                : '<a class="btn btn-ghost btn-sm" href="' + esc(href) + '" target="_blank" rel="noopener">Video</a>';
-            } catch (e) {
-              return "";
-            }
-          }
-          var rows = data.map(function (b) {
-            var notes = b.notes ? '<div class="table-desc">' + esc(b.notes) + '</div>' : "";
-            var who = esc(b.customer_name || customerName(b.user_id) || "—");
-            var contact = b.phone ? esc(b.phone) + (b.email ? "<br>" + esc(b.email) : "") : (b.email ? esc(b.email) : "—");
-            var acts = "";
-            if (b.status === "pending") {
-              acts += '<button class="action-btn" data-confirm-booking="' + b.id + '">' + adminI18n.t("btn-ok") + '</button> ';
-            }
-            if (b.status === "pending" || b.status === "confirmed") {
-              acts += '<button class="action-btn" data-done-booking="' + b.id + '">' + adminI18n.t("btn-done") + '</button> ';
-              acts += '<button class="action-btn" data-cancel-booking="' + b.id + '">' + adminI18n.t("btn-cancel") + '</button> ';
-            }
-            acts += '<button class="action-btn danger" data-delete-booking="' + b.id + '">Padam</button>';
-            return {
-              who: who,
-              contact: contact,
-              service: esc(b.service) + notes,
-              date: esc(b.booking_date),
-              time: esc(b.booking_time),
-              location: esc(b.location),
-              image: b.image_url,
-              video: b.video_url,
-              status: b.status,
-              acts: acts
-            };
-          });
-          for (var i = 0; i < rows.length; i++) {
-            var r = rows[i];
-            var files = [];
-            if (r.image) files.push(await fileLink(r.image, "img"));
-            if (r.video) files.push(await fileLink(r.video, "vid"));
-            r.files = files.length ? files.join(" ") : "—";
-          }
-          box.innerHTML = '<table class="table"><thead><tr><th>' + adminI18n.t("th-user") + '</th><th>' + adminI18n.t("th-contact") + '</th><th>' + adminI18n.t("th-service") + '</th><th>' + adminI18n.t("th-date") + '</th><th>' + adminI18n.t("th-time") + '</th><th>' + adminI18n.t("th-location") + '</th><th>' + adminI18n.t("th-files") + '</th><th>' + adminI18n.t("th-status") + '</th><th>' + adminI18n.t("th-action") + '</th></tr></thead><tbody>' +
-            rows.map(function (r) {
-              return '<tr><td>' + r.who + '</td><td>' + r.contact + '</td><td>' + r.service + '</td><td>' + r.date +
-                "</td><td>" + r.time + "</td><td>" + r.location + "</td><td>" + r.files +
-                '</td><td><span class="badge ' + esc(r.status) + '">' + window.portal.badge(r.status) +
-                "</span></td><td>" + r.acts + "</td></tr>";
-            }).join("") + "</tbody></table>";
-
-          function bind(id, action) {
-            box.querySelectorAll("[data-" + id + "-booking]").forEach(function (btn) {
-              btn.addEventListener("click", async function () {
-                var bid = btn.getAttribute("data-" + id + "-booking");
-                if (id === "delete" && !confirm(adminI18n.t("c-del-booking"))) return;
-                if (id === "cancel" && !confirm(adminI18n.t("c-cancel-booking"))) return;
-                var payload = action;
-                var { error } = await sb.from("bookings").update(payload).eq("id", bid);
-                if (error) showToast("Ralat: " + error.message);
-                loadBookings();
-              });
-            });
-          }
-          bind("confirm", { status: "confirmed" });
-          bind("done", { status: "done" });
-          bind("cancel", { status: "cancelled" });
-          box.querySelectorAll("[data-delete-booking]").forEach(function (btn) {
-            btn.addEventListener("click", async function () {
-              var bid = btn.getAttribute("data-delete-booking");
-              if (!confirm(adminI18n.t("c-del-booking"))) return;
-              var { error } = await sb.from("bookings").delete().eq("id", bid);
-              if (error) showToast("Ralat: " + error.message);
-              loadBookings();
-            });
-          });
-        }
-
         async function loadTx() {
           var { data, error } = await sb.from("transactions")
             .select("id, label, amount, type, created_at")
@@ -1375,7 +1266,6 @@ async function loadEnrollments() {
 var REPORT_SCOPES = {
           semua: adminI18n.t("report-all"),
           requests: adminI18n.t("scope-requests"),
-          bookings: adminI18n.t("scope-bookings"),
           enrollments: adminI18n.t("scope-enrollments"),
           customers: adminI18n.t("scope-customers"),
           transactions: adminI18n.t("scope-transactions")
@@ -1442,17 +1332,6 @@ var REPORT_SCOPES = {
               rows.push([who(r.user_id), r.service, r.location, r.description || "—", window.portal.badge(r.status), reportDate(r.created_at)]);
             });
             add(adminI18n.t("scope-requests"), [adminI18n.t("th-user"), adminI18n.t("th-service"), adminI18n.t("th-location"), adminI18n.t("th-desc"), adminI18n.t("th-status"), adminI18n.t("th-date")], rows);
-          }
-
-          if (scope === "semua" || scope === "bookings") {
-            var { data: bks } = await sb.from("bookings")
-              .select("user_id, service, booking_date, booking_time, location, notes, status, customer_name, phone, email, image_url, video_url, created_at");
-            var rows = [];
-            (bks || []).forEach(function (b) {
-              if (!reportInRange(b.created_at, from, to)) return;
-              rows.push([b.customer_name || who(b.user_id), b.phone || "—", b.email || "—", b.service, b.booking_date, b.booking_time, b.location, b.notes || "—", window.portal.badge(b.status), b.image_url || "—", b.video_url || "—"]);
-            });
-            add(adminI18n.t("scope-bookings"), [adminI18n.t("th-user"), adminI18n.t("th-phone"), adminI18n.t("th-email"), adminI18n.t("th-service"), adminI18n.t("th-date"), adminI18n.t("th-time"), adminI18n.t("th-location"), adminI18n.t("th-notes"), adminI18n.t("th-status"), "Gambar", "Video"], rows);
           }
 
           if (scope === "semua" || scope === "enrollments") {
@@ -1614,7 +1493,6 @@ var REPORT_SCOPES = {
         renderCalendar();
         loadStats();
         loadRequests();
-        loadBookings();
         loadCategories();
         loadEnrollments();
         loadCustomers();
@@ -1777,5 +1655,6 @@ var REPORT_SCOPES = {
       });
     })();
   </script>
+  <script src="js/responsive-nav.js?v=20261111-nav"></script>
 </body>
 </html>
