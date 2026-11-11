@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 'sha256-TqbFubH4U0RdsrKL6q9Q8LHihYU+LZtyw7s4OffJPlU=' 'sha256-8DB95xg2ZAKXlNrJ/xffkCnpPIquiFtSsODJhU1JlX8=' 'sha256-z4YNqQjztfMAgOKZ7xMVNk7COfkAZHmUb4fD+dmkGbo='; object-src 'none'; base-uri 'none'; form-action 'self'">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self' https://lmvgxcdlnpckmqjjsqwf.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; frame-src 'none'">
@@ -35,7 +38,7 @@
       <h1 data-i18n="rg-title">Daftar Akaun</h1>
       <p class="muted" data-i18n="rg-sub">Buka akaun portal pelanggan percuma.</p>
 
-      <form id="register-form" novalidate>
+      <form id="register-form" method="post" novalidate>
         <div class="hp-field" aria-hidden="true"><input type="text" id="rg-hp" tabindex="-1" autocomplete="off"></div>
         <div class="form-group">
           <label for="name" data-i18n="rg-name">Nama Penuh</label>
@@ -158,7 +161,7 @@
           options: { data: { full_name: name } }
         });
         if (res.error) {
-          errorBox.textContent = res.error.message;
+          errorBox.textContent = document.documentElement.lang === "en" ? "Registration was unsuccessful. Check your details and try again." : "Pendaftaran tidak berjaya. Semak butiran anda dan cuba lagi.";
           errorBox.hidden = false;
           return;
         }

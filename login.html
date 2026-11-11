@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 'sha256-ye+6COv9RQF+xhDLadFVwOxv5wHvdzy1frepOw7eqWw=' 'sha256-CohlunssmtHYaBAr3RuWQJv4z4xPskqg8C/qZNnepr0=' 'sha256-z4YNqQjztfMAgOKZ7xMVNk7COfkAZHmUb4fD+dmkGbo='; object-src 'none'; base-uri 'none'; form-action 'self'">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self' https://lmvgxcdlnpckmqjjsqwf.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; frame-src 'none'">
@@ -34,7 +37,7 @@
         <h1 data-i18n="lg-title">Log Masuk</h1>
         <p class="muted" data-i18n="lg-sub">Masuk ke portal pelanggan anda.</p>
 
-        <form id="login-form" novalidate>
+        <form id="login-form" method="post" novalidate>
           <div class="hp-field" aria-hidden="true"><input type="text" id="lg-hp" tabindex="-1" autocomplete="off"></div>
           <div class="form-group">
             <label for="email" data-i18n="lg-email">E-mel</label>
@@ -166,7 +169,7 @@
           win.count++;
           win.ts = now;
           form._win = win;
-          errorBox.textContent = res.error.message;
+          errorBox.textContent = document.documentElement.lang === "en" ? "Sign-in was unsuccessful. Check your details and try again." : "Log masuk tidak berjaya. Semak butiran anda dan cuba lagi.";
           errorBox.hidden = false;
           return;
         }

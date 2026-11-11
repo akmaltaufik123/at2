@@ -194,7 +194,7 @@
       var path = "public/booking-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + "." + safeExt;
       var { error } = await sb.storage.from("booking-files").upload(path, file, { upsert: false });
       if (error) {
-        showError(t("Gagal muat naik " + (kind === "image" ? "gambar" : "video") + ": ", "Failed to upload " + (kind === "image" ? "image" : "video") + ": ") + error.message);
+        showError(t("Lampiran gagal dimuat naik. Sila cuba lagi.", "The attachment could not be uploaded. Please try again."));
         return null;
       }
       return path;
@@ -294,7 +294,7 @@
       submitBtn.disabled = false;
       submitBtn.textContent = t("Rekod Temujanji", "Set Appointment");
       if (error) {
-        showError(t("Ralat: ", "Error: ") + error.message);
+        showError(t("Tempahan tidak dapat dihantar. Sila cuba lagi.", "The booking could not be submitted. Please try again."));
         return;
       }
       lastSubmit = Date.now();
