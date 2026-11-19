@@ -230,6 +230,19 @@ h1, h2, h3, .slogan, .slogan-mini, .brand, .step-num, .nav-links a, .btn, .lang-
   box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
 }
 
+.nav-links a.nav-booster {
+  border-color: rgba(239, 68, 68, 0.7);
+  background: rgba(239, 68, 68, 0.1);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.2);
+  font-weight: 600;
+}
+
+.nav-links a.nav-booster:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+}
+
 .nav-links .lang-switch {
   margin-left: 8px;
 }

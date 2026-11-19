@@ -1,0 +1,16 @@
+# ATEBooster Cloudflare Worker
+# Proxies API calls to PadooInsta SMM Panel API
+name = "ate-booster-path"
+main = "cloudflare-worker.js"
+compatibility_date = "2026-09-01"
+
+# Intercepts ONLY /booster/api* paths for API proxying
+# Static files (HTML/CSS/JS) are served from GitHub Pages directly
+routes = [
+  { pattern = "akmaltaufikenterprise.my/booster/api*", zone_name = "akmaltaufikenterprise.my" }
+]
+
+# API key is set as a secret at deploy time:
+#   wrangler secret put PADOONSTA_API_KEY
+# Then deploy with:
+#   wrangler deploy
