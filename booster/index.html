@@ -20,6 +20,10 @@
       --ate-text: rgba(255,255,255,0.85);
       --ate-text-dim: rgba(255,255,255,0.5);
       --ate-text-muted: rgba(255,255,255,0.3);
+      --ate-green: rgba(34,197,94,0.8);
+      --ate-blue: rgba(59,130,246,0.8);
+      --ate-yellow: rgba(234,179,8,0.8);
+      --ate-orange: rgba(249,115,22,0.8);
     }
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -105,7 +109,13 @@
       text-transform: uppercase;
     }
     
-    .back-link {
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .back-link, .admin-btn {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -116,12 +126,22 @@
       color: var(--ate-text-dim);
       text-decoration: none;
       font-size: 0.85rem;
+      cursor: pointer;
       transition: all 0.2s;
     }
     
-    .back-link:hover {
+    .back-link:hover, .admin-btn:hover {
       border-color: rgba(255,255,255,0.2);
       color: var(--ate-text);
+    }
+    
+    .admin-btn {
+      border-color: var(--ate-border);
+      color: var(--ate-red);
+    }
+    
+    .admin-btn:hover {
+      background: rgba(239,68,68,0.1);
     }
     
     /* Main */
@@ -130,13 +150,13 @@
       z-index: 2;
       max-width: 1400px;
       margin: 0 auto;
-      padding: 8rem 2rem 4rem;
+      padding: 7rem 2rem 4rem;
     }
     
     /* Hero */
     .hero {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
     }
     
     .hero-badge {
@@ -174,7 +194,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 0.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       padding: 0.75rem;
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.08);
@@ -221,15 +241,17 @@
       color: var(--ate-red);
     }
     
-    /* Search */
-    .search-bar {
+    /* Search & Actions Bar */
+    .actions-bar {
       display: flex;
       gap: 0.75rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
     }
     
     .search-input {
       flex: 1;
+      min-width: 200px;
       padding: 0.75rem 1rem 0.75rem 2.5rem;
       border-radius: 10px;
       border: 1px solid rgba(255,255,255,0.08);
@@ -247,7 +269,7 @@
       border-color: var(--ate-border);
     }
     
-    .track-btn {
+    .action-btn {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -263,23 +285,95 @@
       transition: all 0.2s;
     }
     
-    .track-btn:hover {
+    .action-btn:hover {
       border-color: rgba(255,255,255,0.15);
       color: var(--ate-text);
     }
     
-    /* Services Grid */
+    /* Price Filter Tabs */
+    .price-filter {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding: 0.5rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(10,7,7,0.25);
+      backdrop-filter: blur(17px);
+      width: fit-content;
+    }
+    
+    .price-filter-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ate-text-dim);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .price-filter-btn:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ate-text);
+    }
+    
+    .price-filter-btn.active {
+      background: rgba(239,68,68,0.1);
+      border-color: var(--ate-border);
+      color: var(--ate-text);
+    }
+    
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1.5rem 0 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+    
+    .section-header.low {
+      border-left: 3px solid var(--ate-green);
+    }
+    
+    .section-header.high {
+      border-left: 3px solid var(--ate-orange);
+    }
+    
+    .section-header .section-icon {
+      font-size: 1.2rem;
+    }
+    
+    .section-header .section-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    
+    .section-header .section-count {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--ate-text-muted);
+    }
+    
+    /* Services Header */
     .services-header {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      justify-content: space-between;
       margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
+      padding-bottom: 0.75rem;
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     
     .services-header .platform-name {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -287,13 +381,14 @@
     }
     
     .services-header .count {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       color: var(--ate-text-muted);
     }
     
+    /* Services Grid */
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 1rem;
       margin-bottom: 3rem;
     }
@@ -306,6 +401,8 @@
       background: var(--ate-card);
       backdrop-filter: blur(20px);
       transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
     }
     
     .service-card::before {
@@ -324,8 +421,49 @@
       transform: translateY(-2px);
     }
     
+    /* Service Badges */
+    .service-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .badge {
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    
+    .badge-refill {
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      color: var(--ate-green);
+    }
+    
+    .badge-no-drop {
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.2);
+      color: var(--ate-blue);
+    }
+    
+    .badge-guarantee {
+      background: rgba(234,179,8,0.1);
+      border: 1px solid rgba(234,179,8,0.2);
+      color: var(--ate-yellow);
+    }
+    
+    .badge-fast {
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.2);
+      color: var(--ate-orange);
+    }
+    
     .service-name {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 500;
       line-height: 1.4;
       margin-bottom: 0.75rem;
@@ -333,6 +471,7 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      min-height: 2.5em;
     }
     
     .service-price {
@@ -340,10 +479,14 @@
       align-items: baseline;
       gap: 0.5rem;
       margin-bottom: 1rem;
+      padding: 0.75rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
     }
     
     .price-myr {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 600;
       font-family: 'Orbitron', sans-serif;
     }
@@ -355,7 +498,7 @@
     
     .price-usd {
       margin-left: auto;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: var(--ate-text-muted);
     }
     
@@ -368,7 +511,7 @@
     
     .stat {
       padding: 0.5rem 0.75rem;
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.05);
       background: rgba(255,255,255,0.02);
     }
@@ -382,7 +525,7 @@
     }
     
     .stat-value {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 500;
       color: var(--ate-text-dim);
     }
@@ -393,34 +536,22 @@
       justify-content: center;
       gap: 0.5rem;
       width: 100%;
-      padding: 0.65rem;
-      border-radius: 8px;
+      padding: 0.75rem;
+      border-radius: 10px;
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.03);
       color: var(--ate-text-dim);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
+      margin-top: auto;
     }
     
     .select-btn:hover {
       border-color: var(--ate-border);
       background: rgba(239,68,68,0.05);
       color: var(--ate-text);
-    }
-    
-    .refill-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 10px;
-      border: 1px solid rgba(34,197,94,0.2);
-      background: rgba(34,197,94,0.08);
-      font-size: 0.6rem;
-      font-weight: 600;
-      color: rgba(34,197,94,0.8);
     }
     
     /* Modal */
@@ -434,6 +565,7 @@
       padding: 1rem;
       background: rgba(0,0,0,0.7);
       backdrop-filter: blur(4px);
+      overflow-y: auto;
     }
     
     .modal-overlay.active {
@@ -443,12 +575,15 @@
     .modal {
       position: relative;
       width: 100%;
-      max-width: 420px;
-      padding: 1.5rem;
+      max-width: 440px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.75rem;
       border-radius: 20px;
       border: 1px solid var(--ate-border);
       background: rgba(17,16,15,0.95);
       backdrop-filter: blur(20px);
+      margin: auto;
     }
     
     .modal::before {
@@ -493,20 +628,21 @@
     }
     
     .modal-service-name {
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 500;
       margin-bottom: 0.25rem;
+      padding-right: 2rem;
     }
     
     .modal-service-id {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: var(--ate-text-muted);
       margin-bottom: 1.25rem;
     }
     
     .price-card {
       padding: 1rem;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.06);
       background: rgba(255,255,255,0.02);
       margin-bottom: 1.25rem;
@@ -516,7 +652,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
     }
     
     .price-row + .price-row {
@@ -534,7 +670,7 @@
     }
     
     .price-row .total {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 600;
       font-family: 'Orbitron', sans-serif;
     }
@@ -545,7 +681,7 @@
     
     .form-label {
       display: block;
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       font-weight: 600;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -555,13 +691,21 @@
     
     .form-input {
       width: 100%;
-      padding: 0.65rem 0.85rem;
-      border-radius: 8px;
+      padding: 0.75rem 0.85rem;
+      border-radius: 10px;
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.03);
       color: var(--ate-text);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-family: inherit;
+      /* Hide number input arrows */
+      -moz-appearance: textfield;
+    }
+    
+    .form-input::-webkit-outer-spin-button,
+    .form-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
     
     .form-input:focus {
@@ -570,7 +714,7 @@
     }
     
     .form-hint {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: var(--ate-text-muted);
       margin-top: 0.35rem;
     }
@@ -583,12 +727,12 @@
     }
     
     .quick-btn {
-      padding: 0.35rem 0.65rem;
-      border-radius: 6px;
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
       border: 1px solid rgba(255,255,255,0.06);
       background: rgba(255,255,255,0.02);
       color: var(--ate-text-muted);
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
@@ -605,12 +749,12 @@
       justify-content: center;
       gap: 0.5rem;
       width: 100%;
-      padding: 0.85rem;
-      border-radius: 10px;
+      padding: 0.9rem;
+      border-radius: 12px;
       border: none;
       background: #E9E9E9;
       color: #0A0707;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
@@ -629,14 +773,127 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.65rem 0.85rem;
-      border-radius: 8px;
+      padding: 0.75rem 0.85rem;
+      border-radius: 10px;
       border: 1px solid rgba(239,68,68,0.15);
       background: rgba(239,68,68,0.05);
       color: rgba(239,68,68,0.8);
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       margin-bottom: 1rem;
     }
+    
+    /* Admin Panel */
+    .admin-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      background: var(--ate-black);
+      overflow-y: auto;
+    }
+    
+    .admin-panel.active {
+      display: block;
+    }
+    
+    .admin-header {
+      position: sticky;
+      top: 0;
+      padding: 1rem 2rem;
+      background: rgba(8,10,25,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+    
+    .admin-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    
+    .admin-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .admin-stat-card {
+      padding: 1.25rem;
+      border-radius: 14px;
+      border: 1px solid var(--ate-border);
+      background: var(--ate-card);
+      backdrop-filter: blur(20px);
+    }
+    
+    .admin-stat-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ate-text-muted);
+      margin-bottom: 0.5rem;
+    }
+    
+    .admin-stat-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      font-family: 'Orbitron', sans-serif;
+    }
+    
+    .admin-stat-value.profit {
+      color: var(--ate-green);
+    }
+    
+    .orders-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    
+    .orders-table th,
+    .orders-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .orders-table th {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ate-text-muted);
+    }
+    
+    .orders-table td {
+      font-size: 0.85rem;
+      color: var(--ate-text-dim);
+    }
+    
+    .status-badge {
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+    
+    .status-pending { background: rgba(234,179,8,0.1); color: var(--ate-yellow); }
+    .status-progress { background: rgba(59,130,246,0.1); color: var(--ate-blue); }
+    .status-completed { background: rgba(34,197,94,0.1); color: var(--ate-green); }
+    .status-partial { background: rgba(249,115,22,0.1); color: var(--ate-orange); }
+    .status-cancelled { background: rgba(239,68,68,0.1); color: var(--ate-red); }
     
     /* Loading */
     .loading {
@@ -673,7 +930,7 @@
       position: fixed;
       bottom: 1.5rem;
       right: 1.5rem;
-      z-index: 2000;
+      z-index: 3000;
       display: none;
       align-items: center;
       gap: 0.75rem;
@@ -695,22 +952,26 @@
     }
     
     .toast-title {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 500;
     }
     
     .toast-subtitle {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: var(--ate-text-muted);
     }
     
     /* Responsive */
     @media (max-width: 768px) {
       header { padding: 0.75rem 1rem; }
-      main { padding: 6rem 1rem 2rem; }
+      main { padding: 5.5rem 1rem 2rem; }
       .services-grid { grid-template-columns: 1fr; }
       .platform-tabs { padding: 0.5rem; }
       .platform-tab { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+      .actions-bar { flex-direction: column; }
+      .admin-stats { grid-template-columns: 1fr 1fr; }
+      .orders-table { font-size: 0.75rem; }
+      .orders-table th, .orders-table td { padding: 0.5rem; }
     }
   </style>
 </head>
@@ -727,12 +988,20 @@
           <div class="logo-sub">Akmal Taufik Enterprise</div>
         </div>
       </a>
-      <a href="/" class="back-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-        Back to Main Site
-      </a>
+      <div class="header-actions">
+        <button class="admin-btn" id="adminBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20V10M18 20V4M6 20v-4"/>
+          </svg>
+          Dashboard
+        </button>
+        <a href="/" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Back
+        </a>
+      </div>
     </div>
   </header>
   
@@ -743,19 +1012,23 @@
       <p>Boost your social media presence with premium services. Select a platform to browse packages.</p>
     </section>
     
-    <div class="platform-tabs" id="platformTabs">
-      <!-- Tabs will be inserted here -->
-    </div>
+    <div class="platform-tabs" id="platformTabs"></div>
     
-    <div class="search-bar">
+    <div class="actions-bar">
       <input type="text" class="search-input" id="searchInput" placeholder="Search services...">
-      <button class="track-btn" id="trackBtn">
+      <button class="action-btn" id="trackBtn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
           <circle cx="12" cy="10" r="3"/>
         </svg>
         Track Order
       </button>
+    </div>
+    
+    <div class="price-filter">
+      <button class="price-filter-btn active" data-filter="all">All Prices</button>
+      <button class="price-filter-btn" data-filter="low">💰 Low Price</button>
+      <button class="price-filter-btn" data-filter="high">💎 High Price</button>
     </div>
     
     <div class="services-header">
@@ -803,9 +1076,13 @@
         </div>
         <div class="form-group">
           <label class="form-label">Quantity</label>
-          <input type="number" class="form-input" id="orderQuantity" required>
+          <input type="text" inputmode="numeric" class="form-input" id="orderQuantity" placeholder="Enter quantity" required>
           <div class="form-hint" id="quantityHint"></div>
           <div class="quick-select" id="quickSelect"></div>
+        </div>
+        <div class="form-group" id="commentsGroup" style="display:none;">
+          <label class="form-label">Comments <span style="font-weight:400;text-transform:none;">(one per line)</span></label>
+          <textarea class="form-input" id="orderComments" rows="4" placeholder="Great post!&#10;Amazing content!&#10;Love this!"></textarea>
         </div>
         <button type="submit" class="submit-btn" id="submitBtn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -833,12 +1110,46 @@
       <div class="form-group">
         <label class="form-label">Order ID</label>
         <div style="display:flex;gap:0.5rem;">
-          <input type="number" class="form-input" id="trackOrderId" placeholder="Enter Order ID">
-          <button type="button" class="submit-btn" style="width:auto;padding:0.65rem 1.25rem;" id="trackSubmitBtn">Check</button>
+          <input type="text" inputmode="numeric" class="form-input" id="trackOrderId" placeholder="Enter Order ID">
+          <button type="button" class="submit-btn" style="width:auto;padding:0.75rem 1.25rem;" id="trackSubmitBtn">Check</button>
         </div>
       </div>
       
       <div id="trackResult" style="display:none;margin-top:1rem;"></div>
+    </div>
+  </div>
+  
+  <!-- Admin Panel -->
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-header">
+      <div class="admin-title">ATEBooster Dashboard</div>
+      <button class="back-link" id="closeAdminBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+        Close
+      </button>
+    </div>
+    <div class="admin-content">
+      <div class="admin-stats" id="adminStats"></div>
+      <h3 style="margin-bottom:1rem;font-size:1rem;">Order History</h3>
+      <div style="overflow-x:auto;">
+        <table class="orders-table" id="ordersTable">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Service</th>
+              <th>Quantity</th>
+              <th>Customer Paid</th>
+              <th>Cost</th>
+              <th>Profit</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
   
@@ -858,6 +1169,7 @@
     // Configuration
     const API_BASE = '/booster/api';
     const USD_TO_MYR = 4.47;
+    const PROFIT_MARGIN = 1.3; // 30% profit margin - adjust as needed
     
     // Platform definitions
     const PLATFORMS = [
@@ -877,6 +1189,9 @@
     let allServices = [];
     let activePlatform = 'instagram';
     let selectedService = null;
+    let orders = JSON.parse(localStorage.getItem('atebooster_orders') || '[]');
+    let priceFilter = 'all'; // 'all', 'low', 'high'
+    const PRICE_THRESHOLD = 50; // MYR - services below this are "low price"
     
     // Format currency
     function formatMYR(usd) {
@@ -885,6 +1200,53 @@
     
     function formatUSD(usd) {
       return `$${usd.toFixed(2)}`;
+    }
+    
+    // Parse service name for badges
+    function parseServiceBadges(service) {
+      const badges = [];
+      const name = service.name.toLowerCase();
+      
+      // Refill badges
+      if (name.includes('365 days refill') || name.includes('365 days guarantee')) {
+        badges.push({ text: '365 Days Refill', class: 'badge-refill' });
+      } else if (name.includes('lifetime refill') || name.includes('lifetime guarantee')) {
+        badges.push({ text: 'Lifetime Refill', class: 'badge-refill' });
+      } else if (name.includes('90 days refill')) {
+        badges.push({ text: '90 Days Refill', class: 'badge-refill' });
+      } else if (name.includes('60 days refill')) {
+        badges.push({ text: '60 Days Refill', class: 'badge-refill' });
+      } else if (name.includes('30 days refill')) {
+        badges.push({ text: '30 Days Refill', class: 'badge-refill' });
+      } else if (name.includes('15 days refill')) {
+        badges.push({ text: '15 Days Refill', class: 'badge-refill' });
+      } else if (service.refill) {
+        badges.push({ text: 'Refill', class: 'badge-refill' });
+      }
+      
+      // No drop badges
+      if (name.includes('no drop') || name.includes('non drop') || name.includes('non-drop')) {
+        badges.push({ text: 'No Drop', class: 'badge-no-drop' });
+      }
+      
+      // Guarantee badges
+      if (name.includes('guarantee') || name.includes('guaranteed')) {
+        badges.push({ text: 'Guaranteed', class: 'badge-guarantee' });
+      }
+      
+      // Speed badges
+      if (name.includes('fast') || name.includes('instant') || name.includes('super fast')) {
+        badges.push({ text: 'Fast', class: 'badge-fast' });
+      }
+      
+      return badges;
+    }
+    
+    // Check if service needs comments
+    function needsComments(service) {
+      const type = service.type?.toLowerCase() || '';
+      const name = service.name.toLowerCase();
+      return type.includes('custom comment') || name.includes('custom comment');
     }
     
     // Group services by platform
@@ -935,53 +1297,79 @@
       const services = groups[activePlatform] || [];
       const searchQuery = document.getElementById('searchInput').value.toLowerCase();
       
-      const filtered = searchQuery
+      let filtered = searchQuery
         ? services.filter(s => s.name.toLowerCase().includes(searchQuery))
         : services;
       
+      // Apply price filter
+      const thresholdMYR = PRICE_THRESHOLD * USD_TO_MYR;
+      let lowPriceServices = [];
+      let highPriceServices = [];
+      
+      if (priceFilter === 'all') {
+        // Split into sections
+        filtered.forEach(svc => {
+          const rate = parseFloat(svc.rate) * PROFIT_MARGIN * USD_TO_MYR;
+          if (rate < thresholdMYR) {
+            lowPriceServices.push(svc);
+          } else {
+            highPriceServices.push(svc);
+          }
+        });
+      } else if (priceFilter === 'low') {
+        lowPriceServices = filtered.filter(svc => {
+          const rate = parseFloat(svc.rate) * PROFIT_MARGIN * USD_TO_MYR;
+          return rate < thresholdMYR;
+        });
+      } else if (priceFilter === 'high') {
+        highPriceServices = filtered.filter(svc => {
+          const rate = parseFloat(svc.rate) * PROFIT_MARGIN * USD_TO_MYR;
+          return rate >= thresholdMYR;
+        });
+      }
+      
       const platform = PLATFORMS.find(p => p.key === activePlatform);
       document.getElementById('platformName').textContent = platform?.label?.toUpperCase() || '';
-      document.getElementById('serviceCount').textContent = `${filtered.length} services`;
+      
+      const totalCount = lowPriceServices.length + highPriceServices.length;
+      document.getElementById('serviceCount').textContent = `${totalCount} services`;
       
       const container = document.getElementById('servicesContainer');
       
-      if (filtered.length === 0) {
+      if (totalCount === 0) {
         container.innerHTML = '<div class="empty-state">No services found matching your search.</div>';
         return;
       }
       
-      container.innerHTML = `<div class="services-grid">${filtered.map(svc => {
-        const rate = parseFloat(svc.rate);
-        return `
-          <div class="service-card" data-id="${svc.service}">
-            ${svc.refill ? '<span class="refill-badge">REFILL</span>' : ''}
-            <div class="service-name">${svc.name}</div>
-            <div class="service-price">
-              <span class="price-myr">${formatMYR(rate)}</span>
-              <span class="price-unit">/ 1000</span>
-              <span class="price-usd">${formatUSD(rate)}</span>
-            </div>
-            <div class="service-stats">
-              <div class="stat">
-                <div class="stat-label">Min</div>
-                <div class="stat-value">${svc.min.toLocaleString()}</div>
-              </div>
-              <div class="stat">
-                <div class="stat-label">Max</div>
-                <div class="stat-value">${svc.max.toLocaleString()}</div>
-              </div>
-            </div>
-            <button class="select-btn" data-service='${JSON.stringify(svc).replace(/'/g, "&#39;")}'>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-              </svg>
-              Select Package
-            </button>
-          </div>
-        `;
-      }).join('')}</div>`;
+      let html = '';
       
+      // Low Price Section
+      if (lowPriceServices.length > 0 && (priceFilter === 'all' || priceFilter === 'low')) {
+        html += `
+          <div class="section-header low">
+            <span class="section-icon">💰</span>
+            <span class="section-title">Low Price</span>
+            <span class="section-count">${lowPriceServices.length} services</span>
+          </div>
+          <div class="services-grid">${lowPriceServices.map(svc => renderServiceCard(svc)).join('')}</div>
+        `;
+      }
+      
+      // High Price Section
+      if (highPriceServices.length > 0 && (priceFilter === 'all' || priceFilter === 'high')) {
+        html += `
+          <div class="section-header high">
+            <span class="section-icon">💎</span>
+            <span class="section-title">High Price</span>
+            <span class="section-count">${highPriceServices.length} services</span>
+          </div>
+          <div class="services-grid">${highPriceServices.map(svc => renderServiceCard(svc)).join('')}</div>
+        `;
+      }
+      
+      container.innerHTML = html;
+      
+      // Attach click handlers
       container.querySelectorAll('.select-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           selectedService = JSON.parse(btn.dataset.service);
@@ -990,20 +1378,67 @@
       });
     }
     
+    // Render individual service card
+    function renderServiceCard(svc) {
+      const rate = parseFloat(svc.rate) * PROFIT_MARGIN;
+      const badges = parseServiceBadges(svc);
+      return `
+        <div class="service-card" data-id="${svc.service}">
+          ${badges.length > 0 ? `
+            <div class="service-badges">
+              ${badges.map(b => `<span class="badge ${b.class}">${b.text}</span>`).join('')}
+            </div>
+          ` : ''}
+          <div class="service-name">${svc.name}</div>
+          <div class="service-price">
+            <span class="price-myr">${formatMYR(rate)}</span>
+            <span class="price-unit">/ 1000</span>
+            <span class="price-usd">${formatUSD(rate)}</span>
+          </div>
+          <div class="service-stats">
+            <div class="stat">
+              <div class="stat-label">Min</div>
+              <div class="stat-value">${svc.min.toLocaleString()}</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Max</div>
+              <div class="stat-value">${svc.max >= 1000000000 ? '∞' : svc.max.toLocaleString()}</div>
+            </div>
+          </div>
+          <button class="select-btn" data-service='${JSON.stringify(svc).replace(/'/g, "&#39;")}'>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+            Select Package
+          </button>
+        </div>
+      `;
+    }
+    
     // Open order modal
     function openOrderModal() {
       if (!selectedService) return;
       
-      const rate = parseFloat(selectedService.rate);
+      const rate = parseFloat(selectedService.rate) * PROFIT_MARGIN;
       document.getElementById('modalServiceName').textContent = selectedService.name;
       document.getElementById('modalServiceId').textContent = `Service ID: ${selectedService.service} · ${selectedService.type}`;
       document.getElementById('modalRate').textContent = `${formatMYR(rate)} (${formatUSD(rate)})`;
-      document.getElementById('quantityHint').textContent = `Min: ${selectedService.min.toLocaleString()} · Max: ${selectedService.max.toLocaleString()}`;
+      document.getElementById('quantityHint').textContent = `Min: ${selectedService.min.toLocaleString()} · Max: ${selectedService.max >= 1000000000 ? 'Unlimited' : selectedService.max.toLocaleString()}`;
       
       const qtyInput = document.getElementById('orderQuantity');
-      qtyInput.min = selectedService.min;
-      qtyInput.max = selectedService.max;
-      qtyInput.value = selectedService.min;
+      qtyInput.value = '';
+      qtyInput.placeholder = `Enter ${selectedService.min.toLocaleString()} - ${selectedService.max >= 1000000000 ? '∞' : selectedService.max.toLocaleString()}`;
+      
+      // Show/hide comments field
+      const commentsGroup = document.getElementById('commentsGroup');
+      if (needsComments(selectedService)) {
+        commentsGroup.style.display = 'block';
+        document.getElementById('orderComments').required = true;
+      } else {
+        commentsGroup.style.display = 'none';
+        document.getElementById('orderComments').required = false;
+      }
       
       updateTotal();
       renderQuickSelect();
@@ -1015,23 +1450,25 @@
     // Update total price
     function updateTotal() {
       if (!selectedService) return;
-      const rate = parseFloat(selectedService.rate);
+      const rate = parseFloat(selectedService.rate) * PROFIT_MARGIN;
       const qty = parseInt(document.getElementById('orderQuantity').value) || 0;
       const total = (rate * qty) / 1000;
       document.getElementById('modalTotal').textContent = `${formatMYR(total)} (${formatUSD(total)})`;
-      document.getElementById('submitText').textContent = `Place Order — ${formatMYR(total)}`;
+      document.getElementById('submitText').textContent = qty > 0 ? `Place Order — ${formatMYR(total)}` : 'Place Order';
     }
     
     // Render quick select buttons
     function renderQuickSelect() {
       if (!selectedService) return;
+      const maxVal = Math.min(selectedService.max, 1000000);
       const values = [
         { label: 'Min', val: selectedService.min },
-        { label: '1K', val: Math.min(1000, selectedService.max) },
-        { label: '5K', val: Math.min(5000, selectedService.max) },
-        { label: '10K', val: Math.min(10000, selectedService.max) },
-        { label: '50K', val: Math.min(50000, selectedService.max) }
-      ].filter(b => b.val >= selectedService.min && b.val <= selectedService.max).slice(0, 4);
+        { label: '1K', val: 1000 },
+        { label: '5K', val: 5000 },
+        { label: '10K', val: 10000 },
+        { label: '50K', val: 50000 },
+        { label: '100K', val: 100000 }
+      ].filter(b => b.val >= selectedService.min && b.val <= maxVal).slice(0, 5);
       
       document.getElementById('quickSelect').innerHTML = values.map(b => 
         `<button type="button" class="quick-btn" data-val="${b.val}">${b.label}</button>`
@@ -1045,12 +1482,21 @@
       });
     }
     
+    // Validate quantity
+    function validateQuantity(qty) {
+      if (!selectedService) return false;
+      if (isNaN(qty) || qty < selectedService.min) return false;
+      if (selectedService.max < 1000000000 && qty > selectedService.max) return false;
+      return true;
+    }
+    
     // Submit order
     async function submitOrder(e) {
       e.preventDefault();
       
       const link = document.getElementById('orderLink').value.trim();
       const quantity = parseInt(document.getElementById('orderQuantity').value);
+      const comments = document.getElementById('orderComments').value.trim();
       const errorEl = document.getElementById('orderError');
       const submitBtn = document.getElementById('submitBtn');
       
@@ -1060,8 +1506,15 @@
         return;
       }
       
-      if (quantity < selectedService.min || quantity > selectedService.max) {
-        errorEl.textContent = `Quantity must be between ${selectedService.min.toLocaleString()} and ${selectedService.max.toLocaleString()}.`;
+      if (!validateQuantity(quantity)) {
+        const maxMsg = selectedService.max >= 1000000000 ? 'unlimited' : selectedService.max.toLocaleString();
+        errorEl.textContent = `Quantity must be between ${selectedService.min.toLocaleString()} and ${maxMsg}.`;
+        errorEl.style.display = 'flex';
+        return;
+      }
+      
+      if (needsComments(selectedService) && !comments) {
+        errorEl.textContent = 'Please enter comments for this service.';
         errorEl.style.display = 'flex';
         return;
       }
@@ -1071,14 +1524,19 @@
       errorEl.style.display = 'none';
       
       try {
+        const orderData = {
+          service: selectedService.service,
+          link,
+          quantity
+        };
+        if (needsComments(selectedService)) {
+          orderData.comments = comments;
+        }
+        
         const res = await fetch(`${API_BASE}/order`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            service: selectedService.service,
-            link,
-            quantity
-          })
+          body: JSON.stringify(orderData)
         });
         
         const data = await res.json();
@@ -1087,8 +1545,30 @@
           errorEl.textContent = data.error;
           errorEl.style.display = 'flex';
         } else if (data.order) {
+          // Save order locally
+          const customerRate = parseFloat(selectedService.rate) * PROFIT_MARGIN;
+          const costRate = parseFloat(selectedService.rate);
+          const newOrder = {
+            id: data.order,
+            serviceId: selectedService.service,
+            serviceName: selectedService.name,
+            quantity,
+            customerPaid: (customerRate * quantity) / 1000,
+            cost: (costRate * quantity) / 1000,
+            profit: ((customerRate - costRate) * quantity) / 1000,
+            status: 'pending',
+            date: new Date().toISOString(),
+            link
+          };
+          orders.unshift(newOrder);
+          localStorage.setItem('atebooster_orders', JSON.stringify(orders));
+          
           document.getElementById('orderModal').classList.remove('active');
           showToast(`Order #${data.order}`);
+          
+          // Reset form
+          document.getElementById('orderForm').reset();
+          document.getElementById('orderQuantity').value = '';
         }
       } catch (err) {
         errorEl.textContent = 'Failed to place order. Please try again.';
@@ -1127,12 +1607,12 @@
             <div class="price-card">
               <div class="price-row">
                 <span class="label">Status</span>
-                <span class="value" style="text-transform:capitalize;">${data.status || 'Unknown'}</span>
+                <span class="status-badge status-${(data.status || 'pending').toLowerCase().replace(' ', '-')}">${data.status || 'Unknown'}</span>
               </div>
               ${data.charge ? `<div class="price-row"><span class="label">Charge</span><span class="value">${data.charge} ${data.currency || 'USD'}</span></div>` : ''}
               ${data.start_count ? `<div class="price-row"><span class="label">Start Count</span><span class="value">${parseInt(data.start_count).toLocaleString()}</span></div>` : ''}
               ${data.remains !== undefined ? `<div class="price-row"><span class="label">Remaining</span><span class="value">${parseInt(data.remains).toLocaleString()}</span></div>` : ''}
-              ${progress !== null ? `<div style="margin-top:0.75rem;"><div style="height:4px;background:rgba(255,255,255,0.05);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${progress}%;background:linear-gradient(90deg,rgba(239,68,68,0.5),rgba(34,197,94,0.5));"></div></div><div style="text-align:right;font-size:0.7rem;color:var(--ate-text-muted);margin-top:0.35rem;">${progress}% complete</div></div>` : ''}
+              ${progress !== null ? `<div style="margin-top:0.75rem;"><div style="height:4px;background:rgba(255,255,255,0.05);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${progress}%;background:linear-gradient(90deg,rgba(239,68,68,0.5),rgba(34,197,94,0.5));"></div></div><div style="text-align:right;font-size:0.75rem;color:var(--ate-text-muted);margin-top:0.35rem;">${progress}% complete</div></div>` : ''}
             </div>
           `;
         }
@@ -1141,6 +1621,61 @@
         resultEl.innerHTML = `<div class="error-msg">Failed to check order status.</div>`;
         resultEl.style.display = 'block';
       }
+    }
+    
+    // Admin panel
+    function openAdminPanel() {
+      renderAdminStats();
+      renderOrdersTable();
+      document.getElementById('adminPanel').classList.add('active');
+    }
+    
+    function renderAdminStats() {
+      const totalOrders = orders.length;
+      const totalGross = orders.reduce((sum, o) => sum + (o.customerPaid || 0), 0);
+      const totalCost = orders.reduce((sum, o) => sum + (o.cost || 0), 0);
+      const totalProfit = orders.reduce((sum, o) => sum + (o.profit || 0), 0);
+      
+      document.getElementById('adminStats').innerHTML = `
+        <div class="admin-stat-card">
+          <div class="admin-stat-label">Total Orders</div>
+          <div class="admin-stat-value">${totalOrders}</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-label">Gross Revenue</div>
+          <div class="admin-stat-value">${formatMYR(totalGross)}</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-label">Total Cost</div>
+          <div class="admin-stat-value">${formatMYR(totalCost)}</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-label">Net Profit</div>
+          <div class="admin-stat-value profit">${formatMYR(totalProfit)}</div>
+        </div>
+      `;
+    }
+    
+    function renderOrdersTable() {
+      const tbody = document.getElementById('ordersBody');
+      
+      if (orders.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--ate-text-muted);">No orders yet</td></tr>';
+        return;
+      }
+      
+      tbody.innerHTML = orders.map(o => `
+        <tr>
+          <td>#${o.id}</td>
+          <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.serviceName}</td>
+          <td>${o.quantity.toLocaleString()}</td>
+          <td>${formatMYR(o.customerPaid)}</td>
+          <td>${formatMYR(o.cost)}</td>
+          <td style="color:var(--ate-green);">${formatMYR(o.profit)}</td>
+          <td><span class="status-badge status-${o.status}">${o.status}</span></td>
+          <td>${new Date(o.date).toLocaleDateString()}</td>
+        </tr>
+      `).join('');
     }
     
     // Show toast
@@ -1178,6 +1713,20 @@
       document.getElementById('trackModal').classList.remove('active');
     });
     document.getElementById('trackSubmitBtn').addEventListener('click', trackOrder);
+    document.getElementById('adminBtn').addEventListener('click', openAdminPanel);
+    document.getElementById('closeAdminBtn').addEventListener('click', () => {
+      document.getElementById('adminPanel').classList.remove('active');
+    });
+    
+    // Price filter buttons
+    document.querySelectorAll('.price-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.price-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        priceFilter = btn.dataset.filter;
+        renderServices();
+      });
+    });
     
     // Close modals on overlay click
     document.querySelectorAll('.modal-overlay').forEach(overlay => {

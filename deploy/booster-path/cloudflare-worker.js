@@ -49,9 +49,13 @@ export default {
           link: body.link,
           quantity: body.quantity,
         };
+        // Handle comments for custom comment services
         if (body.comments) params.comments = body.comments;
         if (body.runs) params.runs = body.runs;
         if (body.interval) params.interval = body.interval;
+        if (body.usernames) params.usernames = body.usernames;
+        if (body.hashtag) params.hashtag = body.hashtag;
+        if (body.country) params.country = body.country;
 
         const data = await proxyToApi(env.PADOONSTA_API_KEY, params);
         return new Response(JSON.stringify(data), { headers: corsHeaders });
