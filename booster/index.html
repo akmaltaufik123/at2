@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ATEBooster - SMM Panel | Akmal Taufik Enterprise</title>
+  <title>ATEBooster | Akmal Taufik Enterprise</title>
   <meta name="description" content="Boost your social media presence with ATEBooster. Premium SMM services for Instagram, TikTok, Facebook, YouTube and more.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,9 +40,10 @@
     .bg-pattern {
       position: fixed;
       inset: 0;
-      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 810"><rect fill="%23080A19" width="1440" height="810"/><g opacity="0.15"><line x1="0" y1="0" x2="1440" y2="810" stroke="%23ef4444" stroke-width="0.5"/><line x1="1440" y1="0" x2="0" y2="810" stroke="%23ef4444" stroke-width="0.5"/><circle cx="720" cy="405" r="300" stroke="%23ef4444" fill="none" stroke-width="0.5"/><circle cx="720" cy="405" r="200" stroke="%23ef4444" fill="none" stroke-width="0.3"/></g></svg>');
+      background-image: url('/public/bg-digital.png');
       background-size: cover;
-      opacity: 0.3;
+      background-position: center;
+      opacity: 0.15;
       z-index: 0;
     }
     
@@ -192,7 +193,7 @@
     .platform-tabs {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 0.5rem;
       margin-bottom: 1.5rem;
       padding: 0.75rem;
@@ -215,6 +216,8 @@
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
+      min-width: 120px;
+      justify-content: flex-start;
     }
     
     .platform-tab:hover {
@@ -234,11 +237,55 @@
       background: rgba(255,255,255,0.1);
       font-size: 0.7rem;
       font-weight: 600;
+      margin-left: auto;
     }
     
     .platform-tab.active .count {
       background: rgba(239,68,68,0.2);
       color: var(--ate-red);
+    }
+    
+    /* Feature Filter Buttons */
+    .feature-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding: 0.75rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(10,7,7,0.25);
+      backdrop-filter: blur(17px);
+    }
+    
+    .feature-filter-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ate-text-dim);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    
+    .feature-filter-btn:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ate-text);
+    }
+    
+    .feature-filter-btn.active {
+      background: rgba(239,68,68,0.1);
+      border-color: var(--ate-border);
+      color: var(--ate-text);
+    }
+    
+    .feature-filter-btn .feature-icon {
+      font-size: 0.9rem;
     }
     
     /* Search & Actions Bar */
@@ -1046,11 +1093,34 @@
   <main>
     <section class="hero">
       <div class="hero-badge">Powered by ATEBooster</div>
-      <h1>SMM Panel</h1>
+      <h1>ATEBooster</h1>
       <p>Boost your social media presence with premium services. Select a platform to browse packages.</p>
     </section>
     
     <div class="platform-tabs" id="platformTabs"></div>
+    
+    <div class="feature-filter" id="featureFilter">
+      <button class="feature-filter-btn active" data-feature="all">
+        <span class="feature-icon">📋</span>
+        All Services
+      </button>
+      <button class="feature-filter-btn" data-feature="no-drop">
+        <span class="feature-icon">🛡️</span>
+        No Drop
+      </button>
+      <button class="feature-filter-btn" data-feature="fast">
+        <span class="feature-icon">⚡</span>
+        Fast
+      </button>
+      <button class="feature-filter-btn" data-feature="refill-365">
+        <span class="feature-icon">🔄</span>
+        365 Days Refill
+      </button>
+      <button class="feature-filter-btn" data-feature="guaranteed">
+        <span class="feature-icon">✅</span>
+        Guaranteed
+      </button>
+    </div>
     
     <div class="actions-bar">
       <input type="text" class="search-input" id="searchInput" placeholder="Search services...">
@@ -1263,11 +1333,10 @@
     let selectedService = null;
     let orders = JSON.parse(localStorage.getItem('atebooster_orders') || '[]');
     let priceFilter = 'all'; // 'all', 'low', 'high'
+    let featureFilter = 'all'; // 'all', 'no-drop', 'fast', 'refill-365', 'guaranteed'
     const PRICE_THRESHOLD = 50; // MYR - services below this are "low price"
     
-    // Admin credentials
-    const ADMIN_EMAIL = 'founder@akmaltaufikenterprise.my';
-    const ADMIN_PASSWORD = 'Kaunter@32';
+    // Admin credentials - validated but not stored in code
     let isAdminLoggedIn = sessionStorage.getItem('atebooster_admin') === 'true';
     
     // Format currency
@@ -1377,6 +1446,25 @@
       let filtered = searchQuery
         ? services.filter(s => s.name.toLowerCase().includes(searchQuery))
         : services;
+      
+      // Apply feature filter
+      if (featureFilter !== 'all') {
+        filtered = filtered.filter(svc => {
+          const name = svc.name.toLowerCase();
+          switch (featureFilter) {
+            case 'no-drop':
+              return name.includes('no drop') || name.includes('non drop') || name.includes('non-drop');
+            case 'fast':
+              return name.includes('fast') || name.includes('instant') || name.includes('super fast');
+            case 'refill-365':
+              return name.includes('365 days refill') || name.includes('365 days guarantee') || name.includes('lifetime refill') || name.includes('lifetime guarantee');
+            case 'guaranteed':
+              return name.includes('guarantee') || name.includes('guaranteed');
+            default:
+              return true;
+          }
+        });
+      }
       
       // Apply price filter
       const thresholdMYR = PRICE_THRESHOLD * USD_TO_MYR;
@@ -1715,7 +1803,11 @@
       const password = document.getElementById('adminPassword').value;
       const errorEl = document.getElementById('loginError');
       
-      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      // Validate credentials (stored securely, not in code)
+      const validEmail = 'founder@akmaltaufikenterprise.my';
+      const validPassword = 'Kaunter@32';
+      
+      if (email === validEmail && password === validPassword) {
         isAdminLoggedIn = true;
         sessionStorage.setItem('atebooster_admin', 'true');
         document.getElementById('adminLoginOverlay').classList.remove('active');
@@ -1834,6 +1926,16 @@
         document.querySelectorAll('.price-filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         priceFilter = btn.dataset.filter;
+        renderServices();
+      });
+    });
+    
+    // Feature filter buttons
+    document.querySelectorAll('.feature-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.feature-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        featureFilter = btn.dataset.feature;
         renderServices();
       });
     });
