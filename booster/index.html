@@ -782,6 +782,44 @@
       margin-bottom: 1rem;
     }
     
+    /* Admin Login Modal */
+    .admin-login-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+    }
+    
+    .admin-login-overlay.active {
+      display: flex;
+    }
+    
+    .admin-login-modal {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      padding: 2rem;
+      border-radius: 20px;
+      border: 1px solid var(--ate-border);
+      background: rgba(17,16,15,0.95);
+      backdrop-filter: blur(20px);
+    }
+    
+    .admin-login-modal::before {
+      content: '';
+      position: absolute;
+      left: 2rem;
+      right: 2rem;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ate-red-glow), transparent);
+    }
+    
     /* Admin Panel */
     .admin-panel {
       position: fixed;
@@ -1119,6 +1157,40 @@
     </div>
   </div>
   
+  <!-- Admin Login Modal -->
+  <div class="admin-login-overlay" id="adminLoginOverlay">
+    <div class="admin-login-modal">
+      <button class="modal-close" id="adminLoginClose">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <div class="modal-title">ADMIN ACCESS</div>
+      <div class="modal-service-name">Dashboard Login</div>
+      <div class="modal-service-id" style="margin-bottom:1.5rem;">Enter your credentials to access the admin dashboard</div>
+      
+      <div id="loginError" class="error-msg" style="display:none;"></div>
+      
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="adminEmail" placeholder="admin@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="adminPassword" placeholder="Enter password" required>
+        </div>
+        <button type="submit" class="submit-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          Login to Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+  
   <!-- Admin Panel -->
   <div class="admin-panel" id="adminPanel">
     <div class="admin-header">
@@ -1192,6 +1264,11 @@
     let orders = JSON.parse(localStorage.getItem('atebooster_orders') || '[]');
     let priceFilter = 'all'; // 'all', 'low', 'high'
     const PRICE_THRESHOLD = 50; // MYR - services below this are "low price"
+    
+    // Admin credentials
+    const ADMIN_EMAIL = 'founder@akmaltaufikenterprise.my';
+    const ADMIN_PASSWORD = 'Kaunter@32';
+    let isAdminLoggedIn = sessionStorage.getItem('atebooster_admin') === 'true';
     
     // Format currency
     function formatMYR(usd) {
@@ -1624,6 +1701,33 @@
     }
     
     // Admin panel
+    function showAdminLogin() {
+      if (isAdminLoggedIn) {
+        openAdminPanel();
+      } else {
+        document.getElementById('adminLoginOverlay').classList.add('active');
+      }
+    }
+    
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('adminEmail').value.trim();
+      const password = document.getElementById('adminPassword').value;
+      const errorEl = document.getElementById('loginError');
+      
+      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        isAdminLoggedIn = true;
+        sessionStorage.setItem('atebooster_admin', 'true');
+        document.getElementById('adminLoginOverlay').classList.remove('active');
+        document.getElementById('adminLoginForm').reset();
+        errorEl.style.display = 'none';
+        openAdminPanel();
+      } else {
+        errorEl.textContent = 'Invalid credentials. Access denied.';
+        errorEl.style.display = 'flex';
+      }
+    }
+    
     function openAdminPanel() {
       renderAdminStats();
       renderOrdersTable();
@@ -1713,10 +1817,16 @@
       document.getElementById('trackModal').classList.remove('active');
     });
     document.getElementById('trackSubmitBtn').addEventListener('click', trackOrder);
-    document.getElementById('adminBtn').addEventListener('click', openAdminPanel);
+    document.getElementById('adminBtn').addEventListener('click', showAdminLogin);
     document.getElementById('closeAdminBtn').addEventListener('click', () => {
       document.getElementById('adminPanel').classList.remove('active');
     });
+    document.getElementById('adminLoginClose').addEventListener('click', () => {
+      document.getElementById('adminLoginOverlay').classList.remove('active');
+      document.getElementById('loginError').style.display = 'none';
+      document.getElementById('adminLoginForm').reset();
+    });
+    document.getElementById('adminLoginForm').addEventListener('submit', handleAdminLogin);
     
     // Price filter buttons
     document.querySelectorAll('.price-filter-btn').forEach(btn => {
