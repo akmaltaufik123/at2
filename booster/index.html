@@ -288,6 +288,49 @@
       font-size: 0.9rem;
     }
     
+    /* Category Filter Buttons */
+    .category-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding: 0.75rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(10,7,7,0.25);
+      backdrop-filter: blur(17px);
+    }
+    
+    .category-filter-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ate-text-dim);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    
+    .category-filter-btn:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--ate-text);
+    }
+    
+    .category-filter-btn.active {
+      background: rgba(239,68,68,0.1);
+      border-color: var(--ate-border);
+      color: var(--ate-text);
+    }
+    
+    .category-filter-btn .category-icon {
+      font-size: 0.9rem;
+    }
+    
     /* Search & Actions Bar */
     .actions-bar {
       display: flex;
@@ -466,6 +509,22 @@
       border-color: var(--ate-border-hover);
       background: rgba(17,16,15,0.5);
       transform: translateY(-2px);
+    }
+    
+    /* Service ID Badge */
+    .service-id-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.2);
+      font-size: 0.6rem;
+      font-weight: 600;
+      font-family: 'Orbitron', sans-serif;
+      color: var(--ate-red);
+      letter-spacing: 0.05em;
     }
     
     /* Service Badges */
@@ -940,6 +999,183 @@
       color: var(--ate-green);
     }
     
+    /* Admin Sections */
+    .admin-section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+    
+    .admin-section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--ate-text);
+    }
+    
+    /* Markup Control */
+    .markup-control {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .markup-slider-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .markup-inputs {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .markup-slider {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.1);
+      outline: none;
+      -webkit-appearance: none;
+    }
+    
+    .markup-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--ate-red);
+      cursor: pointer;
+    }
+    
+    .markup-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--ate-red);
+      cursor: pointer;
+      border: none;
+    }
+    
+    .markup-number {
+      width: 80px;
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      color: var(--ate-text);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    
+    .markup-percent {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      color: var(--ate-green);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .markup-preview {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .markup-preview-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+    
+    .markup-preview-item .label {
+      color: var(--ate-text-muted);
+    }
+    
+    .markup-preview-item .value {
+      font-weight: 500;
+      color: var(--ate-text);
+    }
+    
+    .markup-preview-item.profit {
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .markup-preview-item.profit .value {
+      color: var(--ate-green);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    
+    /* Service ID Manager */
+    .service-id-manager {
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 0.5rem;
+      border-radius: 8px;
+      background: rgba(0,0,0,0.2);
+    }
+    
+    .service-id-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    
+    .service-id-row:last-child {
+      border-bottom: none;
+    }
+    
+    .service-id-row .service-name {
+      flex: 1;
+      font-size: 0.8rem;
+      color: var(--ate-text-dim);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .service-id-row .service-id-input {
+      width: 150px;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      color: var(--ate-text);
+      font-size: 0.75rem;
+      font-family: 'Orbitron', sans-serif;
+    }
+    
+    .service-id-row .save-id-btn {
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      border: 1px solid rgba(34,197,94,0.2);
+      background: rgba(34,197,94,0.1);
+      color: var(--ate-green);
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .service-id-row .save-id-btn:hover {
+      background: rgba(34,197,94,0.2);
+    }
+    
     .orders-table {
       width: 100%;
       border-collapse: collapse;
@@ -1076,9 +1312,9 @@
       <div class="header-actions">
         <button class="admin-btn" id="adminBtn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 20V10M18 20V4M6 20v-4"/>
+            <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
           </svg>
-          Dashboard
+          Admin
         </button>
         <a href="/" class="back-link">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1119,6 +1355,45 @@
       <button class="feature-filter-btn" data-feature="guaranteed">
         <span class="feature-icon">✅</span>
         Guaranteed
+      </button>
+    </div>
+    
+    <div class="category-filter" id="categoryFilter">
+      <button class="category-filter-btn active" data-category="all">
+        <span class="category-icon">🎯</span>
+        All Types
+      </button>
+      <button class="category-filter-btn" data-category="followers">
+        <span class="category-icon">👥</span>
+        Followers
+      </button>
+      <button class="category-filter-btn" data-category="likes">
+        <span class="category-icon">❤️</span>
+        Likes
+      </button>
+      <button class="category-filter-btn" data-category="views">
+        <span class="category-icon">👁️</span>
+        Views
+      </button>
+      <button class="category-filter-btn" data-category="comments">
+        <span class="category-icon">💬</span>
+        Comments
+      </button>
+      <button class="category-filter-btn" data-category="shares">
+        <span class="category-icon">🔗</span>
+        Shares
+      </button>
+      <button class="category-filter-btn" data-category="scraper">
+        <span class="category-icon">🔍</span>
+        Data Scraper
+      </button>
+      <button class="category-filter-btn" data-category="live">
+        <span class="category-icon">📺</span>
+        Live Stream
+      </button>
+      <button class="category-filter-btn" data-category="package">
+        <span class="category-icon">📦</span>
+        Packages
       </button>
     </div>
     
@@ -1264,7 +1539,7 @@
   <!-- Admin Panel -->
   <div class="admin-panel" id="adminPanel">
     <div class="admin-header">
-      <div class="admin-title">ATEBooster Dashboard</div>
+      <div class="admin-title">ATEBooster Admin</div>
       <button class="back-link" id="closeAdminBtn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M18 6L6 18M6 6l12 12"/>
@@ -1273,24 +1548,72 @@
       </button>
     </div>
     <div class="admin-content">
-      <div class="admin-stats" id="adminStats"></div>
-      <h3 style="margin-bottom:1rem;font-size:1rem;">Order History</h3>
-      <div style="overflow-x:auto;">
-        <table class="orders-table" id="ordersTable">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Service</th>
-              <th>Quantity</th>
-              <th>Customer Paid</th>
-              <th>Cost</th>
-              <th>Profit</th>
-              <th>Status</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody id="ordersBody"></tbody>
-        </table>
+      <!-- Markup Control Section -->
+      <div class="admin-section">
+        <h3 class="admin-section-title">Price Markup Control</h3>
+        <div class="markup-control">
+          <div class="markup-slider-container">
+            <label class="form-label">Markup Multiplier</label>
+            <div class="markup-inputs">
+              <input type="range" id="markupSlider" min="1" max="3" step="0.05" value="1.3" class="markup-slider">
+              <input type="number" id="markupInput" min="1" max="10" step="0.01" value="1.3" class="markup-number">
+              <span class="markup-percent" id="markupPercent">30%</span>
+            </div>
+            <p class="form-hint">Example: 1.3 means 30% profit on top of PadooInsta price</p>
+          </div>
+          <div class="markup-preview">
+            <div class="markup-preview-item">
+              <span class="label">PadooInsta Price (Cost)</span>
+              <span class="value">RM 100.00</span>
+            </div>
+            <div class="markup-preview-item">
+              <span class="label">Customer Price (Your Price)</span>
+              <span class="value" id="customerPricePreview">RM 130.00</span>
+            </div>
+            <div class="markup-preview-item profit">
+              <span class="label">Your Profit (Untung Bersih)</span>
+              <span class="value" id="profitPreview">RM 30.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Service ID Management Section -->
+      <div class="admin-section">
+        <h3 class="admin-section-title">Service ID Management</h3>
+        <p class="form-hint" style="margin-bottom:1rem;">Customize service IDs for easier tracking. Leave empty to use auto-generated IDs.</p>
+        <div class="service-id-manager" id="serviceIdManager">
+          <div class="form-hint">Loading services...</div>
+        </div>
+      </div>
+      
+      <!-- Stats Section -->
+      <div class="admin-section">
+        <h3 class="admin-section-title">Sales Overview</h3>
+        <div class="admin-stats" id="adminStats"></div>
+      </div>
+      
+      <!-- Order History Section -->
+      <div class="admin-section">
+        <h3 class="admin-section-title">Order History</h3>
+        <div style="overflow-x:auto;">
+          <table class="orders-table" id="ordersTable">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Service ID</th>
+                <th>Service</th>
+                <th>Quantity</th>
+                <th>Gross (PadooInsta)</th>
+                <th>Customer Paid</th>
+                <th>Profit (Untung)</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -1311,7 +1634,6 @@
     // Configuration
     const API_BASE = '/booster/api';
     const USD_TO_MYR = 4.47;
-    const PROFIT_MARGIN = 1.3; // 30% profit margin - adjust as needed
     
     // Platform definitions
     const PLATFORMS = [
@@ -1334,7 +1656,15 @@
     let orders = JSON.parse(localStorage.getItem('atebooster_orders') || '[]');
     let priceFilter = 'all'; // 'all', 'low', 'high'
     let featureFilter = 'all'; // 'all', 'no-drop', 'fast', 'refill-365', 'guaranteed'
+    let categoryFilter = 'all'; // 'all', 'followers', 'likes', 'views', 'comments', 'shares', 'scraper', 'live', 'package'
     const PRICE_THRESHOLD = 50; // MYR - services below this are "low price"
+    const WHATSAPP_NUMBER = '60189451570'; // WhatsApp Business number
+    
+    // Load custom markup from localStorage or use default
+    let customMarkup = parseFloat(localStorage.getItem('atebooster_markup') || '1.3');
+    
+    // Load custom service IDs from localStorage
+    let customServiceIds = JSON.parse(localStorage.getItem('atebooster_service_ids') || '{}');
     
     // Admin credentials - validated but not stored in code
     let isAdminLoggedIn = sessionStorage.getItem('atebooster_admin') === 'true';
@@ -1393,6 +1723,33 @@
       const type = service.type?.toLowerCase() || '';
       const name = service.name.toLowerCase();
       return type.includes('custom comment') || name.includes('custom comment');
+    }
+    
+    // Categorize service by type
+    function categorizeService(service) {
+      const name = service.name.toLowerCase();
+      const category = service.category?.toLowerCase() || '';
+      
+      if (name.includes('follower') || category.includes('follower')) return 'followers';
+      if (name.includes('like') || category.includes('like')) return 'likes';
+      if (name.includes('view') || name.includes('visit') || category.includes('view')) return 'views';
+      if (name.includes('comment') || category.includes('comment')) return 'comments';
+      if (name.includes('share') || category.includes('share')) return 'shares';
+      if (name.includes('scrape') || name.includes('extract') || category.includes('scrape')) return 'scraper';
+      if (name.includes('live') || category.includes('live')) return 'live';
+      if (name.includes('package') || category.includes('package')) return 'package';
+      return 'other';
+    }
+    
+    // Get custom service ID or generate one
+    function getServiceId(service) {
+      const key = `svc_${service.service}`;
+      if (customServiceIds[key]) {
+        return customServiceIds[key];
+      }
+      // Generate ATEBooster ID: ATE-{platform}-{number}
+      const platform = activePlatform.toUpperCase().substring(0, 3);
+      return `ATE-${platform}-${service.service}`;
     }
     
     // Group services by platform
@@ -1466,6 +1823,11 @@
         });
       }
       
+      // Apply category filter
+      if (categoryFilter !== 'all') {
+        filtered = filtered.filter(svc => categorizeService(svc) === categoryFilter);
+      }
+      
       // Apply price filter
       const thresholdMYR = PRICE_THRESHOLD * USD_TO_MYR;
       let lowPriceServices = [];
@@ -1474,7 +1836,7 @@
       if (priceFilter === 'all') {
         // Split into sections
         filtered.forEach(svc => {
-          const rate = parseFloat(svc.rate) * PROFIT_MARGIN * USD_TO_MYR;
+          const rate = parseFloat(svc.rate) * customMarkup * USD_TO_MYR;
           if (rate < thresholdMYR) {
             lowPriceServices.push(svc);
           } else {
@@ -1483,12 +1845,12 @@
         });
       } else if (priceFilter === 'low') {
         lowPriceServices = filtered.filter(svc => {
-          const rate = parseFloat(svc.rate) * PROFIT_MARGIN * USD_TO_MYR;
+          const rate = parseFloat(svc.rate) * customMarkup * USD_TO_MYR;
           return rate < thresholdMYR;
         });
       } else if (priceFilter === 'high') {
         highPriceServices = filtered.filter(svc => {
-          const rate = parseFloat(svc.rate) * PROFIT_MARGIN * USD_TO_MYR;
+          const rate = parseFloat(svc.rate) * customMarkup * USD_TO_MYR;
           return rate >= thresholdMYR;
         });
       }
@@ -1545,10 +1907,12 @@
     
     // Render individual service card
     function renderServiceCard(svc) {
-      const rate = parseFloat(svc.rate) * PROFIT_MARGIN;
+      const rate = parseFloat(svc.rate) * customMarkup;
       const badges = parseServiceBadges(svc);
+      const serviceId = getServiceId(svc);
       return `
         <div class="service-card" data-id="${svc.service}">
+          <div class="service-id-badge">${serviceId}</div>
           ${badges.length > 0 ? `
             <div class="service-badges">
               ${badges.map(b => `<span class="badge ${b.class}">${b.text}</span>`).join('')}
@@ -1585,9 +1949,10 @@
     function openOrderModal() {
       if (!selectedService) return;
       
-      const rate = parseFloat(selectedService.rate) * PROFIT_MARGIN;
+      const rate = parseFloat(selectedService.rate) * customMarkup;
+      const serviceId = getServiceId(selectedService);
       document.getElementById('modalServiceName').textContent = selectedService.name;
-      document.getElementById('modalServiceId').textContent = `Service ID: ${selectedService.service} · ${selectedService.type}`;
+      document.getElementById('modalServiceId').textContent = `Service ID: ${serviceId} · ${selectedService.type}`;
       document.getElementById('modalRate').textContent = `${formatMYR(rate)} (${formatUSD(rate)})`;
       document.getElementById('quantityHint').textContent = `Min: ${selectedService.min.toLocaleString()} · Max: ${selectedService.max >= 1000000000 ? 'Unlimited' : selectedService.max.toLocaleString()}`;
       
@@ -1615,11 +1980,11 @@
     // Update total price
     function updateTotal() {
       if (!selectedService) return;
-      const rate = parseFloat(selectedService.rate) * PROFIT_MARGIN;
+      const rate = parseFloat(selectedService.rate) * customMarkup;
       const qty = parseInt(document.getElementById('orderQuantity').value) || 0;
       const total = (rate * qty) / 1000;
       document.getElementById('modalTotal').textContent = `${formatMYR(total)} (${formatUSD(total)})`;
-      document.getElementById('submitText').textContent = qty > 0 ? `Place Order — ${formatMYR(total)}` : 'Place Order';
+      document.getElementById('submitText').textContent = qty > 0 ? `Order via WhatsApp — ${formatMYR(total)}` : 'Order via WhatsApp';
     }
     
     // Render quick select buttons
@@ -1655,15 +2020,14 @@
       return true;
     }
     
-    // Submit order
-    async function submitOrder(e) {
+    // Submit order - redirect to WhatsApp
+    function submitOrder(e) {
       e.preventDefault();
       
       const link = document.getElementById('orderLink').value.trim();
       const quantity = parseInt(document.getElementById('orderQuantity').value);
       const comments = document.getElementById('orderComments').value.trim();
       const errorEl = document.getElementById('orderError');
-      const submitBtn = document.getElementById('submitBtn');
       
       if (!link) {
         errorEl.textContent = 'Please enter a valid link.';
@@ -1684,64 +2048,53 @@
         return;
       }
       
-      submitBtn.disabled = true;
-      document.getElementById('submitText').textContent = 'Processing...';
-      errorEl.style.display = 'none';
+      // Build WhatsApp message
+      const serviceId = getServiceId(selectedService);
+      const rate = parseFloat(selectedService.rate) * customMarkup;
+      const total = (rate * quantity) / 1000;
       
-      try {
-        const orderData = {
-          service: selectedService.service,
-          link,
-          quantity
-        };
-        if (needsComments(selectedService)) {
-          orderData.comments = comments;
-        }
-        
-        const res = await fetch(`${API_BASE}/order`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(orderData)
-        });
-        
-        const data = await res.json();
-        
-        if (data.error) {
-          errorEl.textContent = data.error;
-          errorEl.style.display = 'flex';
-        } else if (data.order) {
-          // Save order locally
-          const customerRate = parseFloat(selectedService.rate) * PROFIT_MARGIN;
-          const costRate = parseFloat(selectedService.rate);
-          const newOrder = {
-            id: data.order,
-            serviceId: selectedService.service,
-            serviceName: selectedService.name,
-            quantity,
-            customerPaid: (customerRate * quantity) / 1000,
-            cost: (costRate * quantity) / 1000,
-            profit: ((customerRate - costRate) * quantity) / 1000,
-            status: 'pending',
-            date: new Date().toISOString(),
-            link
-          };
-          orders.unshift(newOrder);
-          localStorage.setItem('atebooster_orders', JSON.stringify(orders));
-          
-          document.getElementById('orderModal').classList.remove('active');
-          showToast(`Order #${data.order}`);
-          
-          // Reset form
-          document.getElementById('orderForm').reset();
-          document.getElementById('orderQuantity').value = '';
-        }
-      } catch (err) {
-        errorEl.textContent = 'Failed to place order. Please try again.';
-        errorEl.style.display = 'flex';
-      } finally {
-        submitBtn.disabled = false;
-        updateTotal();
+      let message = `🛒 *ATEBooster Order*\n\n`;
+      message += `*Service ID:* ${serviceId}\n`;
+      message += `*Service:* ${selectedService.name}\n`;
+      message += `*Quantity:* ${quantity.toLocaleString()}\n`;
+      message += `*Link:* ${link}\n`;
+      message += `*Total:* ${formatMYR(total)}\n`;
+      
+      if (needsComments(selectedService) && comments) {
+        message += `*Comments:* ${comments}\n`;
       }
+      
+      message += `\n_Please confirm and proceed with payment._`;
+      
+      // Save order locally for tracking
+      const costRate = parseFloat(selectedService.rate);
+      const newOrder = {
+        id: `WA-${Date.now()}`,
+        serviceId: selectedService.service,
+        customServiceId: serviceId,
+        serviceName: selectedService.name,
+        quantity,
+        customerPaid: (rate * quantity) / 1000,
+        cost: (costRate * quantity) / 1000,
+        profit: ((rate - costRate) * quantity) / 1000,
+        status: 'pending',
+        date: new Date().toISOString(),
+        link
+      };
+      orders.unshift(newOrder);
+      localStorage.setItem('atebooster_orders', JSON.stringify(orders));
+      
+      // Redirect to WhatsApp
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      
+      // Close modal and show toast
+      document.getElementById('orderModal').classList.remove('active');
+      showToast(`Order sent to WhatsApp`);
+      
+      // Reset form
+      document.getElementById('orderForm').reset();
+      document.getElementById('orderQuantity').value = '';
     }
     
     // Track order
@@ -1823,31 +2176,38 @@
     function openAdminPanel() {
       renderAdminStats();
       renderOrdersTable();
+      renderServiceIdManager();
+      updateMarkupPreview();
       document.getElementById('adminPanel').classList.add('active');
     }
     
     function renderAdminStats() {
       const totalOrders = orders.length;
-      const totalGross = orders.reduce((sum, o) => sum + (o.customerPaid || 0), 0);
-      const totalCost = orders.reduce((sum, o) => sum + (o.cost || 0), 0);
+      // Gross = actual PadooInsta cost (what you pay to PadooInsta)
+      const totalGross = orders.reduce((sum, o) => sum + (o.cost || 0), 0);
+      // Customer Paid = what customer pays you
+      const totalCustomerPaid = orders.reduce((sum, o) => sum + (o.customerPaid || 0), 0);
+      // Profit = Customer Paid - Gross (your untungkan bersih)
       const totalProfit = orders.reduce((sum, o) => sum + (o.profit || 0), 0);
+      const profitPercent = totalCustomerPaid > 0 ? ((totalProfit / totalCustomerPaid) * 100).toFixed(1) : 0;
       
       document.getElementById('adminStats').innerHTML = `
         <div class="admin-stat-card">
           <div class="admin-stat-label">Total Orders</div>
           <div class="admin-stat-value">${totalOrders}</div>
         </div>
-        <div class="admin-stat-card">
-          <div class="admin-stat-label">Gross Revenue</div>
-          <div class="admin-stat-value">${formatMYR(totalGross)}</div>
+        <div class="admin-stat-card" style="border-color: rgba(34,197,94,0.2);">
+          <div class="admin-stat-label">Gross (PadooInsta Cost)</div>
+          <div class="admin-stat-value profit">${formatMYR(totalGross)}</div>
         </div>
         <div class="admin-stat-card">
-          <div class="admin-stat-label">Total Cost</div>
-          <div class="admin-stat-value">${formatMYR(totalCost)}</div>
+          <div class="admin-stat-label">Customer Paid (Total)</div>
+          <div class="admin-stat-value">${formatMYR(totalCustomerPaid)}</div>
         </div>
-        <div class="admin-stat-card">
-          <div class="admin-stat-label">Net Profit</div>
+        <div class="admin-stat-card" style="border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.05);">
+          <div class="admin-stat-label">Profit (Untung Bersih)</div>
           <div class="admin-stat-value profit">${formatMYR(totalProfit)}</div>
+          <div style="font-size:0.7rem; color:var(--ate-green); margin-top:0.25rem;">${profitPercent}% margin</div>
         </div>
       `;
     }
@@ -1856,22 +2216,88 @@
       const tbody = document.getElementById('ordersBody');
       
       if (orders.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--ate-text-muted);">No orders yet</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--ate-text-muted);">No orders yet</td></tr>';
         return;
       }
       
       tbody.innerHTML = orders.map(o => `
         <tr>
-          <td>#${o.id}</td>
-          <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.serviceName}</td>
+          <td>${o.id}</td>
+          <td style="font-family:'Orbitron',sans-serif; font-size:0.7rem; color:var(--ate-red);">${o.customServiceId || 'ATE-' + o.serviceId}</td>
+          <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.serviceName}</td>
           <td>${o.quantity.toLocaleString()}</td>
+          <td style="color:var(--ate-green);">${formatMYR(o.cost)}</td>
           <td>${formatMYR(o.customerPaid)}</td>
-          <td>${formatMYR(o.cost)}</td>
-          <td style="color:var(--ate-green);">${formatMYR(o.profit)}</td>
+          <td style="color:var(--ate-green); font-weight:600;">${formatMYR(o.profit)}</td>
           <td><span class="status-badge status-${o.status}">${o.status}</span></td>
           <td>${new Date(o.date).toLocaleDateString()}</td>
         </tr>
       `).join('');
+    }
+    
+    function renderServiceIdManager() {
+      const container = document.getElementById('serviceIdManager');
+      if (allServices.length === 0) {
+        container.innerHTML = '<div class="form-hint">No services loaded yet.</div>';
+        return;
+      }
+      
+      // Show first 20 services for editing
+      const services = allServices.slice(0, 20);
+      container.innerHTML = services.map(svc => {
+        const key = `svc_${svc.service}`;
+        const customId = customServiceIds[key] || '';
+        const defaultId = getServiceId(svc);
+        return `
+          <div class="service-id-row">
+            <span class="service-name" title="${svc.name}">${svc.name}</span>
+            <input type="text" class="service-id-input" data-service="${svc.service}" value="${customId}" placeholder="${defaultId}">
+            <button class="save-id-btn" data-service="${svc.service}">Save</button>
+          </div>
+        `;
+      }).join('');
+      
+      // Attach save handlers
+      container.querySelectorAll('.save-id-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const serviceId = btn.dataset.service;
+          const input = container.querySelector(`.service-id-input[data-service="${serviceId}"]`);
+          const customId = input.value.trim();
+          const key = `svc_${serviceId}`;
+          
+          if (customId) {
+            customServiceIds[key] = customId;
+          } else {
+            delete customServiceIds[key];
+          }
+          
+          localStorage.setItem('atebooster_service_ids', JSON.stringify(customServiceIds));
+          btn.textContent = 'Saved!';
+          setTimeout(() => { btn.textContent = 'Save'; }, 1500);
+          renderServices(); // Refresh the main view
+        });
+      });
+    }
+    
+    function updateMarkupPreview() {
+      const markup = customMarkup;
+      const percent = ((markup - 1) * 100).toFixed(0);
+      const cost = 100; // Example RM 100
+      const customerPrice = cost * markup;
+      const profit = customerPrice - cost;
+      
+      document.getElementById('markupSlider').value = markup;
+      document.getElementById('markupInput').value = markup.toFixed(2);
+      document.getElementById('markupPercent').textContent = `${percent}%`;
+      document.getElementById('customerPricePreview').textContent = formatMYR(customerPrice / USD_TO_MYR);
+      document.getElementById('profitPreview').textContent = formatMYR(profit / USD_TO_MYR);
+    }
+    
+    function handleMarkupChange(value) {
+      customMarkup = parseFloat(value);
+      localStorage.setItem('atebooster_markup', customMarkup.toString());
+      updateMarkupPreview();
+      renderServices(); // Refresh the main view with new prices
     }
     
     // Show toast
@@ -1938,6 +2364,25 @@
         featureFilter = btn.dataset.feature;
         renderServices();
       });
+    });
+    
+    // Category filter buttons
+    document.querySelectorAll('.category-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.category-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        categoryFilter = btn.dataset.category;
+        renderServices();
+      });
+    });
+    
+    // Markup controls
+    document.getElementById('markupSlider').addEventListener('input', (e) => {
+      handleMarkupChange(e.target.value);
+    });
+    
+    document.getElementById('markupInput').addEventListener('change', (e) => {
+      handleMarkupChange(e.target.value);
     });
     
     // Close modals on overlay click
