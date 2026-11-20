@@ -953,6 +953,30 @@
       z-index: 10;
     }
     
+    .admin-header-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+    
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(239,68,68,0.3);
+      background: rgba(239,68,68,0.1);
+      color: var(--ate-red);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .logout-btn:hover {
+      background: rgba(239,68,68,0.2);
+      border-color: rgba(239,68,68,0.5);
+    }
+    
     .admin-title {
       font-family: 'Orbitron', sans-serif;
       font-size: 1.2rem;
@@ -1114,9 +1138,36 @@
     }
     
     .markup-preview-item.profit .value {
-      color: var(--ate-green);
+      color: #10b981;
       font-weight: 600;
-      font-size: 1rem;
+    }
+    
+    .save-markup-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(239,68,68,0.3);
+      background: rgba(239,68,68,0.1);
+      color: var(--ate-red);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 1rem;
+    }
+    
+    .save-markup-btn:hover {
+      background: rgba(239,68,68,0.2);
+      border-color: rgba(239,68,68,0.5);
+    }
+    
+    .save-markup-btn.saved {
+      background: rgba(16,185,129,0.1);
+      border-color: rgba(16,185,129,0.3);
+      color: #10b981;
     }
     
     /* Service ID Manager */
@@ -1540,12 +1591,22 @@
   <div class="admin-panel" id="adminPanel">
     <div class="admin-header">
       <div class="admin-title">ATEBooster Admin</div>
-      <button class="back-link" id="closeAdminBtn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-        Close
-      </button>
+      <div class="admin-header-actions">
+        <button class="logout-btn" id="logoutBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Logout
+        </button>
+        <button class="back-link" id="closeAdminBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+          Close
+        </button>
+      </div>
     </div>
     <div class="admin-content">
       <!-- Markup Control Section -->
@@ -1575,6 +1636,14 @@
               <span class="value" id="profitPreview">RM 30.00</span>
             </div>
           </div>
+          <button class="save-markup-btn" id="saveMarkupBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            Save Markup
+          </button>
         </div>
       </div>
       
@@ -1667,7 +1736,7 @@
     let customServiceIds = JSON.parse(localStorage.getItem('atebooster_service_ids') || '{}');
     
     // Admin credentials - validated but not stored in code
-    let isAdminLoggedIn = sessionStorage.getItem('atebooster_admin') === 'true';
+    let isAdminLoggedIn = false; // Always require fresh login
     
     // Format currency
     function formatMYR(usd) {
@@ -2162,7 +2231,6 @@
       
       if (email === validEmail && password === validPassword) {
         isAdminLoggedIn = true;
-        sessionStorage.setItem('atebooster_admin', 'true');
         document.getElementById('adminLoginOverlay').classList.remove('active');
         document.getElementById('adminLoginForm').reset();
         errorEl.style.display = 'none';
@@ -2174,6 +2242,10 @@
     }
     
     function openAdminPanel() {
+      // Set initial markup values
+      document.getElementById('markupSlider').value = customMarkup;
+      document.getElementById('markupInput').value = customMarkup.toFixed(2);
+      
       renderAdminStats();
       renderOrdersTable();
       renderServiceIdManager();
@@ -2280,24 +2352,15 @@
     }
     
     function updateMarkupPreview() {
-      const markup = customMarkup;
+      const markup = parseFloat(document.getElementById('markupInput').value);
       const percent = ((markup - 1) * 100).toFixed(0);
       const cost = 100; // Example RM 100
       const customerPrice = cost * markup;
       const profit = customerPrice - cost;
       
-      document.getElementById('markupSlider').value = markup;
-      document.getElementById('markupInput').value = markup.toFixed(2);
       document.getElementById('markupPercent').textContent = `${percent}%`;
       document.getElementById('customerPricePreview').textContent = formatMYR(customerPrice / USD_TO_MYR);
       document.getElementById('profitPreview').textContent = formatMYR(profit / USD_TO_MYR);
-    }
-    
-    function handleMarkupChange(value) {
-      customMarkup = parseFloat(value);
-      localStorage.setItem('atebooster_markup', customMarkup.toString());
-      updateMarkupPreview();
-      renderServices(); // Refresh the main view with new prices
     }
     
     // Show toast
@@ -2339,6 +2402,13 @@
     document.getElementById('closeAdminBtn').addEventListener('click', () => {
       document.getElementById('adminPanel').classList.remove('active');
     });
+    
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      isAdminLoggedIn = false;
+      document.getElementById('adminPanel').classList.remove('active');
+      // Show a brief confirmation
+      showToast('Logged out successfully');
+    });
     document.getElementById('adminLoginClose').addEventListener('click', () => {
       document.getElementById('adminLoginOverlay').classList.remove('active');
       document.getElementById('loginError').style.display = 'none';
@@ -2378,11 +2448,47 @@
     
     // Markup controls
     document.getElementById('markupSlider').addEventListener('input', (e) => {
-      handleMarkupChange(e.target.value);
+      document.getElementById('markupInput').value = e.target.value;
+      updateMarkupPreview();
     });
     
-    document.getElementById('markupInput').addEventListener('change', (e) => {
-      handleMarkupChange(e.target.value);
+    document.getElementById('markupInput').addEventListener('input', (e) => {
+      document.getElementById('markupSlider').value = e.target.value;
+      updateMarkupPreview();
+    });
+    
+    document.getElementById('saveMarkupBtn').addEventListener('click', () => {
+      const newMarkup = parseFloat(document.getElementById('markupInput').value);
+      if (newMarkup >= 1 && newMarkup <= 10) {
+        customMarkup = newMarkup;
+        localStorage.setItem('atebooster_markup', customMarkup.toString());
+        
+        // Show save confirmation
+        const btn = document.getElementById('saveMarkupBtn');
+        btn.classList.add('saved');
+        btn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Saved!
+        `;
+        
+        setTimeout(() => {
+          btn.classList.remove('saved');
+          btn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            Save Markup
+          `;
+        }, 2000);
+        
+        // Refresh the main view with new prices
+        renderServices();
+        showToast('Markup saved successfully');
+      }
     });
     
     // Close modals on overlay click
