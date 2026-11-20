@@ -1744,10 +1744,6 @@
       return `RM ${(usd * USD_TO_MYR).toFixed(2)}`;
     }
     
-    function formatUSD(usd) {
-      return `$${usd.toFixed(2)}`;
-    }
-    
     // Parse service name for badges
     function parseServiceBadges(service) {
       const badges = [];
@@ -1992,7 +1988,6 @@
           <div class="service-price">
             <span class="price-myr">${formatMYR(rate)}</span>
             <span class="price-unit">/ 1000</span>
-            <span class="price-usd">${formatUSD(rate)}</span>
           </div>
           <div class="service-stats">
             <div class="stat">
@@ -2023,7 +2018,7 @@
       const serviceId = getServiceId(selectedService);
       document.getElementById('modalServiceName').textContent = selectedService.name;
       document.getElementById('modalServiceId').textContent = `Service ID: ${serviceId} · ${selectedService.type}`;
-      document.getElementById('modalRate').textContent = `${formatMYR(rate)} (${formatUSD(rate)})`;
+      document.getElementById('modalRate').textContent = formatMYR(rate);
       document.getElementById('quantityHint').textContent = `Min: ${selectedService.min.toLocaleString()} · Max: ${selectedService.max >= 1000000000 ? 'Unlimited' : selectedService.max.toLocaleString()}`;
       
       const qtyInput = document.getElementById('orderQuantity');
@@ -2053,7 +2048,7 @@
       const rate = parseFloat(selectedService.rate) * customMarkup;
       const qty = parseInt(document.getElementById('orderQuantity').value) || 0;
       const total = (rate * qty) / 1000;
-      document.getElementById('modalTotal').textContent = `${formatMYR(total)} (${formatUSD(total)})`;
+      document.getElementById('modalTotal').textContent = formatMYR(total);
       document.getElementById('submitText').textContent = qty > 0 ? `Order via WhatsApp — ${formatMYR(total)}` : 'Order via WhatsApp';
     }
     
