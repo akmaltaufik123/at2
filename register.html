@@ -129,17 +129,66 @@
       var errorBox = document.getElementById("form-error");
       var form = document.getElementById("register-form");
       var T = function (k) { return (window.__rg && window.__rg[k]) || ""; };
+      
+      // Rate limiting for registration attempts
+      var REGISTRATION_COOLDOWN = 60000; // 60 seconds between attempts
+      var lastAttempt = 0;
+      var attemptCount = 0;
+      var MAX_ATTEMPTS = 3;
+      var LOCKOUT_DURATION = 300000; // 5 minutes lockout
+      var lockoutUntil = 0;
+      
       if (!window.portal.supabase) {
         errorBox.textContent = T("err-config");
         errorBox.hidden = false;
       }
+      
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
+        
+        // Check lockout
+        var now = Date.now();
+        if (now < lockoutUntil) {
+          var remaining = Math.ceil((lockoutUntil - now) / 1000);
+          errorBox.textContent = document.documentElement.lang === "en" 
+            ? "Too many attempts. Please wait " + remaining + " seconds." 
+            : "Terlalu banyak percubaan. Sila tunggu " + remaining + " saat.";
+          errorBox.hidden = false;
+          return;
+        }
+        
+        // Check rate limit
+        if (now - lastAttempt < REGISTRATION_COOLDOWN) {
+          errorBox.textContent = document.documentElement.lang === "en"
+            ? "Please wait before trying again."
+            : "Sila tunggu sebelum mencuba lagi.";
+          errorBox.hidden = false;
+          return;
+        }
+        
+        // Track attempts
+        attemptCount++;
+        lastAttempt = now;
+        if (attemptCount >= MAX_ATTEMPTS) {
+          lockoutUntil = now + LOCKOUT_DURATION;
+          attemptCount = 0;
+        }
+        
         if (document.getElementById("rg-hp").value) return;
         var p = window.portal;
         var name = p.sanitize(document.getElementById("name").value, 60);
         var email = document.getElementById("email").value.trim().toLowerCase();
         var password = document.getElementById("password").value;
+        
+        // Enhanced password validation
+        if (password.length < 8) {
+          errorBox.textContent = document.documentElement.lang === "en"
+            ? "Password must be at least 8 characters."
+            : "Kata laluan mestilah sekurang-kurangnya 8 aksara.";
+          errorBox.hidden = false;
+          return;
+        }
+        
         if (name.length < 2 || !/^[A-Za-z\u00C0-\u024F' .-]+$/.test(name)) {
           errorBox.textContent = T("err-name");
           errorBox.hidden = false;
@@ -155,22 +204,43 @@
           errorBox.hidden = false;
           return;
         }
-        var res = await window.portal.supabase.auth.signUp({
-          email: email,
-          password: password,
-          options: { data: { full_name: name } }
-        });
-        if (res.error) {
-          errorBox.textContent = document.documentElement.lang === "en" ? "Registration was unsuccessful. Check your details and try again." : "Pendaftaran tidak berjaya. Semak butiran anda dan cuba lagi.";
+        
+        // Disable submit button during request
+        var submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = document.documentElement.lang === "en" ? "Registering..." : "Mendaftar...";
+        
+        try {
+          var res = await window.portal.supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: { data: { full_name: name } }
+          });
+          
+          if (res.error) {
+            errorBox.textContent = document.documentElement.lang === "en" ? "Registration was unsuccessful. Check your details and try again." : "Pendaftaran tidak berjaya. Semak butiran anda dan cuba lagi.";
+            errorBox.hidden = false;
+            return;
+          }
+          
+          // Reset attempt counter on success
+          attemptCount = 0;
+          
+          if (res.data.session) {
+            window.location.href = "dashboard.html";
+          } else {
+            errorBox.className = "alert ok";
+            errorBox.textContent = T("rg-ok");
+            errorBox.hidden = false;
+          }
+        } catch (err) {
+          errorBox.textContent = document.documentElement.lang === "en" 
+            ? "An error occurred. Please try again." 
+            : "Ralat berlaku. Sila cuba lagi.";
           errorBox.hidden = false;
-          return;
-        }
-        if (res.data.session) {
-          window.location.href = "dashboard.html";
-        } else {
-          errorBox.className = "alert ok";
-          errorBox.textContent = T("rg-ok");
-          errorBox.hidden = false;
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = T("rg-btn");
         }
       });
     })();

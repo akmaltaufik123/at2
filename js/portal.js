@@ -5,10 +5,50 @@
 
   function makeClient() {
     if (!configured) return null;
-    return window.supabase.createClient(url, key);
+    return window.supabase.createClient(url, key, {
+      auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true
+      }
+    });
   }
 
   var supabase = makeClient();
+  
+  // Rate limiting for authentication operations
+  var AUTH_COOLDOWN = 5000; // 5 seconds between auth attempts
+  var lastAuthAttempt = 0;
+  var authAttemptCount = 0;
+  var MAX_AUTH_ATTEMPTS = 5;
+  var AUTH_LOCKOUT = 300000; // 5 minutes lockout
+  var authLockoutUntil = 0;
+  
+  function checkAuthRateLimit() {
+    var now = Date.now();
+    if (now < authLockoutUntil) {
+      return { allowed: false, remaining: Math.ceil((authLockoutUntil - now) / 1000) };
+    }
+    if (now - lastAuthAttempt < AUTH_COOLDOWN) {
+      return { allowed: false, remaining: Math.ceil((AUTH_COOLDOWN - (now - lastAuthAttempt)) / 1000) };
+    }
+    return { allowed: true };
+  }
+  
+  function recordAuthAttempt() {
+    var now = Date.now();
+    lastAuthAttempt = now;
+    authAttemptCount++;
+    if (authAttemptCount >= MAX_AUTH_ATTEMPTS) {
+      authLockoutUntil = now + AUTH_LOCKOUT;
+      authAttemptCount = 0;
+    }
+  }
+  
+  function resetAuthAttempts() {
+    authAttemptCount = 0;
+    authLockoutUntil = 0;
+  }
 
   function getUserName(u) {
     var n = u && u.user_metadata && u.user_metadata.full_name;
@@ -51,7 +91,10 @@
     esc: esc,
     sanitize: sanitize,
     isValidEmail: isValidEmail,
-    safeUrl: safeUrl
+    safeUrl: safeUrl,
+    checkAuthRateLimit: checkAuthRateLimit,
+    recordAuthAttempt: recordAuthAttempt,
+    resetAuthAttempts: resetAuthAttempts
   };
 
   async function requireAuth() {

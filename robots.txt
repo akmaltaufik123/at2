@@ -1,6 +1,17 @@
 User-agent: *
 Allow: /
 
+# Block sensitive paths
+Disallow: /admin.html
+Disallow: /register.html
+Disallow: /dashboard.html
+Disallow: /api.html
+Disallow: /js/supabase-config.js
+Disallow: /supabase/
+Disallow: /deploy/
+Disallow: /tests/
+Disallow: /docs/
+
 # ATEGateway admin/application interface (served at /gateway by the
 # dashboard origin through Cloudflare). Not for search indexing.
 Disallow: /gateway/

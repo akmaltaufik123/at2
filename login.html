@@ -143,6 +143,15 @@
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
         if (document.getElementById("lg-hp").value) return;
+        
+        // Check rate limit using portal's centralized rate limiter
+        var rateCheck = window.portal.checkAuthRateLimit();
+        if (!rateCheck.allowed) {
+          errorBox.textContent = T("err-wait") + rateCheck.remaining + T("err-wait-sec");
+          errorBox.hidden = false;
+          return;
+        }
+        
         var email = document.getElementById("email").value.trim().toLowerCase();
         var password = document.getElementById("password").value;
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !password) {
@@ -150,30 +159,32 @@
           errorBox.hidden = false;
           return;
         }
-        var now = Date.now();
-        var win = form._win || { count: 0, ts: 0 };
-        if (win.count >= 5 && now - win.ts < 60000) {
-          var wait = Math.ceil((60000 - (now - win.ts)) / 1000);
-          errorBox.textContent = T("err-wait") + wait + T("err-wait-sec");
-          errorBox.hidden = false;
-          return;
-        }
+        
+        // Record this attempt
+        window.portal.recordAuthAttempt();
+        
         var btn = form.querySelector("button[type=submit]");
         btn.disabled = true;
         btn.textContent = T("sending");
-        var res = await window.portal.supabase.auth.signInWithPassword({ email: email, password: password });
-        btn.disabled = false;
-        btn.textContent = T("lg-btn");
-        if (res.error) {
-          if (now - win.ts > 60000) { win.count = 0; win.ts = now; }
-          win.count++;
-          win.ts = now;
-          form._win = win;
-          errorBox.textContent = document.documentElement.lang === "en" ? "Sign-in was unsuccessful. Check your details and try again." : "Log masuk tidak berjaya. Semak butiran anda dan cuba lagi.";
+        try {
+          var res = await window.portal.supabase.auth.signInWithPassword({ email: email, password: password });
+          if (res.error) {
+            errorBox.textContent = document.documentElement.lang === "en" ? "Sign-in was unsuccessful. Check your details and try again." : "Log masuk tidak berjaya. Semak butiran anda dan cuba lagi.";
+            errorBox.hidden = false;
+            return;
+          }
+          // Reset rate limit on successful login
+          window.portal.resetAuthAttempts();
+          window.location.href = "dashboard.html";
+        } catch (err) {
+          errorBox.textContent = document.documentElement.lang === "en" 
+            ? "An error occurred. Please try again." 
+            : "Ralat berlaku. Sila cuba lagi.";
           errorBox.hidden = false;
-          return;
+        } finally {
+          btn.disabled = false;
+          btn.textContent = T("lg-btn");
         }
-        window.location.href = "dashboard.html";
       });
     })();
   </script>
