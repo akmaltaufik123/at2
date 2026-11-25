@@ -17,14 +17,14 @@
   <link rel="stylesheet" href="css/styles.css?v=20261112">
 <style>
 body.ate-video-home { isolation:isolate; }
-.ate-motion-bg { position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden; background:#000; }
+.ate-motion-bg { position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden; background:#000 url('assets/background-poster.jpg') center / cover no-repeat; }
 .ate-motion-bg video { width:100%; height:100%; object-fit:cover; opacity:.55; }
-.ate-video-home.video-active .section-alt { background:rgba(0,0,0,.38); }
+.ate-video-home .section-alt { background:rgba(0,0,0,.38); }
 @media (prefers-reduced-motion:reduce) { .ate-motion-bg video { display:none; } }
 </style>
 </head>
 <body class="ate-black ate-video-home">
-  <div class="ate-motion-bg" aria-hidden="true"><video muted loop playsinline preload="none" id="ate-bg-video"></video></div>
+  <div class="ate-motion-bg" aria-hidden="true"><video muted loop playsinline preload="none" poster="assets/background-poster.jpg" id="ate-bg-video"></video></div>
   <div id="loader" class="loader-overlay">
     <div class="loader-inner">
       <div class="loader-ring"><div class="loader-spin"></div></div>
@@ -213,7 +213,7 @@ body.ate-video-home { isolation:isolate; }
     })();
   </script>
   <script src="js/responsive-nav.js?v=20261111-nav"></script>
-  <script src="js/video-background.js"></script>
+  <script src="js/video-background.js?v=20261126"></script>
 </body>
 </html>
 
