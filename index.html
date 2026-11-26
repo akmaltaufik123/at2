@@ -117,6 +117,29 @@ body.ate-video-home .nav-inner{padding-top:8px!important;padding-bottom:8px!impo
 body.ate-video-home .nav{min-height:0!important;padding-top:0!important;padding-bottom:0!important}
 body.ate-video-home .ate-landing{height:calc(100dvh - 63px)}
 @media(max-width:900px){body.ate-video-home .ate-landing{height:calc(100dvh - 63px)}}
+</style><style>
+html{height:auto!important;overflow:auto!important;scroll-behavior:smooth}body.ate-video-home{height:auto!important;overflow:visible!important;font-family:Arial,Helvetica,sans-serif!important}
+body.ate-video-home .ate-motion-bg{position:absolute!important;height:clamp(480px,65vw,650px)!important}
+body.ate-video-home .nav-inner{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.ate-direct-nav{display:flex;flex-wrap:wrap;gap:clamp(12px,2vw,28px);align-items:center}.ate-direct-nav a{color:white;text-decoration:none;font-size:14px;padding:8px 0}.ate-direct-nav a:hover{color:#ff4545}
+body.ate-video-home .ate-landing{display:flex;align-items:flex-start;justify-content:center;height:auto;min-height:420px;max-height:none;overflow:visible;padding:60px clamp(20px,5.7vw,80px)}
+body.ate-video-home .ate-landing-copy{max-width:950px;margin:0}
+body.ate-video-home .section{display:block!important;position:relative!important;inset:auto!important;overflow:visible!important;padding:54px 0;background:#090909!important;border-top:1px solid #ffffff12}
+body.ate-video-home .section-alt{background:#101010!important}
+body.ate-video-home .section .container{width:min(1200px,90%);max-width:1200px;margin:auto}
+body.ate-video-home .section h2,body.ate-video-home .section h3{font-family:Arial,Helvetica,sans-serif!important;letter-spacing:-.025em}
+body.ate-video-home .section h2{font-size:clamp(26px,3vw,40px);line-height:1.15;margin:10px 0 20px;text-align:left}
+.ate-kicker{color:#ff4545;font-size:13px;font-weight:700;letter-spacing:.08em}.ate-intro{margin-bottom:24px}
+.ate-service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ate-service-card{overflow:hidden;background:#111;border:1px solid #ffffff26;border-radius:10px}
+.ate-service-card img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:cover;background:#181818}
+.ate-service-card>div{padding:18px}.ate-service-card h3{font-size:19px;margin:0 0 8px}.ate-service-card p{font-size:14px;line-height:1.55;margin:0}
+body.ate-video-home .reveal{opacity:1!important;transform:none!important;visibility:visible!important}
+.ate-product-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.ate-product{display:block;padding:25px;border:1px solid #ffffff30;border-radius:10px;background:linear-gradient(120deg,#250b0b,#101010 65%);color:white;text-decoration:none}.ate-product h3{font-size:27px;margin:0 0 10px}.ate-product span{color:#ff4545}
+.ate-cta{background:linear-gradient(110deg,#350b0b,#101010);border:1px solid #ff303052;border-radius:10px;padding:30px;margin-bottom:24px}.ate-cta a{display:inline-block;background:#ef293b;color:white;text-decoration:none;padding:13px 20px;margin-top:14px}
+@media(max-width:900px){body.ate-video-home .ate-landing{min-height:380px;padding:40px 5%}.ate-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ate-direct-nav{gap:12px}}
+@media(max-width:560px){.ate-service-grid,.ate-product-grid{grid-template-columns:1fr}.ate-direct-nav{width:100%;gap:12px}.ate-direct-nav a{font-size:12px}body.ate-video-home .section{padding:35px 0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style></head>
 <body class="ate-black ate-video-home">
   <div class="ate-motion-bg" aria-hidden="true"><video muted loop playsinline preload="none" poster="assets/background-poster.jpg" id="ate-bg-video"></video></div>
@@ -129,62 +152,21 @@ body.ate-video-home .ate-landing{height:calc(100dvh - 63px)}
   </div>
 
   <header class="nav">
-    <div class="container nav-inner" data-responsive-nav>
+    <div class="container nav-inner">
       <a href="index.html" class="brand ate-wordmark" aria-label="Akmal Taufik Enterprise"><img class="ate-header-logo" src="data:image/webp;base64,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" alt="Akmal Taufik Enterprise" width="120" height="47"></a>
-      <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false">
-        <span aria-hidden="true">☰</span> Menu
-      </button>
-      <nav class="nav-links" id="site-menu" aria-label="Main navigation">
-        <a href="#services">Services</a>
-        <a href="#coverage">Coverage Areas</a>
-        <a href="#contact">Contact Us</a>
-        <a href="login.html">Sign In</a>
-        <a href="/gateway/">ATEGateway</a>
-        <a href="/booster/" class="nav-booster">ATEBooster</a>
-        <a href="#contact" class="btn btn-primary">Contact Us</a>
-        
-      </nav>
+      
+      <nav class="ate-direct-nav" aria-label="Main navigation"><a href="#top">Home</a><a href="#services">Our Services</a><a href="#coverage">Coverage Areas</a><a href="#products">Our Products</a><a href="#contact">Contact Us</a><a href="login.html">Sign In</a></nav>
     </div>
   </header>
 
-<main class="ate-landing" id="top"><div class="ate-landing-copy"><div class="ate-landing-badge">✦ IT Solutions &amp; Technical Services</div><h1><span class="ate-gradient-name">Akmal Taufik Enterprise</span><br><em>IT &amp; AI Solutions</em></h1><p>IT infrastructure, technical support and AI solutions in Penang.</p><div class="ate-landing-actions"><a href="#contact">Contact Us</a><a href="#services">Our Services</a><a href="#coverage">Coverage Areas</a></div></div><aside class="ate-info"><div class="ate-info-label">AKMAL TAUFIK ENTERPRISE</div><h2>IT Solutions &amp; Technical Services</h2><p>IT infrastructure, technical support and AI solutions.</p><div class="ate-info-bottom"><span>Service coverage: Penang</span><a href="#coverage">View coverage ↗</a></div></aside></main>
-<section id="services" class="section ate-panel" aria-label="services"><a class="ate-close" href="#top" aria-label="Close panel">×</a>
+<main class="ate-landing" id="top"><div class="ate-landing-copy"><div class="ate-landing-badge">✦ IT Solutions &amp; Technical Services</div><h1><span class="ate-gradient-name">Akmal Taufik Enterprise</span><br><em>IT &amp; AI Solutions</em></h1><p>IT infrastructure, technical support and AI solutions in Penang.</p><div class="ate-landing-actions"><a href="#contact">Contact Us</a><a href="#services">Our Services</a><a href="#coverage">Coverage Areas</a></div></div></main>
+<section id="services" class="section"><div class="container"><div class="ate-kicker">— OUR SERVICES</div><h2>Complete IT Solutions for Your Business and Daily Operations.</h2><p class="ate-intro">From IT repair and network setup to CCTV, servers, AI and technical support.</p><div class="ate-service-grid" id="services-grid"><article class="ate-service-card" data-box="svc-3"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="" width="800" height="400"><div><h3>PC, Laptop & Phone Repair</h3><p>Diagnosis, repair, upgrades, software installation and setup.</p></div></article><article class="ate-service-card" data-box="svc-1"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="" width="800" height="400"><div><h3>CCTV & Security Systems</h3><p>Installation and configuration of CCTV and WiFi for homes and offices.</p></div></article><article class="ate-service-card" data-box="svc-2"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="" width="800" height="400"><div><h3>Network & WiFi Cabling</h3><p>Reliable network cabling, WiFi setup and troubleshooting.</p></div></article><article class="ate-service-card" data-box="svc-server"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="" width="800" height="400"><div><h3>Server & Rack Setup</h3><p>Server and rack installation, configuration and system integration.</p></div></article><article class="ate-service-card" data-box="svc-4"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="" width="800" height="400"><div><h3>AI Solutions & Classes</h3><p>Practical introductory AI classes online or in person, and AI assistance.</p></div></article><article class="ate-service-card" data-box="svc-6"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="" width="800" height="400"><div><h3>Remote & On-Site Support</h3><p>Technical assistance and additional services upon request.</p></div></article><article class="ate-service-card" data-box="svc-5"><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="" width="800" height="400"><div><h3>Basic Computer Classes</h3><p>Online or in-person computer classes covering beginner and everyday skills.</p></div></article></div></div></section>
+
+
+
+  <section id="coverage" class="section section-alt" aria-label="coverage">
     <div class="container">
-      <h2 class="glitch" data-text="Our Services">Our Services</h2>
-      <div class="grid" id="services-grid">
-        <div class="card reveal" data-box="svc-1">
-          <h3>Server, Server Rack, WiFi & CCTV Installation</h3>
-          <p>Installation and configuration of servers, racks, CCTV and WiFi for homes and offices.</p>
-        </div>
-        <div class="card reveal" data-box="svc-2">
-          <h3>Network Cabling</h3>
-          <p>Neat, reliable network cabling for homes and offices.</p>
-        </div>
-        <div class="card reveal" data-box="svc-3">
-          <h3>Computer & Laptop Setup</h3>
-          <p>Computer and laptop setup for homes and offices, including software installation and initial configuration.</p>
-        </div>
-        <div class="card reveal" data-box="svc-4">
-          <h3>Introduction to Artificial Intelligence (AI)</h3>
-          <p>Online or in-person introductory classes on practical AI tools.</p>
-        </div>
-        <div class="card reveal" data-box="svc-5">
-          <h3>Basic Computer Classes</h3>
-          <p>Online or in-person computer classes covering beginner and everyday skills.</p>
-        </div>
-        <div class="card reveal" data-box="svc-6">
-          <h3>Additional Services</h3>
-          <p>Additional services are available upon request. Contact us for details.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-
-  <section id="coverage" class="section section-alt ate-panel" aria-label="coverage"><a class="ate-close" href="#top" aria-label="Close panel">×</a>
-    <div class="container">
-      <h2 class="glitch" data-text="Coverage Areas">Coverage Areas</h2>
+      <div class="ate-kicker">— COVERAGE AREAS</div><h2>Our Service Coverage</h2>
       <div class="grid grid-3">
         <div class="card reveal">
           <h3>State Served</h3>
@@ -219,9 +201,9 @@ body.ate-video-home .ate-landing{height:calc(100dvh - 63px)}
 
 
 
-  <section id="contact" class="section section-alt ate-panel" aria-label="contact"><a class="ate-close" href="#top" aria-label="Close panel">×</a>
+  <section id="products" class="section"><div class="container"><div class="ate-kicker">— OUR PRODUCTS</div><h2>Our Platforms &amp; Solutions</h2><div class="ate-product-grid"><a href="/gateway/" class="ate-product"><h3><span>://ATE</span>Gateway ↗</h3><p>AI API gateway for personal projects and application development.</p></a><a href="/booster/" class="ate-product"><h3>ATE<span>Booster</span> ↗</h3><p>Explore ATEBooster.</p></a></div></div></section><section id="contact" class="section section-alt" aria-label="contact">
     <div class="container">
-      <h2 class="glitch" data-text="Contact Us">Contact Us</h2>
+      <div class="ate-kicker">— CONTACT US</div><div class="ate-cta"><h2>Need IT or AI Support?</h2><p>Get a quotation or consult with us for the right solution.</p><a href="https://wa.me/60189451570">Contact Us Now ↗</a></div>
       <div class="grid grid-3">
         <div class="card card-contact reveal">
           <h3>Call / WhatsApp</h3>
@@ -277,7 +259,7 @@ body.ate-video-home .ate-landing{height:calc(100dvh - 63px)}
       }
     })();
   </script>
-  <script src="js/responsive-nav.js?v=20261111-nav"></script>
+  
   <script src="js/video-background.js?v=20261126"></script>
 </body>
 </html>
