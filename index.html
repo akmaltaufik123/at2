@@ -85,6 +85,29 @@ body.ate-video-home .ate-motion-bg::after,body.ate-video-home .ate-motion-bg::be
 @keyframes ate-red-gradient{0%{background-position:0% 50%}100%{background-position:100% 50%}}
 .ate-video-home .ate-landing-copy{margin-bottom:36px}
 @media(prefers-reduced-motion:reduce){.ate-gradient-name{animation:none;background-position:0% 50%}}
+</style><style>
+body.ate-video-home .nav{border-bottom:1px solid #ff303055!important}
+body.ate-video-home .nav-inner{padding:20px clamp(20px,5.7vw,80px);gap:24px}
+body.ate-video-home .nav-links a{border-radius:0;background:transparent;border-color:transparent;padding:12px 10px;font-weight:500}
+body.ate-video-home .nav-links a.btn{border:1px solid #ff3030!important}
+body.ate-video-home .nav-toggle{border-radius:0!important;border-color:#ff3030!important}
+body.ate-video-home .ate-landing{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:center;gap:clamp(24px,6vw,90px);text-align:left;padding:32px clamp(20px,5.7vw,80px);height:calc(100dvh - 90px)}
+body.ate-video-home .ate-landing-copy{margin:0;width:100%;max-width:none;text-align:left}
+.ate-landing-badge{background:none;color:#ff4545;letter-spacing:.16em;text-transform:uppercase;font-weight:700;padding:0;margin-bottom:22px}
+.ate-landing h1{font-weight:750;letter-spacing:-.045em;font-size:clamp(36px,4.6vw,68px);line-height:1.05;text-align:left}
+.ate-landing p{margin:24px 0 0;max-width:550px;line-height:1.7;color:#e0e0e0}
+.ate-landing-actions{justify-content:flex-start;gap:12px;margin-top:28px}
+.ate-landing-actions a{border:1px solid #ff3030!important;border-radius:0!important;font-weight:600}
+.ate-landing-actions a:first-child{background:#ef293b!important;color:#fff!important}
+.ate-landing-actions a:not(:first-child){background:#090909b0!important}
+.ate-info{border:1px solid #ff3030;background:#101010d9;padding:26px;align-self:center;color:white}
+.ate-info-label{font-size:11px;letter-spacing:.1em;font-weight:700;color:#ff4545}
+.ate-info h2{font:600 21px/1.3 Inter,system-ui,sans-serif;margin:18px 0 0;color:white}
+.ate-info p{font-size:14px;margin:12px 0 22px}
+.ate-info-bottom{border-top:1px solid #ff303055;padding-top:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;flex-wrap:wrap}
+.ate-info-bottom a{border:1px solid #ff3030;padding:8px;color:white;text-decoration:none}
+@media(max-width:900px){body.ate-video-home .ate-landing{grid-template-columns:1fr;align-content:center;gap:22px;height:calc(100dvh - 76px);padding:18px 20px;overflow:auto}.ate-landing h1{font-size:clamp(28px,6vw,46px)}.ate-info{padding:16px}.ate-info h2{font-size:17px;margin-top:10px}.ate-info p{margin:8px 0 12px}.ate-landing-badge{margin-bottom:12px}.ate-landing p{margin-top:12px}.ate-landing-actions{margin-top:16px}}
+@media(max-height:650px) and (max-width:900px){body.ate-video-home .ate-landing{align-content:start}.ate-info{padding:12px}}
 </style></head>
 <body class="ate-black ate-video-home">
   <div class="ate-motion-bg" aria-hidden="true"><video muted loop playsinline preload="none" poster="assets/background-poster.jpg" id="ate-bg-video"></video></div>
@@ -115,7 +138,7 @@ body.ate-video-home .ate-motion-bg::after,body.ate-video-home .ate-motion-bg::be
     </div>
   </header>
 
-<main class="ate-landing" id="top"><div class="ate-landing-copy"><div class="ate-landing-badge">✦ IT Solutions &amp; Technical Services</div><h1><span class="ate-gradient-name">Akmal Taufik Enterprise</span><br><em>IT &amp; AI Solutions</em></h1><p>IT infrastructure, technical support and AI solutions in Penang.</p><div class="ate-landing-actions"><a href="#contact">Contact Us</a><a href="#services">Our Services</a><a href="#coverage">Coverage Areas</a></div></div></main>
+<main class="ate-landing" id="top"><div class="ate-landing-copy"><div class="ate-landing-badge">✦ IT Solutions &amp; Technical Services</div><h1><span class="ate-gradient-name">Akmal Taufik Enterprise</span><br><em>IT &amp; AI Solutions</em></h1><p>IT infrastructure, technical support and AI solutions in Penang.</p><div class="ate-landing-actions"><a href="#contact">Contact Us</a><a href="#services">Our Services</a><a href="#coverage">Coverage Areas</a></div></div><aside class="ate-info"><div class="ate-info-label">AKMAL TAUFIK ENTERPRISE</div><h2>IT Solutions &amp; Technical Services</h2><p>IT infrastructure, technical support and AI solutions.</p><div class="ate-info-bottom"><span>Service coverage: Penang</span><a href="#coverage">View coverage ↗</a></div></aside></main>
 <section id="services" class="section ate-panel" aria-label="services"><a class="ate-close" href="#top" aria-label="Close panel">×</a>
     <div class="container">
       <h2 class="glitch" data-text="Our Services">Our Services</h2>
