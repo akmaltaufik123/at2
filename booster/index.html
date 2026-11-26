@@ -1351,7 +1351,7 @@ body,button,input,select,textarea{font-family:Arial,sans-serif}body{background:#
 main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:left;margin-bottom:24px}.hero-badge{border:0;background:none;padding:0;margin-bottom:10px;color:#ff505d;letter-spacing:.14em}.hero h1{font-family:Arial,sans-serif;font-size:clamp(32px,5vw,52px);margin-bottom:10px}.hero p{margin:0;max-width:680px;font-size:15px;line-height:1.6}
 .booster-controls{background:#101012;border:1px solid #54232b;border-radius:8px;padding:20px;margin-bottom:28px}.filter-heading{font-size:12px;color:#bfc0c7;margin:0 0 9px;font-weight:600}.booster-controls .platform-tabs,.booster-controls .feature-filter,.booster-controls .category-filter,.booster-controls .price-filter{background:none;border:0;padding:0;gap:7px;margin:0 0 18px;backdrop-filter:none}.booster-controls .price-filter{margin-bottom:0;flex-wrap:wrap}.platform-tab,.feature-filter-btn,.category-filter-btn,.price-filter-btn{border:1px solid #54232b;background:#09090b;color:#ddd;border-radius:5px;min-height:36px;padding:8px 12px;font-size:13px;min-width:0}.platform-tab.active,.feature-filter-btn.active,.category-filter-btn.active,.price-filter-btn.active{background:#e93646;border-color:#e93646;color:#fff}.platform-tab.active .count{background:#0003;color:white}.platform-tab .count{margin-left:4px}.booster-controls .actions-bar{margin-bottom:12px}.search-input,.action-btn{background-color:#09090b;border:1px solid #65212a;border-radius:5px;color:#eee;min-height:44px}.search-input:focus{border-color:#e93646}.services-header{border-color:#54232b}.services-header .platform-name{color:white;font-size:17px;letter-spacing:0}.services-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.service-card{background:#101012;border:1px solid var(--ate-border);border-radius:8px;padding:18px;min-width:0;backdrop-filter:none}.service-card:hover{background:#131215;transform:none}.service-card:before{display:none}.service-name{font-size:15px;font-weight:600;display:block;overflow:visible;overflow-wrap:anywhere;min-height:0}.service-price,.stat{background:#09090b;border:1px solid #54232b;border-radius:5px}.price-myr{font-family:Arial,sans-serif;font-size:25px;color:#fff}.stat-value{color:#ddd}.select-btn{background:#e93646;border:1px solid #e93646;color:white;border-radius:5px;min-height:42px;font-weight:600}.select-btn:hover{background:#bd2635;color:white}.modal{background:#101012;border:1px solid #65212a;border-radius:8px}.form-input{background:#09090b;color:white;border-color:#65212a}.section-header{background:#101012;border-color:#54232b}button:focus-visible,a:focus-visible{outline:2px solid #ff6875;outline-offset:2px}
 @media(max-width:1000px){.services-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){header{padding:10px 12px}.header-inner{flex-wrap:wrap}.header-actions{gap:6px}.logo-sub{font-size:9px}.back-link,.admin-btn{font-size:11px;padding:7px 9px}main{padding-top:126px}.hero{margin-bottom:18px}.booster-controls{padding:14px}.platform-tab,.feature-filter-btn,.category-filter-btn,.price-filter-btn{font-size:12px;min-height:40px;padding:8px 10px}.actions-bar{flex-direction:column}.search-input{min-width:0;width:100%;font-size:16px}.action-btn{justify-content:center}.services-grid{grid-template-columns:1fr}.service-card{padding:15px}.service-price{flex-wrap:wrap}}
-</style><style id="booster-arial">*,*::before,*::after{font-family:Arial,sans-serif!important}</style></head>
+</style><style id="booster-arial">*,*::before,*::after{font-family:Arial,sans-serif!important}</style><style id="booster-price-bands">.price-band{display:inline-flex;align-items:center;font:600 11px Arial,sans-serif;padding:4px 8px;border:1px solid;border-radius:4px;white-space:nowrap}.price-band.low{color:#45dc89;border-color:#286744;background:#10251a}.price-band.high{color:#ff6875;border-color:#78303a;background:#291318}.service-price{flex-wrap:wrap;gap:8px}.section-header.low{border-color:#286744}.section-header.high{border-color:#78303a}.price-myr{overflow-wrap:anywhere;font-variant-numeric:tabular-nums}</style></head>
 <body>
   <div class="bg-pattern"></div>
   <div class="bg-overlay"></div>
@@ -1466,8 +1466,8 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
     
     <div class="price-filter">
       <button class="price-filter-btn active" data-filter="all">All Prices</button>
-      <button class="price-filter-btn" data-filter="low">💰 Low Price</button>
-      <button class="price-filter-btn" data-filter="high">💎 High Price</button>
+      <button class="price-filter-btn" data-filter="low">Low Price · Below RM50</button>
+      <button class="price-filter-btn" data-filter="high">High Price · RM50 and above</button>
     </div>
     
     </section><div class="services-header">
@@ -1745,9 +1745,13 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
     let isAdminLoggedIn = false; // Always require fresh login
     
     // Format currency
+    function formatAmount(value) {
+      return Number(value).toLocaleString('en-MY', {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+    function formatQuantity(value) { return Number(value).toLocaleString('en-MY'); }
     function formatMYR(usd) {
       const myr = Number(usd) * USD_TO_MYR;
-      return Number.isFinite(myr) && myr >= 0 ? `RM ${myr.toFixed(2)}` : 'Unavailable';
+      return Number.isFinite(myr) && myr >= 0 ? `RM ${formatAmount(myr)}` : 'Unavailable';
     }
     
     // Parse service name for badges
@@ -1927,6 +1931,9 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
         });
       }
       
+      const byPrice = (a,b) => Number(a.rate) - Number(b.rate);
+      lowPriceServices.sort(byPrice);
+      highPriceServices.sort(byPrice);
       const platform = PLATFORMS.find(p => p.key === activePlatform);
       document.getElementById('platformName').textContent = platform?.label?.toUpperCase() || '';
       
@@ -1993,16 +2000,17 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
           <div class="service-name">${svc.name}</div>
           <div class="service-price">
             <span class="price-myr">${formatMYR(rate)}</span>
+            <span class="price-band ${Math.round(rate * USD_TO_MYR * 100) / 100 < PRICE_THRESHOLD ? 'low' : 'high'}">${Math.round(rate * USD_TO_MYR * 100) / 100 < PRICE_THRESHOLD ? 'Low Price' : 'High Price'}</span>
             <span class="price-unit">/ 1000</span>
           </div>
           <div class="service-stats">
             <div class="stat">
               <div class="stat-label">Min</div>
-              <div class="stat-value">${svc.min.toLocaleString()}</div>
+              <div class="stat-value">${formatQuantity(svc.min)}</div>
             </div>
             <div class="stat">
               <div class="stat-label">Max</div>
-              <div class="stat-value">${svc.max >= 1000000000 ? '∞' : svc.max.toLocaleString()}</div>
+              <div class="stat-value">${svc.max >= 1000000000 ? '∞' : formatQuantity(svc.max)}</div>
             </div>
           </div>
           <button class="select-btn" data-service='${JSON.stringify(svc).replace(/'/g, "&#39;")}'>
@@ -2025,11 +2033,11 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
       document.getElementById('modalServiceName').textContent = selectedService.name;
       document.getElementById('modalServiceId').textContent = `Service ID: ${serviceId} · ${selectedService.type}`;
       document.getElementById('modalRate').textContent = formatMYR(rate);
-      document.getElementById('quantityHint').textContent = `Min: ${selectedService.min.toLocaleString()} · Max: ${selectedService.max >= 1000000000 ? 'Unlimited' : selectedService.max.toLocaleString()}`;
+      document.getElementById('quantityHint').textContent = `Min: ${formatQuantity(selectedService.min)} · Max: ${selectedService.max >= 1000000000 ? 'Unlimited' : formatQuantity(selectedService.max)}`;
       
       const qtyInput = document.getElementById('orderQuantity');
       qtyInput.value = '';
-      qtyInput.placeholder = `Enter ${selectedService.min.toLocaleString()} - ${selectedService.max >= 1000000000 ? '∞' : selectedService.max.toLocaleString()}`;
+      qtyInput.placeholder = `Enter ${formatQuantity(selectedService.min)} - ${selectedService.max >= 1000000000 ? '∞' : formatQuantity(selectedService.max)}`;
       
       // Show/hide comments field
       const commentsGroup = document.getElementById('commentsGroup');
@@ -2107,8 +2115,8 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
       }
       
       if (!validateQuantity(quantity)) {
-        const maxMsg = selectedService.max >= 1000000000 ? 'unlimited' : selectedService.max.toLocaleString();
-        errorEl.textContent = `Quantity must be between ${selectedService.min.toLocaleString()} and ${maxMsg}.`;
+        const maxMsg = selectedService.max >= 1000000000 ? 'unlimited' : formatQuantity(selectedService.max);
+        errorEl.textContent = `Quantity must be between ${formatQuantity(selectedService.min)} and ${maxMsg}.`;
         errorEl.style.display = 'flex';
         return;
       }
@@ -2127,7 +2135,7 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
       let message = `🛒 *ATEBooster Order*\n\n`;
       message += `*Service ID:* ${serviceId}\n`;
       message += `*Service:* ${selectedService.name}\n`;
-      message += `*Quantity:* ${quantity.toLocaleString()}\n`;
+      message += `*Quantity:* ${formatQuantity(quantity)}\n`;
       message += `*Link:* ${link}\n`;
       message += `*Total:* ${formatMYR(total)}\n`;
       
@@ -2198,9 +2206,9 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
                 <span class="label">Status</span>
                 <span class="status-badge status-${(data.status || 'pending').toLowerCase().replace(' ', '-')}">${data.status || 'Unknown'}</span>
               </div>
-              ${data.charge ? `<div class="price-row"><span class="label">Charge</span><span class="value">${data.charge} ${data.currency || 'USD'}</span></div>` : ''}
-              ${data.start_count ? `<div class="price-row"><span class="label">Start Count</span><span class="value">${parseInt(data.start_count).toLocaleString()}</span></div>` : ''}
-              ${data.remains !== undefined ? `<div class="price-row"><span class="label">Remaining</span><span class="value">${parseInt(data.remains).toLocaleString()}</span></div>` : ''}
+              ${data.charge ? `<div class="price-row"><span class="label">Charge</span><span class="value">${formatAmount(data.charge)} ${data.currency || 'USD'}</span></div>` : ''}
+              ${data.start_count ? `<div class="price-row"><span class="label">Start Count</span><span class="value">${formatQuantity(parseInt(data.start_count))}</span></div>` : ''}
+              ${data.remains !== undefined ? `<div class="price-row"><span class="label">Remaining</span><span class="value">${formatQuantity(parseInt(data.remains))}</span></div>` : ''}
               ${progress !== null ? `<div style="margin-top:0.75rem;"><div style="height:4px;background:rgba(255,255,255,0.05);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${progress}%;background:linear-gradient(90deg,rgba(239,68,68,0.5),rgba(34,197,94,0.5));"></div></div><div style="text-align:right;font-size:0.75rem;color:var(--ate-text-muted);margin-top:0.35rem;">${progress}% complete</div></div>` : ''}
             </div>
           `;
@@ -2299,7 +2307,7 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
           <td>${o.id}</td>
           <td style="font-family:Arial,sans-serif; font-size:0.7rem; color:var(--ate-red);">${o.customServiceId || 'ATE-' + o.serviceId}</td>
           <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.serviceName}</td>
-          <td>${o.quantity.toLocaleString()}</td>
+          <td>${formatQuantity(o.quantity)}</td>
           <td style="color:var(--ate-green);">${formatMYR(o.cost)}</td>
           <td>${formatMYR(o.customerPaid)}</td>
           <td style="color:var(--ate-green); font-weight:600;">${formatMYR(o.profit)}</td>
