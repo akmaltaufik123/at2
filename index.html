@@ -151,6 +151,11 @@ body.ate-video-home .reveal{opacity:1!important;transform:none!important;visibil
 @media(max-width:800px){#products .ate-product-grid{grid-template-columns:1fr}#products .ate-product{grid-template-columns:clamp(76px,24%,125px) minmax(0,1fr) auto}}
 @media(max-width:400px){#products .ate-product{gap:8px;padding-right:8px}#products .ate-product p{font-size:12px}#products .ate-arrow{padding:5px 7px}}
 </style>
+<style>
+#products .ate-product:has(.ate-gateway-brand){grid-template-columns:clamp(88px,28%,145px) minmax(0,1fr) auto}
+#products .ate-product .ate-gateway-brand img{width:80%;max-width:208px}
+@media(max-width:400px){#products .ate-product:has(.ate-gateway-brand){grid-template-columns:clamp(78px,27%,100px) minmax(0,1fr) auto}}
+</style>
 </head>
 <body class="ate-black ate-video-home">
   <div class="ate-motion-bg" aria-hidden="true"><video muted loop playsinline preload="none" poster="assets/background-poster.jpg" id="ate-bg-video"></video></div>
