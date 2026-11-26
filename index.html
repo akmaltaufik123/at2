@@ -174,7 +174,17 @@ body.ate-video-home .section h2{margin:0 0 18px;line-height:1.15}
 #coverage .card ul li,#coverage .card ul li:hover{padding:9px 0 9px 26px;color:#ff4545!important;border-bottom-color:rgba(38,38,46,.8);transition:none!important;cursor:default}
 #coverage .card ul li::before,#coverage .card ul li:hover::before{transform:translateY(-50%)!important;width:8px;height:8px;box-shadow:0 0 6px rgba(220,38,38,.7);transition:none!important}
 </style>
-</head>
+<style id="coverage-layout-refinement">
+body.ate-video-home #coverage .container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:20px 28px;align-items:center}
+#coverage .coverage-heading{grid-column:1;grid-row:1;min-width:0}
+body.ate-video-home #coverage .coverage-heading h2{margin:0 0 10px;line-height:1.15}
+#coverage .coverage-heading p{margin:0;color:#bcbcbc;font-size:14px;line-height:1.6}
+#coverage .grid{grid-column:2;grid-row:1;align-items:stretch;margin:0;grid-template-columns:repeat(2,minmax(0,1fr))}
+#coverage .card{margin:0;padding:16px}
+#coverage .coverage-note{grid-column:1/-1;grid-row:2;margin:0;padding:14px 0 0;max-width:none;width:100%;border-top:1px solid #ffffff15;text-align:center;line-height:1.6}
+@media(max-width:800px){body.ate-video-home #coverage .container{grid-template-columns:1fr;gap:18px}#coverage .coverage-heading,#coverage .grid,#coverage .coverage-note{grid-column:1;grid-row:auto}}
+@media(max-width:560px){#coverage .grid{grid-template-columns:1fr}}
+</style></head>
 <body class="ate-black ate-video-home">
   <div class="ate-motion-bg" aria-hidden="true"><video muted loop playsinline preload="none" poster="assets/background-poster.jpg" id="ate-bg-video"></video></div>
   <div id="loader" class="loader-overlay">
@@ -200,7 +210,7 @@ body.ate-video-home .section h2{margin:0 0 18px;line-height:1.15}
 
   <section id="coverage" class="section section-alt" aria-label="coverage">
     <div class="container">
-      <div class="ate-kicker">COVERAGE AREAS</div><h2>Our Service Coverage</h2>
+      <div class="coverage-heading"><div class="ate-kicker">COVERAGE AREAS</div><h2>Our Service Coverage</h2><p>We cover selected areas in Penang Island and Seberang Perai.</p></div>
       <div class="grid grid-3">
         
         <div class="card reveal">
