@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +8,8 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()">
 
-  <title data-i18n="title">Perkhidmatan IT Pulau Pinang — Server, CCTV, Kelas Komputer &amp; AI</title>
-  <meta name="description" content="Perkhidmatan IT di Pulau Pinang — pemasangan server, rack server, WiFi, CCTV, kabel rangkaian, komputer dan laptop, serta kelas komputer dan AI. IT services in Penang, Malaysia.">
+  <title>Akmal Taufik Enterprise — IT &amp; AI Solutions</title>
+  <meta name="description" content="Services IT di Pulau Pinang — pemasangan server, rack server, WiFi, CCTV, kabel rangkaian, komputer dan laptop, serta kelas komputer dan AI. IT services in Penang, Malaysia.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
@@ -62,6 +62,18 @@ body.ate-video-home{font-family:Inter,system-ui,sans-serif!important;overflow-x:
 .ate-video-home .glitch::before,.ate-video-home .glitch::after{content:none!important;display:none!important}
 .ate-video-home .glitch{animation:none!important;text-shadow:none!important}
 .ate-video-home .ate-landing-copy{margin-top:auto;padding-top:0}
+</style><style>
+html,body.ate-video-home{height:100%;overflow:hidden!important}
+.ate-video-home .ate-motion-bg{position:fixed!important;height:100dvh}
+.ate-video-home .ate-landing{min-height:0;height:calc(100dvh - 80px);padding:12px 20px 24px;justify-content:flex-end}
+.ate-video-home .ate-landing-copy{margin:auto auto 24px;padding:0}
+.ate-landing h1 em{font:inherit!important;color:inherit!important;letter-spacing:inherit!important}
+.ate-landing-actions a:not(:first-child){background:linear-gradient(135deg,#ffffff20,#0008);color:white;backdrop-filter:blur(16px)}
+.ate-video-home .ate-panel{display:none!important;position:fixed!important;inset:0;z-index:90;overflow:auto;padding:70px 24px 40px;background:#080808!important}
+.ate-video-home .ate-panel:target{display:block!important}
+.ate-panel .reveal{opacity:1!important;transform:none!important;visibility:visible!important}
+.ate-close{position:fixed;top:18px;right:24px;z-index:95;font:32px Inter,sans-serif;color:white;background:#222;border:1px solid #777;border-radius:6px;padding:0 12px;text-decoration:none}
+@media(max-width:560px){.ate-landing-actions{flex-direction:row!important;gap:6px}.ate-landing-actions a{width:auto!important;padding:10px;font-size:12px}.ate-landing-stats{gap:6px!important}.ate-landing h1{font-size:clamp(25px,6vw,34px)}}
 </style></head>
 <body class="ate-black ate-video-home">
   <div class="ate-motion-bg" aria-hidden="true"><video muted loop playsinline preload="none" poster="assets/background-poster.jpg" id="ate-bg-video"></video></div>
@@ -69,7 +81,7 @@ body.ate-video-home{font-family:Inter,system-ui,sans-serif!important;overflow-x:
     <div class="loader-inner">
       <div class="loader-ring"><div class="loader-spin"></div></div>
       <div class="loader-dot"></div>
-      <div class="loader-text" data-i18n="loading-text">Please wait...</div>
+      <div class="loader-text">Please wait...</div>
     </div>
   </div>
 
@@ -79,50 +91,47 @@ body.ate-video-home{font-family:Inter,system-ui,sans-serif!important;overflow-x:
       <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false">
         <span aria-hidden="true">☰</span> Menu
       </button>
-      <nav class="nav-links" id="site-menu" aria-label="Navigasi utama">
-        <a href="#services" data-i18n="nav-services">Perkhidmatan</a>
-        <a href="#coverage" data-i18n="nav-coverage">Kawasan Liputan</a>
-        <a href="#contact" data-i18n="nav-contact">Hubungi Kami</a>
-        <a href="login.html" data-i18n="nav-portal">Log Masuk</a>
-        <a href="/gateway/" data-i18n="nav-gateway">ATEGateway</a>
-        <a href="/booster/" class="nav-booster" data-i18n="nav-booster">ATEBooster</a>
-        <a href="#contact" class="btn btn-primary" data-i18n="nav-quote">Minta Sebut Harga</a>
-        <div class="lang-switch">
-          <button class="lang-btn" data-lang="my">MY</button>
-          <button class="lang-btn" data-lang="en">ENG</button>
-        </div>
+      <nav class="nav-links" id="site-menu" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#coverage">Coverage Areas</a>
+        <a href="#contact">Contact Us</a>
+        <a href="login.html">Sign In</a>
+        <a href="/gateway/">ATEGateway</a>
+        <a href="/booster/" class="nav-booster">ATEBooster</a>
+        <a href="#contact" class="btn btn-primary">Contact Us</a>
+        
       </nav>
     </div>
   </header>
 
-<main class="ate-landing" id="top"><div class="ate-landing-copy"><div class="ate-landing-badge">✦ IT Solutions &amp; Technical Services</div><h1>Akmal Taufik Enterprise<br><em>IT &amp; AI Solutions</em></h1><p>IT infrastructure, technical support and AI solutions in Penang.</p><div class="ate-landing-actions"><a href="https://wa.me/60189451570" data-i18n="nav-quote">Minta Sebut Harga</a><a href="#services" data-i18n="nav-services">Perkhidmatan</a></div></div><div class="ate-landing-stats"><span>◈ Pulau Pinang</span><span>◈ Remote &amp; On-Site</span><span>◈ IT &amp; AI</span></div></main>
-<section id="services" class="section">
+<main class="ate-landing" id="top"><div class="ate-landing-copy"><div class="ate-landing-badge">✦ IT Solutions &amp; Technical Services</div><h1>Akmal Taufik Enterprise<br><em>IT &amp; AI Solutions</em></h1><p>IT infrastructure, technical support and AI solutions in Penang.</p><div class="ate-landing-actions"><a href="#contact">Contact Us</a><a href="#services">Our Services</a><a href="#coverage">Coverage Areas</a></div></div><div class="ate-landing-stats"><span>◈ Penang</span><span>◈ Remote &amp; On-Site</span><span>◈ IT &amp; AI</span></div></main>
+<section id="services" class="section ate-panel" aria-label="services"><a class="ate-close" href="#top" aria-label="Close panel">×</a>
     <div class="container">
-      <h2 class="glitch" data-i18n="services-title" data-text="Perkhidmatan Kami">Perkhidmatan Kami</h2>
+      <h2 class="glitch" data-text="Our Services">Our Services</h2>
       <div class="grid" id="services-grid">
         <div class="card reveal" data-box="svc-1">
-          <h3 data-i18n="svc-1">Pemasangan Server, Rack Server, WiFi & CCTV</h3>
-          <p data-i18n="svc-1-desc">Pemasangan dan konfigurasi server, rack server, sistem CCTV, dan liputan WiFi untuk rumah dan pejabat.</p>
+          <h3>Server, Server Rack, WiFi & CCTV Installation</h3>
+          <p>Installation and configuration of servers, racks, CCTV and WiFi for homes and offices.</p>
         </div>
         <div class="card reveal" data-box="svc-2">
-          <h3 data-i18n="svc-2">Pemasangan Kabel Rangkaian</h3>
-          <p data-i18n="svc-2-desc">Pemasangan kabel rangkaian di rumah dan pejabat dengan kemasan yang kemas dan sambungan yang stabil.</p>
+          <h3>Network Cabling</h3>
+          <p>Neat, reliable network cabling for homes and offices.</p>
         </div>
         <div class="card reveal" data-box="svc-3">
-          <h3 data-i18n="svc-3">Pemasangan Komputer & Laptop</h3>
-          <p data-i18n="svc-3-desc">Pemasangan dan penyediaan komputer dan laptop di rumah dan pejabat, termasuk pemasangan perisian dan persediaan awal.</p>
+          <h3>Computer & Laptop Setup</h3>
+          <p>Computer and laptop setup for homes and offices, including software installation and initial configuration.</p>
         </div>
         <div class="card reveal" data-box="svc-4">
-          <h3 data-i18n="svc-4">Kelas Asas Kecerdasan Buatan (AI)</h3>
-          <p data-i18n="svc-4-desc">Kelas asasi AI secara online atau bersemuka — belajar cara menggunakan alatan AI secara praktikal dan mudah.</p>
+          <h3>Introduction to Artificial Intelligence (AI)</h3>
+          <p>Online or in-person introductory classes on practical AI tools.</p>
         </div>
         <div class="card reveal" data-box="svc-5">
-          <h3 data-i18n="svc-5">Kelas Asas Komputer</h3>
-          <p data-i18n="svc-5-desc">Kelas online atau bersemuka untuk asas komputer, daripada tahap permulaan hingga kemahiran harian.</p>
+          <h3>Basic Computer Classes</h3>
+          <p>Online or in-person computer classes covering beginner and everyday skills.</p>
         </div>
         <div class="card reveal" data-box="svc-6">
-          <h3 data-i18n="svc-6">Dan Banyak Lagi Perkhidmatan</h3>
-          <p data-i18n="svc-6-desc">Perkhidmatan lain tersedia mengikut permintaan. Hubungi kami untuk maklumat lanjut.</p>
+          <h3>Additional Services</h3>
+          <p>Additional services are available upon request. Contact us for details.</p>
         </div>
       </div>
     </div>
@@ -130,16 +139,16 @@ body.ate-video-home{font-family:Inter,system-ui,sans-serif!important;overflow-x:
 
 
 
-  <section id="coverage" class="section section-alt">
+  <section id="coverage" class="section section-alt ate-panel" aria-label="coverage"><a class="ate-close" href="#top" aria-label="Close panel">×</a>
     <div class="container">
-      <h2 class="glitch" data-i18n="coverage-title" data-text="Kawasan Liputan">Kawasan Liputan</h2>
+      <h2 class="glitch" data-text="Coverage Areas">Coverage Areas</h2>
       <div class="grid grid-3">
         <div class="card reveal">
-          <h3 data-i18n="coverage-state">Negeri Tersedia</h3>
+          <h3>State Served</h3>
           <p class="state-name">Pulau Pinang</p>
         </div>
         <div class="card reveal">
-          <h3 data-i18n="coverage-island">Kawasan Tersedia (Dalam Pulau)</h3>
+          <h3>Penang Island</h3>
           <ul>
             <li>Gelugor</li>
             <li>Batu Uban</li>
@@ -150,7 +159,7 @@ body.ate-video-home{font-family:Inter,system-ui,sans-serif!important;overflow-x:
           </ul>
         </div>
         <div class="card reveal">
-          <h3 data-i18n="coverage-mainland">Kawasan Tersedia (Seberang Pulau)</h3>
+          <h3>Mainland Penang</h3>
           <ul>
             <li>Bagan Dalam</li>
             <li>Bagan Luar</li>
@@ -161,74 +170,46 @@ body.ate-video-home{font-family:Inter,system-ui,sans-serif!important;overflow-x:
           </ul>
         </div>
       </div>
-      <p class="coverage-note" data-i18n="coverage-note">Perkhidmatan bergantung kepada kawasan. Caj pengangkutan akan dikenakan, termasuk caj kawasan luar. Banyak lagi perkhidmatan tersedia.</p>
+      <p class="coverage-note">Service availability depends on location. Transportation charges apply, including additional charges for outlying areas. Other services are available.</p>
     </div>
   </section>
 
-<section id="why" class="section">
-    <div class="container">
-      <h2 class="glitch" data-i18n="why-title" data-text="Kenapa Pilih Kami">Kenapa Pilih Kami</h2>
-      <div class="steps" id="why-steps">
-        <div class="step reveal" data-box="why-1">
-          <span class="step-num">1</span>
-          <h3 data-i18n="why-1">Tindak Balas Pantas</h3>
-          <p data-i18n="why-1-desc">Kami bertindak balas dengan cepat supaya peranti, rangkaian dan sistem anda kembali berfungsi tanpa masa menunggu yang lama.</p>
-        </div>
-        <div class="step reveal" data-box="why-2">
-          <span class="step-num">2</span>
-          <h3 data-i18n="why-2">Harga Telus & Berpatutan</h3>
-          <p data-i18n="why-2-desc">Tiada caj tersembunyi. Anda mengetahui kos sebelum sebarang kerja dimulakan.</p>
-        </div>
-        <div class="step reveal" data-box="why-3">
-          <span class="step-num">3</span>
-          <h3 data-i18n="why-3">Remote & On-Site</h3>
-          <p data-i18n="why-3-desc">Daripada pembaikan jauh yang pantas kepada pemasangan bersemuka penuh, kami mengikut jadual anda.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section id="contact" class="section section-alt">
+
+  <section id="contact" class="section section-alt ate-panel" aria-label="contact"><a class="ate-close" href="#top" aria-label="Close panel">×</a>
     <div class="container">
-      <h2 class="glitch" data-i18n="contact-title" data-text="Hubungi Kami">Hubungi Kami</h2>
+      <h2 class="glitch" data-text="Contact Us">Contact Us</h2>
       <div class="grid grid-3">
         <div class="card card-contact reveal">
-          <h3 data-i18n="contact-call">Hubungi / WhatsApp</h3>
+          <h3>Call / WhatsApp</h3>
           <p>+60 18-945 1570</p>
-          <a href="tel:+60189451570" class="btn btn-outline btn-sm" data-i18n="contact-call-btn">Hubungi Sekarang</a>
+          <a href="tel:+60189451570" class="btn btn-outline btn-sm">Call Now</a>
           <a href="https://wa.me/60189451570" class="btn btn-outline btn-sm" target="_blank" rel="noopener">WhatsApp</a>
         </div>
         <div class="card card-contact reveal">
-          <h3 data-i18n="contact-email">E-mel</h3>
+          <h3>Email</h3>
           <p>akmaltaufik.business@gmail.com</p>
-          <a href="mailto:akmaltaufik.business@gmail.com" class="btn btn-outline btn-sm" data-i18n="contact-email-btn">Hantar E-mel</a>
+          <a href="mailto:akmaltaufik.business@gmail.com" class="btn btn-outline btn-sm">Send Email</a>
         </div>
         <div class="card card-contact reveal">
-          <h3 data-i18n="contact-linkedin">LinkedIn</h3>
-          <p data-i18n="contact-linkedin-desc">Berhubung dengan kami di LinkedIn.</p>
-          <a href="https://www.linkedin.com/in/akmaltaufik" class="btn btn-outline btn-sm" target="_blank" rel="noopener" data-i18n="contact-linkedin-btn">Lihat Profil</a>
+          <h3>LinkedIn</h3>
+          <p>Connect with us on LinkedIn.</p>
+          <a href="https://www.linkedin.com/in/akmaltaufik" class="btn btn-outline btn-sm" target="_blank" rel="noopener">View Profile</a>
         </div>
         <div class="card card-contact reveal">
-          <h3 data-i18n="contact-area">Kawasan Perkhidmatan</h3>
-          <p data-i18n="contact-area-desc">Perkhidmatan on-site tersedia di Pulau Pinang. Sokongan remote tersedia di mana-mana.</p>
+          <h3>Service Area</h3>
+          <p>On-site services are available in Penang. Remote support is available anywhere.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="container">
-      <div id="visitor-info" class="visitor-info" hidden>Memuatkan maklumat pelawat...</div>
-      <p data-i18n="footer-line">Server &amp; rack server | WiFi &amp; CCTV | Kabel rangkaian | Komputer &amp; laptop | Kelas komputer &amp; AI</p>
-      <p class="slogan-mini" data-i18n="hero-slogan">PANTAS - PROFESSIONAL - DIPERCAYAI</p>
-      <p class="muted" data-i18n="footer-copy">© 2026 Hak cipta terpelihara.</p>
-    </div>
-  </footer>
+  
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0" integrity="sha384-gnyZit14c5lnGcarmA166QQjjJXpucw25ogZXuwH3HxxY904zHkBqmxVpelsPorb" crossorigin="anonymous"></script>
   <script src="js/supabase-config.js?v=20260814"></script>
   <script src="js/customize.js?v=20260817"></script>
-  <script src="js/lang.js?v=20261111b"></script>
+  
   <script src="js/main.js?v=20261111-nav"></script>
   <script src="js/visitor.js?v=20260814"></script>
   <script>
