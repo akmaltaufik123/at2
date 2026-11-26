@@ -55,7 +55,14 @@ body.ate-video-home{font-family:Inter,system-ui,sans-serif!important;overflow-x:
 @media(max-width:560px){.ate-landing-actions{flex-direction:column}.ate-landing-actions a{width:100%}}
 @media(prefers-reduced-motion:reduce){.ate-landing-copy>*{animation:none!important}}
 </style>
-</head>
+<style>
+.ate-video-home .ate-wordmark{display:inline-flex;align-items:center;background:none!important;border:0!important;padding:0!important;box-shadow:none!important;color:white!important;font:600 22px Inter,system-ui,sans-serif!important;letter-spacing:-.06em;text-decoration:none}
+.ate-wordmark strong{color:#fff}
+.ate-video-home .nav-toggle{border:1px solid #ffffff55!important;border-radius:6px!important;background:linear-gradient(135deg,#222,#080808)!important;color:white!important;font-family:Inter,system-ui,sans-serif!important;box-shadow:none!important}
+.ate-video-home .glitch::before,.ate-video-home .glitch::after{content:none!important;display:none!important}
+.ate-video-home .glitch{animation:none!important;text-shadow:none!important}
+.ate-video-home .ate-landing-copy{margin-top:auto;padding-top:0}
+</style></head>
 <body class="ate-black ate-video-home">
   <div class="ate-motion-bg" aria-hidden="true"><video muted loop playsinline preload="none" poster="assets/background-poster.jpg" id="ate-bg-video"></video></div>
   <div id="loader" class="loader-overlay">
@@ -68,7 +75,7 @@ body.ate-video-home{font-family:Inter,system-ui,sans-serif!important;overflow-x:
 
   <header class="nav">
     <div class="container nav-inner" data-responsive-nav>
-      <a href="index.html" class="brand"><img src="https://plain-apac-prod-public.komododecks.com/202608/12/3HS3RGiBnGa12S29398i/image.png" alt="Logo" class="logo-img"></a>
+      <a href="index.html" class="brand ate-wordmark" aria-label="Akmal Taufik Enterprise"><span>://<strong>ATE</strong></span></a>
       <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false">
         <span aria-hidden="true">☰</span> Menu
       </button>
