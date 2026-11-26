@@ -1543,7 +1543,7 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
       <div class="form-group">
         <label class="form-label">Order ID</label>
         <div style="display:flex;gap:0.5rem;">
-          <input type="text" inputmode="numeric" class="form-input" id="trackOrderId" placeholder="Enter Order ID">
+          <input type="text" class="form-input" id="trackOrderId" placeholder="Order ID or ATE reference">
           <button type="button" class="submit-btn" style="width:auto;padding:0.75rem 1.25rem;" id="trackSubmitBtn">Check</button>
         </div>
       </div>
@@ -1619,11 +1619,11 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
               <input type="number" id="markupInput" min="1" max="10" step="0.01" value="1.3" class="markup-number">
               <span class="markup-percent" id="markupPercent">30%</span>
             </div>
-            <p class="form-hint">Example: 1.3 means 30% profit on top of PadooInsta price</p>
+            <p class="form-hint">Example: 1.3 adds a 30% markup above the supplier's cost</p>
           </div>
           <div class="markup-preview">
             <div class="markup-preview-item">
-              <span class="label">PadooInsta Price (Cost)</span>
+              <span class="label">Supplier Price (Cost)</span>
               <span class="value">RM 100.00</span>
             </div>
             <div class="markup-preview-item">
@@ -1739,6 +1739,9 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
     let isAdminLoggedIn = false; // Always require fresh login
     
     // Format currency
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    }
     function formatAmount(value) {
       return Number(value).toLocaleString('en-MY', {minimumFractionDigits:2, maximumFractionDigits:2});
     }
@@ -1818,6 +1821,7 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
         return customServiceIds[key];
       }
       // Generate ATEBooster ID: ATE-{platform}-{number}
+      if (/^ATE-B2-\d+$/.test(String(service.service))) return String(service.service);
       const platform = activePlatform.toUpperCase().substring(0, 3);
       return `ATE-${platform}-${service.service}`;
     }
@@ -1830,7 +1834,7 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
       services.forEach(svc => {
         let matched = false;
         for (const p of PLATFORMS) {
-          if (p.key !== 'other' && p.match(svc.category)) {
+          if (p.key !== 'other' && p.match(String(svc.category || '') + ' ' + String(svc.name || ''))) {
             groups[p.key].push(svc);
             matched = true;
             break;
@@ -1984,14 +1988,14 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
       const badges = parseServiceBadges(svc);
       const serviceId = getServiceId(svc);
       return `
-        <div class="service-card" data-id="${svc.service}">
-          <div class="service-id-badge">${serviceId}</div>
+        <div class="service-card" data-id="${escapeHtml(svc.service)}">
+          <div class="service-id-badge">${escapeHtml(serviceId)}</div>
           ${badges.length > 0 ? `
             <div class="service-badges">
               ${badges.map(b => `<span class="badge ${b.class}">${b.text}</span>`).join('')}
             </div>
           ` : ''}
-          <div class="service-name">${svc.name}</div>
+          <div class="service-name">${escapeHtml(svc.name)}</div>
           <div class="service-price">
             <span class="price-myr">${formatMYR(rate)}</span>
             <span class="price-band ${Math.round(rate * USD_TO_MYR * 100) / 100 < PRICE_THRESHOLD ? 'low' : 'high'}">${Math.round(rate * USD_TO_MYR * 100) / 100 < PRICE_THRESHOLD ? 'Low Price' : 'High Price'}</span>
@@ -2143,6 +2147,7 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
       const costRate = parseFloat(selectedService.rate);
       const newOrder = {
         id: `WA-${Date.now()}`,
+        sourceReference: String(selectedService.service),
         serviceId: selectedService.service,
         customServiceId: serviceId,
         serviceName: selectedService.name,
@@ -2182,13 +2187,13 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
         const res = await fetch(`${API_BASE}/status`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ order: parseInt(orderId) })
+          body: JSON.stringify({ order: orderId })
         });
         
         const data = await res.json();
         
         if (data.error) {
-          resultEl.innerHTML = `<div class="error-msg">${data.error}</div>`;
+          resultEl.innerHTML = `<div class="error-msg">${escapeHtml(data.error)}</div>`;
         } else {
           const progress = data.start_count && data.remains !== undefined
             ? ((1 - data.remains / data.start_count) * 100).toFixed(1)
@@ -2198,9 +2203,9 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
             <div class="price-card">
               <div class="price-row">
                 <span class="label">Status</span>
-                <span class="status-badge status-${(data.status || 'pending').toLowerCase().replace(' ', '-')}">${data.status || 'Unknown'}</span>
+                <span class="status-badge status-${String(data.status || 'pending').toLowerCase().replace(/[^a-z0-9-]/g, '-')}">${escapeHtml(data.status || 'Unknown')}</span>
               </div>
-              ${data.charge ? `<div class="price-row"><span class="label">Charge</span><span class="value">${formatAmount(data.charge)} ${data.currency || 'USD'}</span></div>` : ''}
+              ${data.charge ? `<div class="price-row"><span class="label">Charge</span><span class="value">${formatAmount(data.charge)} ${escapeHtml(data.currency || 'USD')}</span></div>` : ''}
               ${data.start_count ? `<div class="price-row"><span class="label">Start Count</span><span class="value">${formatQuantity(parseInt(data.start_count))}</span></div>` : ''}
               ${data.remains !== undefined ? `<div class="price-row"><span class="label">Remaining</span><span class="value">${formatQuantity(parseInt(data.remains))}</span></div>` : ''}
               ${progress !== null ? `<div style="margin-top:0.75rem;"><div style="height:4px;background:rgba(255,255,255,0.05);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${progress}%;background:linear-gradient(90deg,rgba(239,68,68,0.5),rgba(34,197,94,0.5));"></div></div><div style="text-align:right;font-size:0.75rem;color:var(--ate-text-muted);margin-top:0.35rem;">${progress}% complete</div></div>` : ''}
@@ -2259,7 +2264,7 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
     
     function renderAdminStats() {
       const totalOrders = orders.length;
-      // Gross = actual PadooInsta cost (what you pay to PadooInsta)
+      // Gross = estimated supplier cost; orders still require manual verification.
       const totalGross = orders.reduce((sum, o) => sum + (o.cost || 0), 0);
       // Customer Paid = what customer pays you
       const totalCustomerPaid = orders.reduce((sum, o) => sum + (o.customerPaid || 0), 0);
@@ -2273,7 +2278,7 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
           <div class="admin-stat-value">${totalOrders}</div>
         </div>
         <div class="admin-stat-card" style="border-color: rgba(34,197,94,0.2);">
-          <div class="admin-stat-label">Gross (PadooInsta Cost)</div>
+          <div class="admin-stat-label">Gross (Supplier Cost)</div>
           <div class="admin-stat-value profit">${formatMYR(totalGross)}</div>
         </div>
         <div class="admin-stat-card">
@@ -2383,6 +2388,7 @@ main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:l
         if (!Array.isArray(data)) throw new Error('Invalid service catalog');
         allServices = data.filter(s => s.rate !== null && s.rate !== undefined && String(s.rate).trim() !== '' && Number.isFinite(Number(s.rate)) && Number(s.rate) > 0);
         const groups = groupByPlatform(allServices);
+        if (!groups[activePlatform]?.length) activePlatform = PLATFORMS.find(p => groups[p.key]?.length)?.key || 'other';
         renderTabs(groups);
         renderServices();
       } catch (err) {
