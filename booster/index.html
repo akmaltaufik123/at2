@@ -1347,7 +1347,14 @@
       .orders-table th, .orders-table td { padding: 0.5rem; }
     }
   </style>
-</head>
+<style id="ate-booster-unified">
+:root{--ate-black:#080809;--ate-card:#101012;--ate-border:rgba(233,54,70,.32);--ate-border-hover:#e93646;--ate-red:#e93646;--ate-text:#f5f5f5;--ate-text-dim:#c5c5c9;--ate-text-muted:#a0a0a8}
+*{scrollbar-width:thin;scrollbar-color:#e93646 #09090a}*::-webkit-scrollbar{width:9px;height:9px}*::-webkit-scrollbar-track{background:#09090a}*::-webkit-scrollbar-thumb{background:#e93646;border-radius:8px;border:2px solid #09090a}
+body,button,input,select,textarea{font-family:Arial,sans-serif}body{background:#080809}.bg-pattern,.bg-overlay{display:none}header{background:#0b0b0d;border-bottom:1px solid #54232b;padding:12px 24px}.header-inner{gap:12px}.logo-sub{letter-spacing:.1em}.back-link,.admin-btn{border:1px solid #65212a;background:#101012;color:#eee;border-radius:5px;min-height:36px}.back-link:hover,.admin-btn:hover{border-color:#e93646;color:white}
+main{max-width:1440px;padding:100px clamp(16px,4vw,48px) 40px}.hero{text-align:left;margin-bottom:24px}.hero-badge{border:0;background:none;padding:0;margin-bottom:10px;color:#ff505d;letter-spacing:.14em}.hero h1{font-family:Arial,sans-serif;font-size:clamp(32px,5vw,52px);margin-bottom:10px}.hero p{margin:0;max-width:680px;font-size:15px;line-height:1.6}
+.booster-controls{background:#101012;border:1px solid #54232b;border-radius:8px;padding:20px;margin-bottom:28px}.filter-heading{font-size:12px;color:#bfc0c7;margin:0 0 9px;font-weight:600}.booster-controls .platform-tabs,.booster-controls .feature-filter,.booster-controls .category-filter,.booster-controls .price-filter{background:none;border:0;padding:0;gap:7px;margin:0 0 18px;backdrop-filter:none}.booster-controls .price-filter{margin-bottom:0;flex-wrap:wrap}.platform-tab,.feature-filter-btn,.category-filter-btn,.price-filter-btn{border:1px solid #54232b;background:#09090b;color:#ddd;border-radius:5px;min-height:36px;padding:8px 12px;font-size:13px;min-width:0}.platform-tab.active,.feature-filter-btn.active,.category-filter-btn.active,.price-filter-btn.active{background:#e93646;border-color:#e93646;color:#fff}.platform-tab.active .count{background:#0003;color:white}.platform-tab .count{margin-left:4px}.booster-controls .actions-bar{margin-bottom:12px}.search-input,.action-btn{background-color:#09090b;border:1px solid #65212a;border-radius:5px;color:#eee;min-height:44px}.search-input:focus{border-color:#e93646}.services-header{border-color:#54232b}.services-header .platform-name{color:white;font-size:17px;letter-spacing:0}.services-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.service-card{background:#101012;border:1px solid var(--ate-border);border-radius:8px;padding:18px;min-width:0;backdrop-filter:none}.service-card:hover{background:#131215;transform:none}.service-card:before{display:none}.service-name{font-size:15px;font-weight:600;display:block;overflow:visible;overflow-wrap:anywhere;min-height:0}.service-price,.stat{background:#09090b;border:1px solid #54232b;border-radius:5px}.price-myr{font-family:Arial,sans-serif;font-size:25px;color:#fff}.stat-value{color:#ddd}.select-btn{background:#e93646;border:1px solid #e93646;color:white;border-radius:5px;min-height:42px;font-weight:600}.select-btn:hover{background:#bd2635;color:white}.modal{background:#101012;border:1px solid #65212a;border-radius:8px}.form-input{background:#09090b;color:white;border-color:#65212a}.section-header{background:#101012;border-color:#54232b}button:focus-visible,a:focus-visible{outline:2px solid #ff6875;outline-offset:2px}
+@media(max-width:1000px){.services-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){header{padding:10px 12px}.header-inner{flex-wrap:wrap}.header-actions{gap:6px}.logo-sub{font-size:9px}.back-link,.admin-btn{font-size:11px;padding:7px 9px}main{padding-top:126px}.hero{margin-bottom:18px}.booster-controls{padding:14px}.platform-tab,.feature-filter-btn,.category-filter-btn,.price-filter-btn{font-size:12px;min-height:40px;padding:8px 10px}.actions-bar{flex-direction:column}.search-input{min-width:0;width:100%;font-size:16px}.action-btn{justify-content:center}.services-grid{grid-template-columns:1fr}.service-card{padding:15px}.service-price{flex-wrap:wrap}}
+</style></head>
 <body>
   <div class="bg-pattern"></div>
   <div class="bg-overlay"></div>
@@ -1385,9 +1392,9 @@
       <p>Boost your social media presence with premium services. Select a platform to browse packages.</p>
     </section>
     
-    <div class="platform-tabs" id="platformTabs"></div>
+    <section class="booster-controls" aria-label="Service filters"><h2 class="filter-heading">Select a platform</h2><div class="platform-tabs" id="platformTabs"></div>
     
-    <div class="feature-filter" id="featureFilter">
+    <h2 class="filter-heading">Service features</h2><div class="feature-filter" id="featureFilter">
       <button class="feature-filter-btn active" data-feature="all">
         <span class="feature-icon">📋</span>
         All Services
@@ -1410,7 +1417,7 @@
       </button>
     </div>
     
-    <div class="category-filter" id="categoryFilter">
+    <h2 class="filter-heading">Service type</h2><div class="category-filter" id="categoryFilter">
       <button class="category-filter-btn active" data-category="all">
         <span class="category-icon">🎯</span>
         All Types
@@ -1449,7 +1456,7 @@
       </button>
     </div>
     
-    <div class="actions-bar">
+    <h2 class="filter-heading">Search services</h2><div class="actions-bar">
       <input type="text" class="search-input" id="searchInput" placeholder="Search services...">
       <button class="action-btn" id="trackBtn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1466,7 +1473,7 @@
       <button class="price-filter-btn" data-filter="high">💎 High Price</button>
     </div>
     
-    <div class="services-header">
+    </section><div class="services-header">
       <span class="platform-name" id="platformName">INSTAGRAM</span>
       <span class="count" id="serviceCount">0 services</span>
     </div>
