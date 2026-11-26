@@ -1,5 +1,5 @@
 # ATEBooster Cloudflare Worker
-# Proxies API calls to PadooInsta SMM Panel API
+# Proxies optional supplier APIs behind a single ATEBooster interface
 name = "ate-booster-path"
 main = "cloudflare-worker.js"
 compatibility_date = "2026-09-01"
@@ -10,7 +10,9 @@ routes = [
   { pattern = "akmaltaufikenterprise.my/booster/api*", zone_name = "akmaltaufikenterprise.my" }
 ]
 
-# API key is set as a secret at deploy time:
-#   wrangler secret put PADOONSTA_API_KEY
-# Then deploy with:
+# Cloudflare secrets. Never store API keys in this file or frontend:
+#   wrangler secret put PADOONSTA_API_KEY     # existing supplier
+#   wrangler secret put EZKIFY_API_KEY        # Ezkify supplier (optional)
+#   wrangler secret put ATEBOOSTER_ADMIN_TOKEN  # admin-only upstream actions
+# Deploy the Worker after configuring secrets:
 #   wrangler deploy
