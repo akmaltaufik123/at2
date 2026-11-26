@@ -80,6 +80,11 @@ body.ate-video-home .ate-motion-bg{position:fixed!important;inset:0!important;wi
 body.ate-video-home .ate-motion-bg video{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:100%!important;min-height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;object-position:center!important;opacity:1!important}
 body.ate-video-home .nav,body.ate-video-home .ate-landing{background:transparent!important}
 body.ate-video-home .ate-motion-bg::after,body.ate-video-home .ate-motion-bg::before{content:none!important}
+</style><style>
+.ate-gradient-name{display:inline-block;color:#ff3535;background:linear-gradient(110deg,#ff6666,#ff2525,#a50000,#680000,#ff3535,#ff6666);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:ate-red-gradient 5s ease-in-out infinite alternate}
+@keyframes ate-red-gradient{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+.ate-video-home .ate-landing-copy{margin-bottom:36px}
+@media(prefers-reduced-motion:reduce){.ate-gradient-name{animation:none;background-position:0% 50%}}
 </style></head>
 <body class="ate-black ate-video-home">
   <div class="ate-motion-bg" aria-hidden="true"><video muted loop playsinline preload="none" poster="assets/background-poster.jpg" id="ate-bg-video"></video></div>
@@ -110,7 +115,7 @@ body.ate-video-home .ate-motion-bg::after,body.ate-video-home .ate-motion-bg::be
     </div>
   </header>
 
-<main class="ate-landing" id="top"><div class="ate-landing-copy"><div class="ate-landing-badge">✦ IT Solutions &amp; Technical Services</div><h1>Akmal Taufik Enterprise<br><em>IT &amp; AI Solutions</em></h1><p>IT infrastructure, technical support and AI solutions in Penang.</p><div class="ate-landing-actions"><a href="#contact">Contact Us</a><a href="#services">Our Services</a><a href="#coverage">Coverage Areas</a></div></div><div class="ate-landing-stats"><span>◈ Penang</span><span>◈ Remote &amp; On-Site</span><span>◈ IT &amp; AI</span></div></main>
+<main class="ate-landing" id="top"><div class="ate-landing-copy"><div class="ate-landing-badge">✦ IT Solutions &amp; Technical Services</div><h1><span class="ate-gradient-name">Akmal Taufik Enterprise</span><br><em>IT &amp; AI Solutions</em></h1><p>IT infrastructure, technical support and AI solutions in Penang.</p><div class="ate-landing-actions"><a href="#contact">Contact Us</a><a href="#services">Our Services</a><a href="#coverage">Coverage Areas</a></div></div></main>
 <section id="services" class="section ate-panel" aria-label="services"><a class="ate-close" href="#top" aria-label="Close panel">×</a>
     <div class="container">
       <h2 class="glitch" data-text="Our Services">Our Services</h2>
