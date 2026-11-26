@@ -22,6 +22,39 @@ body.ate-video-home { isolation:isolate; }
 .ate-video-home .section-alt { background:rgba(0,0,0,.38); }
 @media (prefers-reduced-motion:reduce) { .ate-motion-bg video { display:none; } }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+html,body{background:#000!important;color:#fff}
+body.ate-video-home{font-family:Inter,system-ui,sans-serif!important;overflow-x:hidden}
+.ate-motion-bg video{opacity:1!important}
+.ate-motion-bg{position:absolute!important;height:100svh;z-index:0!important}
+.ate-video-home .nav{position:relative;background:transparent!important;backdrop-filter:none;z-index:50;border:0}
+.ate-video-home .nav-inner{max-width:none;padding:22px 40px}
+.ate-video-home .nav-links a{font-family:Inter,sans-serif;font-size:13px;border:1px solid #777;border-radius:7px;padding:10px 14px;background:linear-gradient(105deg,#050505,#2a2a2a 48%,#4a4a4a);color:#fff;text-decoration:none;transition:box-shadow .35s}
+.ate-video-home .nav-links a:hover{box-shadow:0 0 18px #ffffff40}
+.ate-landing{position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;text-align:center;min-height:calc(100svh - 110px);padding:40px 24px 36px;color:#fff}
+.ate-landing-copy{max-width:860px;margin:auto auto 60px;padding-top:100px}
+.ate-landing-badge{display:inline-block;padding:9px 15px;border-radius:5px;background:linear-gradient(90deg,#777,#292929,#090909);font-size:13px;margin-bottom:22px}
+.ate-landing h1{font:500 clamp(34px,4vw,76px)/1.12 Inter,system-ui,sans-serif;letter-spacing:-.045em;margin:0;color:#fff;text-shadow:none}
+.ate-landing h1 em{font-family:"Instrument Serif",Georgia,serif;font-weight:400;color:#aaa}
+.ate-landing p{font-size:16px;line-height:1.55;color:#ddd;max-width:500px;margin:18px auto 0}
+.ate-landing-actions{display:flex;justify-content:center;gap:10px;margin-top:26px;flex-wrap:wrap}
+.ate-landing-actions a{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:6px;font-size:14px;text-decoration:none;border:1px solid #aaa;transition:box-shadow .35s}
+.ate-landing-actions a:first-child{background:linear-gradient(#fff,#cfcfcf);color:#111}
+.ate-landing-actions a:last-child{background:linear-gradient(135deg,#ffffff20,#0008);backdrop-filter:blur(16px);color:white}
+.ate-landing-actions a:hover{box-shadow:0 0 24px #ffffff50}
+.ate-landing-stats{display:flex;justify-content:space-between;gap:20px;width:100%;max-width:1280px;color:#ddd;font-size:14px}
+.ate-video-home .section,.ate-video-home .footer{position:relative;background:#000!important;color:#fff}
+.ate-video-home .section h2,.ate-video-home .section h3{font-family:Inter,system-ui,sans-serif!important;color:#fff;text-shadow:none}
+.ate-video-home .section .card,.ate-video-home .section .step{background:linear-gradient(135deg,#151515,#080808)!important;border:1px solid #ffffff25;border-radius:10px;box-shadow:none}
+.ate-video-home .section p,.ate-video-home .section li{color:#ccc}
+.ate-landing-copy>*{animation:ate-enter 1s cubic-bezier(.16,1,.3,1) both}
+.ate-landing-copy h1{animation-delay:.2s}.ate-landing-copy p{animation-delay:.4s}.ate-landing-actions{animation-delay:.6s}
+@keyframes ate-enter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(max-width:900px){.ate-video-home .nav-inner{padding:16px}.ate-landing{min-height:calc(100svh - 90px)}.ate-landing-stats{flex-direction:column;align-items:center;gap:12px}.ate-landing-copy{margin-bottom:40px}}
+@media(max-width:560px){.ate-landing-actions{flex-direction:column}.ate-landing-actions a{width:100%}}
+@media(prefers-reduced-motion:reduce){.ate-landing-copy>*{animation:none!important}}
+</style>
 </head>
 <body class="ate-black ate-video-home">
   <div class="ate-motion-bg" aria-hidden="true"><video muted loop playsinline preload="none" poster="assets/background-poster.jpg" id="ate-bg-video"></video></div>
@@ -55,6 +88,7 @@ body.ate-video-home { isolation:isolate; }
     </div>
   </header>
 
+<main class="ate-landing" id="top"><div class="ate-landing-copy"><div class="ate-landing-badge">✦ IT Solutions &amp; Technical Services</div><h1>Akmal Taufik Enterprise<br><em>IT &amp; AI Solutions</em></h1><p>IT infrastructure, technical support and AI solutions in Penang.</p><div class="ate-landing-actions"><a href="https://wa.me/60189451570" data-i18n="nav-quote">Minta Sebut Harga</a><a href="#services" data-i18n="nav-services">Perkhidmatan</a></div></div><div class="ate-landing-stats"><span>◈ Pulau Pinang</span><span>◈ Remote &amp; On-Site</span><span>◈ IT &amp; AI</span></div></main>
 <section id="services" class="section">
     <div class="container">
       <h2 class="glitch" data-i18n="services-title" data-text="Perkhidmatan Kami">Perkhidmatan Kami</h2>
