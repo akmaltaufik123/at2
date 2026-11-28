@@ -9,6 +9,7 @@ const ATE_RAIN_VIDEO = "/assets/rain.mp4";
 
 const ATE_ROOT_CSS = [
   '<style id="ate-root-override">',
+  ".ate-flag-word{position:relative;display:inline-block}.ate-flag-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.ate-flag-playing{color:transparent!important;-webkit-text-fill-color:transparent!important}",
   "body.ate-theme{background:#ffffff!important;background-image:none!important;color:#111827!important}",
   ".ate-theme{color-scheme:light;background-color:#ffffff!important;background-image:none!important;--red:#111827!important;--red-bright:#111827!important;--red-glow:rgba(0,0,0,.14)!important;--border-red:rgba(17,24,39,.28)!important}",
   ".ate-theme::selection{background:rgba(17,24,39,.22)!important;color:#111827!important}",
@@ -91,11 +92,28 @@ const ATE_ROOT_INLINE = [
   "}catch(e){}}",
   "function replaceHeroText(){try{",
   "document.querySelectorAll('h1').forEach(function(el){",
-  "var html=el.innerHTML;",
-  "var updated=html.replace(/(?<!With )One API gateway\\./gi,'With One API Gateway.');",
-  "if(updated!==html){",
-  "el.innerHTML=updated;",
-  "}});}catch(e){}}",
+  "var walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),nodes=[],n;",
+  "while(n=walker.nextNode())nodes.push(n);",
+  "nodes.forEach(function(n){",
+  "if(n.parentElement.closest('.ate-flag-word'))return;",
+  "var t=n.nodeValue.replace(/Your choice of models\\./gi,'Your choice of models,').replace(/(?:With )?One (?:Malaysian )?(?:AI )?API gateway\\./gi,'with one Malaysian AI API gateway.');",
+  "if(!t.includes('with one Malaysian AI API gateway.')){if(t!==n.nodeValue)n.nodeValue=t;return;}",
+  "var parts=t.split('Malaysian'),f=document.createDocumentFragment();",
+  "parts.forEach(function(p,i){if(i){var span=document.createElement('span');span.className='ate-flag-word';span.textContent='Malaysian';f.appendChild(span);animateFlag(span);}f.appendChild(document.createTextNode(p));});",
+  "n.replaceWith(f);",
+  "});});",
+  "}catch(e){}}",
+  "function animateFlag(span){try{",
+  "if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;",
+  "var v=document.createElement('video');v.muted=true;v.loop=true;v.playsInline=true;v.src='/assets/Vy7Ffwb9OnGr5TLjqx0H%2B6TQntv7-_Vk.mp4';",
+  "var c=document.createElement('canvas'),ctx=c.getContext('2d');if(!ctx)return;",
+  "c.setAttribute('aria-hidden','true');c.className='ate-flag-canvas';span.appendChild(c);",
+  "function frame(){if(!span.isConnected){v.pause();return;}if(v.readyState>=2){",
+  "var b=span.getBoundingClientRect(),st=getComputedStyle(span),d=devicePixelRatio||1;",
+  "if(b.width&&b.height){c.width=Math.ceil(b.width*d);c.height=Math.ceil(b.height*d);ctx.scale(d,d);ctx.font=st.fontWeight+' '+st.fontSize+' '+st.fontFamily;ctx.textBaseline='middle';ctx.textAlign='center';ctx.fillText('Malaysian',b.width/2,b.height/2,b.width);ctx.globalCompositeOperation='source-in';ctx.drawImage(v,0,0,b.width,b.height);span.classList.add('ate-flag-playing');}}",
+  "requestAnimationFrame(frame);}",
+  "v.play().then(frame).catch(function(){c.remove();});",
+  "}catch(e){}}",
   "function flashView(v){try{",
   "var el=document.getElementById('view-'+v);if(!el||!el.classList)return;",
   "el.classList.add('ate-view-flash');",
@@ -263,7 +281,7 @@ function injectAfterBodyOpen(html, injection) {
 }
 
 function injectRootOverride(html) {
-  var out = html.replace(/(?<!With )One API gateway\./gi, 'With One API Gateway.');
+  var out = html.replace(/Your choice of models\./gi, 'Your choice of models,').replace(/(?:With )?One (?:Malaysian )?(?:AI )?API gateway\./gi, 'with one Malaysian AI API gateway.');
   out = out.split(
     '<div class="w-10 h-10 rounded-xl bg-gray-900 text-white flex items-center justify-center font-bold text-lg tracking-wider shadow-md">ATE</div>',
   ).join(
