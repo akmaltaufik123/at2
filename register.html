@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta name="robots" content="noindex, nofollow, noarchive">
   <meta name="referrer" content="no-referrer">
@@ -11,7 +11,7 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()">
 
-  <title>Daftar — Portal Pelanggan</title>
+  <title>Register — Customer Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
@@ -35,29 +35,29 @@
     </div>
     <div class="auth-card">
       <a href="index.html" class="brand auth-brand"><img src="https://plain-apac-prod-public.komododecks.com/202608/12/3HS3RGiBnGa12S29398i/image.png" alt="Logo" class="logo-img"></a>
-      <h1 data-i18n="rg-title">Daftar Akaun</h1>
-      <p class="muted" data-i18n="rg-sub">Buka akaun portal pelanggan percuma.</p>
+      <h1 data-i18n="rg-title">Register Account</h1>
+      <p class="muted" data-i18n="rg-sub">Create a free customer portal account.</p>
 
       <form id="register-form" method="post" novalidate>
         <div class="hp-field" aria-hidden="true"><input type="text" id="rg-hp" tabindex="-1" autocomplete="off"></div>
         <div class="form-group">
-          <label for="name" data-i18n="rg-name">Nama Penuh</label>
-          <input type="text" id="name" placeholder="Nama anda" required>
+          <label for="name" data-i18n="rg-name">Full Name</label>
+          <input type="text" id="name" placeholder="Your name" required>
         </div>
         <div class="form-group">
-          <label for="email" data-i18n="rg-email">E-mel</label>
-          <input type="email" id="email" placeholder="anda@email.com" required>
+          <label for="email" data-i18n="rg-email">Email</label>
+          <input type="email" id="email" placeholder="you@email.com" required>
         </div>
         <div class="form-group">
-          <label for="password" data-i18n="rg-pass">Kata Laluan</label>
-          <input type="password" id="password" placeholder="Minimum 6 aksara" minlength="6" required>
+          <label for="password" data-i18n="rg-pass">Password</label>
+          <input type="password" id="password" placeholder="Minimum 6 characters" minlength="6" required>
         </div>
         <p id="form-error" class="form-error" hidden></p>
-        <button type="submit" class="btn btn-primary btn-block" data-i18n="rg-btn">Daftar</button>
+        <button type="submit" class="btn btn-primary btn-block" data-i18n="rg-btn">Register</button>
       </form>
 
-      <p class="auth-switch" data-i18n="rg-have">Sudah ada akaun? <a href="login.html">Log Masuk</a></p>
-      <p class="auth-switch"><a href="index.html" data-i18n="lg-back">&larr; Kembali ke laman utama</a></p>
+      <p class="auth-switch" data-i18n="rg-have">Already have an account? <a href="login.html">Login</a></p>
+      <p class="auth-switch"><a href="index.html" data-i18n="lg-back">&larr; Back to homepage</a></p>
     </div>
   </main>
 
@@ -101,7 +101,7 @@
           "rg-ok": "Registration successful! Please verify your email before logging in."
         }
       };
-      var lang = localStorage.getItem("site_lang") || "my";
+      var lang = localStorage.getItem("site_lang") || "en";
       function apply() {
         var t = dict[lang];
         document.querySelectorAll("[data-i18n]").forEach(function (el) {

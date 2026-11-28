@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta name="robots" content="noindex, nofollow, noarchive">
   <meta name="referrer" content="no-referrer">
@@ -10,7 +10,7 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()">
 
-  <title>Dashboard — Portal Pelanggan</title>
+  <title>Dashboard — Customer Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
     <div class="loader-inner">
       <div class="loader-ring"><div class="loader-spin"></div></div>
       <div class="loader-dot"></div>
-      <div class="loader-text">Sila tunggu...</div>
+      <div class="loader-text">Please wait...</div>
     </div>
   </div>
 
@@ -32,11 +32,11 @@
       <a href="index.html" class="brand"><img src="https://plain-apac-prod-public.komododecks.com/202608/12/3HS3RGiBnGa12S29398i/image.png" alt="Logo" class="logo-img"></a>
       <nav class="portal-nav">
         <a href="dashboard.html" class="active">Dashboard</a>
-        <a href="request.html">Permohonan Baru</a>
-        <a href="my-requests.html">Permohonan Saya</a>
-        <a href="classes.html">Kelas</a>
+        <a href="request.html">New Request</a>
+        <a href="my-requests.html">My Requests</a>
+        <a href="classes.html">Classes</a>
         <a href="admin.html" id="admin-link" hidden>Admin</a>
-        <button id="signout-btn" class="btn btn-ghost btn-sm">Log Keluar</button>
+        <button id="signout-btn" class="btn btn-ghost btn-sm">Sign Out</button>
       </nav>
     </div>
   </header>
@@ -44,28 +44,28 @@
   <main class="portal-main">
     <div class="container">
       <div class="portal-header">
-        <h2>Salam, <span id="user-name">...</span></h2>
-        <p class="muted">Urus perkhidmatan dan kelas anda di sini.</p>
+        <h2>Hello, <span id="user-name">...</span></h2>
+        <p class="muted">Manage your services and classes here.</p>
       </div>
 
       <div class="grid grid-3">
         <a href="request.html" class="card portal-card">
-          <h3>Permohonan Baru</h3>
-          <p>Mohon perkhidmatan — pemasangan, pembaikan, sokongan dan banyak lagi.</p>
+          <h3>New Request</h3>
+          <p>Request services — installation, repair, support and more.</p>
         </a>
         <a href="my-requests.html" class="card portal-card">
-          <h3>Permohonan Saya</h3>
-          <p>Semak status permohonan anda — menunggu, dalam proses atau selesai.</p>
+          <h3>My Requests</h3>
+          <p>Check your request status — pending, in progress or completed.</p>
         </a>
         <a href="classes.html" class="card portal-card">
-          <h3>Kelas</h3>
-          <p>Daftar untuk kelas asas komputer dan kelas AI — online atau bersemuka.</p>
+          <h3>Classes</h3>
+          <p>Register for basic computer and AI classes — online or in-person.</p>
         </a>
       </div>
 
-      <h2 class="sub-title">Permohonan Terkini</h2>
+      <h2 class="sub-title">Recent Requests</h2>
       <div class="card">
-        <div id="recent-list"><p class="muted">Memuatkan...</p></div>
+        <div id="recent-list"><p class="muted">Loading...</p></div>
       </div>
     </div>
   </main>
@@ -87,11 +87,11 @@
           .limit(5);
         var box = document.getElementById("recent-list");
         if (error || !data || data.length === 0) {
-          box.innerHTML = '<p class="muted">Belum ada permohonan. <a href="request.html" class="red-link">Buat permohonan pertama anda</a>.</p>';
+          box.innerHTML = '<p class="muted">No requests yet. <a href="request.html" class="red-link">Create your first request</a>.</p>';
           return;
         }
         var esc = window.portal.esc;
-        box.innerHTML = '<table class="table"><thead><tr><th>Perkhidmatan</th><th>Tarikh</th><th>Status</th></tr></thead><tbody>' +
+        box.innerHTML = '<table class="table"><thead><tr><th>Service</th><th>Date</th><th>Status</th></tr></thead><tbody>' +
           data.map(function (r) {
             return '<tr><td>' + esc(r.service) + '</td><td>' + new Date(r.created_at).toLocaleDateString("ms-MY") +
               '</td><td><span class="badge ' + esc(r.status) + '">' + window.portal.badge(r.status) + '</span></td></tr>';

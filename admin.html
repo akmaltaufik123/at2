@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta name="robots" content="noindex, nofollow, noarchive">
   <meta name="referrer" content="no-referrer">
@@ -10,7 +10,7 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()">
 
-  <title>Admin — Panel Pentadbir</title>
+  <title>Admin — Admin Panel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
     <div class="loader-inner">
       <div class="loader-ring"><div class="loader-spin"></div></div>
       <div class="loader-dot"></div>
-      <div class="loader-text" data-i18n="loading-text">Sila tunggu...</div>
+      <div class="loader-text" data-i18n="loading-text">Please wait...</div>
     </div>
   </div>
 
@@ -34,11 +34,11 @@
       </button>
       <nav class="portal-nav" id="admin-menu" aria-label="Navigasi pentadbir">
         <a href="dashboard.html" data-i18n="nav-dashboard">Dashboard</a>
-        <a href="request.html" data-i18n="nav-request">Permohonan Baru</a>
-        <a href="my-requests.html" data-i18n="nav-my">Permohonan Saya</a>
-        <a href="classes.html" data-i18n="nav-classes">Kelas</a>
+        <a href="request.html" data-i18n="nav-request">New Request</a>
+        <a href="my-requests.html" data-i18n="nav-my">My Requests</a>
+        <a href="classes.html" data-i18n="nav-classes">Classes</a>
         <a href="admin.html" class="active" data-i18n="nav-admin">Admin</a>
-        <button id="signout-btn" class="btn btn-ghost btn-sm" data-i18n="signout">Log Keluar</button>
+        <button id="signout-btn" class="btn btn-ghost btn-sm" data-i18n="signout">Sign Out</button>
         <div class="lang-switch">
           <button class="lang-btn" data-lang="my">MY</button>
           <button class="lang-btn" data-lang="en">ENG</button>
@@ -58,15 +58,15 @@
       </div>
       
       <div class="portal-header">
-        <h2 data-i18n="header-title">Panel Pentadbir</h2>
-        <p class="muted" data-i18n="header-sub">Kawalan penuh — permohonan, kursus, kelas dan pelanggan.</p>
+        <h2 data-i18n="header-title">Admin Panel</h2>
+        <p class="muted" data-i18n="header-sub">Full control — requests, courses, classes and customers.</p>
       </div>
 
       <div id="denied" hidden>
         <div class="card">
-          <h3 data-i18n="denied">Akses Ditolak</h3>
-          <p class="muted" data-i18n="denied-sub">Akaun anda tidak mempunyai kebenaran pentadbir.</p>
-          <a href="dashboard.html" class="btn btn-outline btn-sm" data-i18n="denied-back">Kembali ke Dashboard</a>
+          <h3 data-i18n="denied">Access Denied</h3>
+          <p class="muted" data-i18n="denied-sub">Your account does not have admin privileges.</p>
+          <a href="dashboard.html" class="btn btn-outline btn-sm" data-i18n="denied-back">Back to Dashboard</a>
         </div>
       </div>
 
@@ -74,89 +74,89 @@
         <div class="grid grid-3 stats-row">
           <div class="card stat-card">
             <h3 id="stat-total">0</h3>
-            <p class="muted" data-i18n="stat-requests">Jumlah Permohonan</p>
+            <p class="muted" data-i18n="stat-requests">Total Requests</p>
           </div>
           <div class="card stat-card">
             <h3 id="stat-pending">0</h3>
-            <p class="muted" data-i18n="stat-pending">Menunggu</p>
+            <p class="muted" data-i18n="stat-pending">Pending</p>
           </div>
           <div class="card stat-card">
             <h3 id="stat-enroll">0</h3>
-            <p class="muted" data-i18n="stat-enroll">Pendaftaran Kelas</p>
+            <p class="muted" data-i18n="stat-enroll">Class Enrollments</p>
           </div>
         </div>
 
         <div class="tab-bar">
           <button class="tab-btn active" data-tab="dashboard" data-i18n="tab-dashboard">Dashboard</button>
-          <button class="tab-btn" data-tab="requests" data-i18n="tab-requests">Permohonan</button>
-          <button class="tab-btn" data-tab="classes" data-i18n="tab-classes">Kelas</button>
-          <button class="tab-btn" data-tab="customers" data-i18n="tab-customers">Pelanggan</button>
-          <button class="tab-btn" data-tab="report" data-i18n="tab-report">Laporan</button>
+          <button class="tab-btn" data-tab="requests" data-i18n="tab-requests">Requests</button>
+          <button class="tab-btn" data-tab="classes" data-i18n="tab-classes">Classes</button>
+          <button class="tab-btn" data-tab="customers" data-i18n="tab-customers">Customers</button>
+          <button class="tab-btn" data-tab="report" data-i18n="tab-report">Report</button>
         </div>
 
 <div id="tab-dashboard" class="tab-panel">
   <div class="grid grid-3 stats-row">
     <div class="card stat-card">
       <h3 id="dash-customers">0</h3>
-      <p class="muted" data-i18n="stat-cust">Pelanggan (Tempoh)</p>
+      <p class="muted" data-i18n="stat-cust">Customers (Period)</p>
     </div>
     <div class="card stat-card">
       <h3 id="dash-requests">0</h3>
-      <p class="muted" data-i18n="stat-req">Permohonan (Tempoh)</p>
+      <p class="muted" data-i18n="stat-req">Requests (Period)</p>
     </div>
     <div class="card stat-card">
       <h3 id="dash-income">RM 0</h3>
-      <p class="muted" data-i18n="stat-income">Pendapatan (Tempoh)</p>
+      <p class="muted" data-i18n="stat-income">Income (Period)</p>
     </div>
     <div class="card stat-card">
       <h3 id="dash-pending">0</h3>
-      <p class="muted" data-i18n="stat-pending2">Menunggu (Tempoh)</p>
+      <p class="muted" data-i18n="stat-pending2">Pending (Period)</p>
     </div>
   </div>
 
   <div class="card">
     <div class="card-toolbar">
-      <h3 data-i18n="cal-title">Kalendar Aktiviti</h3>
+      <h3 data-i18n="cal-title">Activity Calendar</h3>
       <div class="cal-nav">
         <button id="cal-prev" class="action-btn">◀</button>
         <select id="cal-month"></select>
         <select id="cal-year"></select>
         <button id="cal-next" class="action-btn">▶</button>
-        <button id="cal-today" class="action-btn" data-i18n="cal-today">Hari Ini</button>
+        <button id="cal-today" class="action-btn" data-i18n="cal-today">Today</button>
       </div>
     </div>
     <div id="calendar" class="calendar"></div>
-    <p class="muted cal-legend" data-i18n="cal-legend" data-i18n-html><span class="cal-badge reg">N daftar</span> pendaftaran pelanggan &middot; <span class="cal-badge inc">RM</span> pendapatan hari tersebut. Klik mana-mana tarikh untuk menapis graf ke hari itu.</p>
+    <p class="muted cal-legend" data-i18n="cal-legend" data-i18n-html><span class="cal-badge reg">C reg</span> customer registrations &middot; <span class="cal-badge inc">RM</span> income for that day. Click any date to filter graph to that day.</p>
     <p id="cal-info" class="muted"></p>
   </div>
 
   <div class="card">
     <div class="card-toolbar">
-      <h3 data-i18n="filter-title">Penapis Graf &amp; Tempoh</h3>
+      <h3 data-i18n="filter-title">Graph &amp; Period Filter</h3>
       <div class="filter-row">
-        <label data-i18n="f-cust">Pelanggan</label>
+        <label data-i18n="f-cust">Customers</label>
         <select id="filter-cust">
-          <option value="7d" data-i18n="f-7d">7 Hari</option>
-          <option value="14d" selected data-i18n="f-14d">14 Hari</option>
-          <option value="30d" data-i18n="f-30d">30 Hari</option>
-          <option value="8w" data-i18n="f-8w">8 Minggu</option>
-          <option value="12m" data-i18n="f-12m">12 Bulan</option>
-          <option value="5y" data-i18n="f-5y">5 Tahun</option>
-          <option value="custom" data-i18n="f-custom">Tempoh Pilihan</option>
+          <option value="7d" data-i18n="f-7d">7 Days</option>
+          <option value="14d" selected data-i18n="f-14d">14 Days</option>
+          <option value="30d" data-i18n="f-30d">30 Days</option>
+          <option value="8w" data-i18n="f-8w">8 Weeks</option>
+          <option value="12m" data-i18n="f-12m">12 Months</option>
+          <option value="5y" data-i18n="f-5y">5 Years</option>
+          <option value="custom" data-i18n="f-custom">Custom Period</option>
         </select>
-        <label data-i18n="f-income">Pendapatan</label>
+        <label data-i18n="f-income">Income</label>
         <select id="filter-income">
-          <option value="14d">14 Hari</option>
-          <option value="12w" data-i18n="f-12w">12 Minggu</option>
-          <option value="12m" selected>12 Bulan</option>
-          <option value="5y" data-i18n="f-5y">5 Tahun</option>
-          <option value="custom" data-i18n="f-custom">Tempoh Pilihan</option>
+          <option value="14d">14 Days</option>
+          <option value="12w" data-i18n="f-12w">12 Weeks</option>
+          <option value="12m" selected>12 Months</option>
+          <option value="5y" data-i18n="f-5y">5 Years</option>
+          <option value="custom" data-i18n="f-custom">Custom Period</option>
         </select>
-        <label data-i18n="f-from">Dari</label>
+        <label data-i18n="f-from">From</label>
         <input type="datetime-local" id="range-from">
-        <label data-i18n="f-to">Hingga</label>
+        <label data-i18n="f-to">To</label>
         <input type="datetime-local" id="range-to">
-        <button id="btn-apply" class="action-btn" data-i18n="f-apply">Guna</button>
+        <button id="btn-apply" class="action-btn" data-i18n="f-apply">Apply</button>
         <button id="btn-reset" class="action-btn danger" data-i18n="f-reset">Reset</button>
       </div>
     </div>
@@ -165,52 +165,52 @@
   <div class="charts-grid">
     <div class="card">
       <div class="card-toolbar">
-        <h3 id="title-cust" data-i18n="chart-cust">Pendaftaran Pelanggan</h3>
-        <button id="graph-report-btn" class="btn btn-primary btn-sm" data-i18n="report-btn">Muat Turun Laporan</button>
+        <h3 id="title-cust" data-i18n="chart-cust">Customer Registrations</h3>
+        <button id="graph-report-btn" class="btn btn-primary btn-sm" data-i18n="report-btn">Download Report</button>
       </div>
       <div class="chart-wrap"><canvas id="chart-cust"></canvas></div>
     </div>
     <div class="card">
-      <h3 id="title-income" data-i18n="chart-income">Pendapatan</h3>
+      <h3 id="title-income" data-i18n="chart-income">Income</h3>
       <div class="chart-wrap"><canvas id="chart-income"></canvas></div>
     </div>
   </div>
 
   <div class="charts-grid">
     <div class="card">
-      <h3 data-i18n="chart-status">Permohonan Mengikut Status</h3>
+      <h3 data-i18n="chart-status">Requests By Status</h3>
       <div class="chart-wrap"><canvas id="chart-status"></canvas></div>
     </div>
     <div class="card">
       <div class="card-toolbar">
-        <h3 data-i18n="tx-title">Rekod Pendapatan</h3>
-        <button id="add-tx-btn" class="btn btn-primary btn-sm" data-i18n="tx-add">+ Rekod Baru</button>
+        <h3 data-i18n="tx-title">Income Records</h3>
+        <button id="add-tx-btn" class="btn btn-primary btn-sm" data-i18n="tx-add">+ New Record</button>
       </div>
-      <div id="tx-list"><p class="muted" data-i18n="loading">Memuatkan...</p></div>
+      <div id="tx-list"><p class="muted" data-i18n="loading">Loading...</p></div>
     </div>
   </div>
 </div>
 
   <div class="modal-overlay" id="graph-report-modal" hidden>
     <div class="modal-box modal-sm">
-      <h3 data-i18n="report-modal-title">Muat Turun Laporan</h3>
+      <h3 data-i18n="report-modal-title">Download Report</h3>
       <div class="form-group">
-        <label for="gr-scope" data-i18n="report-scope">Jenis Laporan</label>
+        <label for="gr-scope" data-i18n="report-scope">Report Type</label>
         <select id="gr-scope">
-          <option value="semua" data-i18n="scope-semua">Laporan Lengkap (Semua)</option>
-          <option value="requests" data-i18n="scope-requests">Permohonan Perkhidmatan</option>
-          <option value="enrollments" data-i18n="scope-enrollments">Pendaftaran Kelas</option>
-          <option value="customers" data-i18n="scope-customers">Pelanggan</option>
-          <option value="transactions" data-i18n="scope-transactions">Transaksi</option>
+          <option value="semua" data-i18n="scope-semua">Full Report (All)</option>
+          <option value="requests" data-i18n="scope-requests">Service Requests</option>
+          <option value="enrollments" data-i18n="scope-enrollments">Class Enrollments</option>
+          <option value="customers" data-i18n="scope-customers">Customers</option>
+          <option value="transactions" data-i18n="scope-transactions">Transactions</option>
         </select>
       </div>
       <div class="report-range">
         <div class="form-group">
-          <label for="gr-from" data-i18n="from-label">Dari Tarikh (pilihan)</label>
+          <label for="gr-from" data-i18n="from-label">From Date (optional)</label>
           <input type="date" id="gr-from">
         </div>
         <div class="form-group">
-          <label for="gr-to" data-i18n="to-label">Hingga Tarikh (pilihan)</label>
+          <label for="gr-to" data-i18n="to-label">To Date (optional)</label>
           <input type="date" id="gr-to">
         </div>
       </div>
@@ -219,65 +219,65 @@
         <button class="btn btn-primary" id="gr-excel">Excel</button>
         <button class="btn btn-primary" id="gr-word">Word</button>
         <button class="btn btn-primary" id="gr-csv">CSV</button>
-        <button class="btn btn-ghost" id="gr-close" data-i18n="close">Tutup</button>
+        <button class="btn btn-ghost" id="gr-close" data-i18n="close">Close</button>
       </div>
-      <p class="muted form-hint" data-i18n="fmt-hint">Semua format mengandungi kandungan yang sama. Kosongkan tarikh untuk laporan penuh.</p>
+      <p class="muted form-hint" data-i18n="fmt-hint">All formats contain the same content. Leave dates empty for full report.</p>
     </div>
   </div>
         <div id="tab-requests" class="tab-panel" hidden>
           <div class="card">
-            <div id="requests-list"><p class="muted" data-i18n="loading">Memuatkan...</p></div>
+            <div id="requests-list"><p class="muted" data-i18n="loading">Loading...</p></div>
           </div>
         </div>
 
         <div id="tab-classes" class="tab-panel" hidden>
           <div class="card">
             <div class="card-toolbar">
-              <h3 data-i18n="cat-title">Kategori &amp; Kelas</h3>
+              <h3 data-i18n="cat-title">Categories &amp; Classes</h3>
               <div class="toolbar-actions">
-                <span class="muted hint" data-i18n="cat-drag">Seret kad untuk susun semula</span>
-                <button id="add-cat-btn" class="btn btn-primary btn-sm" data-i18n="cat-add">+ Tambah Kategori</button>
+                <span class="muted hint" data-i18n="cat-drag">Drag cards to reorder</span>
+                <button id="add-cat-btn" class="btn btn-primary btn-sm" data-i18n="cat-add">+ Add Category</button>
               </div>
             </div>
             <div id="cat-grid" class="cat-grid">
-              <p class="muted" data-i18n="loading">Memuatkan...</p>
+              <p class="muted" data-i18n="loading">Loading...</p>
             </div>
           </div>
 
           <div class="card">
             <div class="card-toolbar">
-              <h3>Pendaftaran Kelas</h3>
+              <h3>Class Enrollments</h3>
             </div>
-            <div id="classes-list"><p class="muted" data-i18n="loading">Memuatkan...</p></div>
+            <div id="classes-list"><p class="muted" data-i18n="loading">Loading...</p></div>
           </div>
         </div>
 
         <div id="tab-customers" class="tab-panel" hidden>
           <div class="card">
-            <div id="customers-list"><p class="muted" data-i18n="loading">Memuatkan...</p></div>
+            <div id="customers-list"><p class="muted" data-i18n="loading">Loading...</p></div>
           </div>
         </div>
 
         <div id="tab-report" class="tab-panel" hidden>
           <div class="card">
-            <h3 data-i18n="report-modal-title">Muat Turun Laporan</h3>
+            <h3 data-i18n="report-modal-title">Download Report</h3>
             <div class="form-group">
-              <label for="report-scope" data-i18n="report-scope">Jenis Laporan</label>
+              <label for="report-scope" data-i18n="report-scope">Report Type</label>
               <select id="report-scope">
-                <option value="semua" data-i18n="scope-semua">Laporan Lengkap (Semua)</option>
-                <option value="requests" data-i18n="scope-requests">Permohonan Perkhidmatan</option>
-                <option value="enrollments" data-i18n="scope-enrollments">Pendaftaran Kelas</option>
-                <option value="customers" data-i18n="scope-customers">Pelanggan</option>
-                <option value="transactions" data-i18n="scope-transactions">Transaksi</option>
+                <option value="semua" data-i18n="scope-semua">Full Report (All)</option>
+                <option value="requests" data-i18n="scope-requests">Service Requests</option>
+                <option value="enrollments" data-i18n="scope-enrollments">Class Enrollments</option>
+                <option value="customers" data-i18n="scope-customers">Customers</option>
+                <option value="transactions" data-i18n="scope-transactions">Transactions</option>
               </select>
             </div>
             <div class="report-range">
               <div class="form-group">
-                <label for="report-from" data-i18n="from-label">Dari Tarikh (pilihan)</label>
+                <label for="report-from" data-i18n="from-label">From Date (optional)</label>
                 <input type="date" id="report-from">
               </div>
               <div class="form-group">
-                <label for="report-to" data-i18n="to-label">Hingga Tarikh (pilihan)</label>
+                <label for="report-to" data-i18n="to-label">To Date (optional)</label>
                 <input type="date" id="report-to">
               </div>
             </div>
@@ -287,7 +287,7 @@
               <button class="btn btn-primary" id="report-word">Word</button>
               <button class="btn btn-primary" id="report-csv">CSV</button>
             </div>
-            <p class="muted form-hint" data-i18n="fmt-hint">Semua format (PDF, Excel, Word, CSV) mengandungi kandungan yang sama. Kosongkan tarikh untuk laporan penuh.</p>
+            <p class="muted form-hint" data-i18n="fmt-hint">All formats (PDF, Excel, Word, CSV) contain the same content. Leave dates empty for full report.</p>
           </div>
         </div>
 
