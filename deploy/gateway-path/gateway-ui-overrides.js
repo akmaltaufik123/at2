@@ -92,9 +92,9 @@ const ATE_ROOT_INLINE = [
   "function replaceHeroText(){try{",
   "document.querySelectorAll('h1').forEach(function(el){",
   "var html=el.innerHTML;",
-  "if(html.indexOf('One API gateway')!==-1&&!el.dataset.ateTextReplaced){",
-  "el.dataset.ateTextReplaced='1';",
-  "el.innerHTML=html.replace(/One API gateway\\./g,'With One API Gateway.');",
+  "var updated=html.replace(/(?<!With )One API gateway\\./gi,'With One API Gateway.');",
+  "if(updated!==html){",
+  "el.innerHTML=updated;",
   "}});}catch(e){}}",
   "function flashView(v){try{",
   "var el=document.getElementById('view-'+v);if(!el||!el.classList)return;",
@@ -263,7 +263,7 @@ function injectAfterBodyOpen(html, injection) {
 }
 
 function injectRootOverride(html) {
-  var out = html;
+  var out = html.replace(/(?<!With )One API gateway\./gi, 'With One API Gateway.');
   out = out.split(
     '<div class="w-10 h-10 rounded-xl bg-gray-900 text-white flex items-center justify-center font-bold text-lg tracking-wider shadow-md">ATE</div>',
   ).join(
